@@ -1,6 +1,4 @@
 plugins:
-  brakeman:
-    enabled: true
   editorconfig:
     enabled: true
   fixme:
