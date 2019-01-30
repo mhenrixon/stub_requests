@@ -1,0 +1,15 @@
+plugins:
+  brakeman:
+    enabled: true
+  editorconfig:
+    enabled: true
+  fixme:
+    enabled: true
+  flog:
+    enabled: true
+    config:
+      score_threshold: 20.0
+  reek:
+    enabled: true
+  rubocop:
+    enabled: true

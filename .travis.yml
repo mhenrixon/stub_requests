@@ -20,12 +20,13 @@ script:
 after_script:
   - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
 rvm:
-  - 2.5.3
-# matrix:
-#   fast_finish: true
-#   include:
-#   - rvm: 2.4
-#     env: COV=false
+  - 2.3.7
+  - 2.4.5
+matrix:
+  fast_finish: true
+  include:
+    - rvm: 2.5.3
+      env: COV=true
 deploy:
   provider: rubygems
   api_key:
