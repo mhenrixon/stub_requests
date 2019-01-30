@@ -1,0 +1,123 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Include:
+    - "Rakefile"
+    - "lib/**/*"
+    - "bin/**/*"
+    - "spec/**/*"
+  Exclude:
+    - "lib/stub_requests/core_ext/**/*"
+    - "Gemfile.lock"
+    - "bin/setup"
+
+Lint/HandleExceptions:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Metrics/AbcSize:
+  Max: 38
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 13
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - '**/spec/**/*.rb'
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Naming/AccessorMethodName:
+  Enabled: true
+
+Naming/ConstantName:
+  Enabled: true
+
+Naming/FileName:
+  Enabled: true
+  Exclude:
+    - '**/Gemfile'
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - ex
+
+RSpec/DescribeClass:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/ExpectActual:
+  Enabled: false
+
+RSpec/ExpectChange:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+  Enabled: true
+
+RSpec/RepeatedExample:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: true
+
+Style/GlobalVars:
+  Enabled: true
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: true
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+
+Style/SymbolArray:
+  Enabled: true
+  EnforcedStyle: brackets
+
+Style/TernaryParentheses:
+  Enabled: true
+  EnforcedStyle: require_parentheses_when_complex
+  AllowSafeAssignment: true
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
