@@ -1,5 +1,7 @@
 # StubRequests
 
+[![Build Status](https://travis-ci.org/mhenrixon/stub_requests.svg?branch=master)](https://travis-ci.org/mhenrixon/stub_requests) [![Maintainability](https://api.codeclimate.com/v1/badges/c9217e458c2a77fff1bc/maintainability)](https://codeclimate.com/github/mhenrixon/stub_requests/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/c9217e458c2a77fff1bc/test_coverage)](https://codeclimate.com/github/mhenrixon/stub_requests/test_coverage)
+
 This gem attempts to solve a problem I've had for the longest time with WebMock. I found it difficult to maintain all the various stub requests. 
 
 When something changes, I have to update every single stub_request. This gem allows me to only update the crucial parts while abstracting away things like service URI's, endpoint definitions and focus on the important things.
