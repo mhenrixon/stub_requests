@@ -84,12 +84,13 @@ module StubRequests
     # @return [String]
     #
     def to_s
-      string = +"#<#{self.class}"
-      string << +" id=#{id}"
-      string << +" uri=#{uri}"
-      string << +" endpoints=#{endpoints.endpoints_string}"
-      string << +">"
-      string
+      [
+        +"#<#{self.class}",
+        +" id=#{id}",
+        +" uri=#{uri}",
+        +" endpoints=#{endpoints.endpoints_string}",
+        +">",
+      ].join("")
     end
   end
 end

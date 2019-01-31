@@ -16,14 +16,14 @@ module StubRequests
     attr_accessor :services
 
     def initialize
-      reset!
+      self.services = Concurrent::Map.new
     end
 
     #
     # Resets the map with registered services
     # @api private
     def reset!
-      self.services = Concurrent::Map.new
+      services.clear
     end
 
     #
@@ -46,10 +46,12 @@ module StubRequests
     #
     # @param [Symbol] service_id the service_id to remove
     #
-    # @raise [ServiceNotRegistered] when the service was not removed
+    # @raise [ServiceNotFound] when the service was not removed
     #
     def remove_service(service_id)
-      raise ServiceNotRegistered, "Service \n\n #{service} \n\n is not registered." unless services.delete(service_id)
+      services.delete(service_id)&.tap { |service| return service }
+
+      raise(ServiceNotFound, service_id)
     end
 
     #
@@ -73,7 +75,9 @@ module StubRequests
     # @return [Endpoint, nil]
     #
     def get_service!(service_id)
-      get_service(service_id) || raise(ServiceNotFound, "Couldn't find a service with id=:#{service_id}")
+      get_service(service_id)&.tap { |service| return service }
+
+      raise(ServiceNotFound, service_id)
     end
   end
 end

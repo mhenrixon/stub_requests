@@ -118,10 +118,11 @@ module StubRequests
     # @return [String]
     #
     def to_s
-      string = +"#<#{self.class} endpoints="
-      string << +endpoints_string
-      string << +">"
-      string
+      [
+        +"#<#{self.class} endpoints=",
+        +endpoints_string,
+        +">",
+      ].join("")
     end
 
     #
@@ -131,10 +132,13 @@ module StubRequests
     # @return [<type>] <description>
     #
     def endpoints_string
-      string = +"["
-      string << endpoints.values.map(&:to_s).join(",") if endpoints.size.positive?
-      string << +"]"
-      string
+      "[#{endpoints_as_string}]"
+    end
+
+    private
+
+    def endpoints_as_string
+      endpoints.values.map(&:to_s).join(",") if endpoints.size.positive?
     end
   end
 end

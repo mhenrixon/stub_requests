@@ -31,7 +31,7 @@ RSpec.describe StubRequests::UriFor do
           StubRequests::UriSegmentMismatch,
           "The uri segment(s) [:without_any] were not replaced" \
           " in uri_template (another/random/endpoint/:without_any/value)." \
-          " The following uri_replacements where passed in: [bogus]",
+          " Given uri_replacements=[bogus]",
         )
       end
     end

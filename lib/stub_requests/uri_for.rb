@@ -39,18 +39,10 @@ module StubRequests
     #   `"http://service-name:9292/internal/persons/abcdefabper/identifications"`
     #
     def uri_for(service_uri, uri_template, uri_replacements)
-      uri = +uri_template
-      unused_uri_replacements = uri_replacements.map do |key, value|
-        uri_segment = ":#{key}"
-        if uri_template.include?(uri_segment)
-          uri.gsub!(uri_segment.to_s, value.to_s)
-          next
-        else
-          uri_segment
-        end
-      end
+      uri                 = +uri_template
+      unused_replacements = replace_uri_segments(uri, uri_template, uri_replacements)
 
-      validate_uri_replacements_used!(uri_template, unused_uri_replacements)
+      validate_replacements_used!(uri_template, unused_replacements)
       validate_segments_replaced!(uri, uri_replacements)
 
       warn_about_invalid_uri([service_uri, uri].join("/"))
@@ -66,12 +58,11 @@ module StubRequests
     #
     # @return [nil] when all is good
     #
-    def validate_uri_replacements_used!(uri_template, unused_uri_replacements)
-      unused_uri_replacements.compact!
-      return if unused_uri_replacements.none?
+    def validate_replacements_used!(uri_template, unused_replacements)
+      return if unused_replacements.none?
 
       raise UriSegmentMismatch,
-            "The uri segment(s) [#{unused_uri_replacements.join(',')}] are missing in uri_template (#{uri_template})"
+            "The uri segment(s) [#{unused_replacements.join(',')}] are missing in uri_template (#{uri_template})"
     end
 
     #
@@ -85,19 +76,32 @@ module StubRequests
     # @return [nil] when all is good
     #
     def validate_segments_replaced!(uri_template, uri_replacements)
-      unreplaced_segments = []
-      URL_SEGMENT_REGEX.match(uri_template) do |match|
-        match.to_a.uniq.each { |uri_segment| unreplaced_segments << uri_segment }
-      end
+      unreplaced_segments = parse_unreplaced_segments(uri_template)
       return if unreplaced_segments.none?
 
       raise UriSegmentMismatch,
             "The uri segment(s) [#{unreplaced_segments.join(',')}]" \
             " were not replaced in uri_template (#{uri_template})." \
-            " The following uri_replacements where passed in: [#{uri_replacements.keys.join(',')}]"
+            " Given uri_replacements=[#{uri_replacements.keys.join(',')}]"
     end
 
     private
+
+    def replace_uri_segments(uri, uri_template, uri_replacements)
+      uri_replacements.map do |key, value|
+        uri_segment = ":#{key}"
+        if uri_template.include?(uri_segment)
+          uri.gsub!(uri_segment.to_s, value.to_s)
+          next
+        else
+          uri_segment
+        end
+      end.compact
+    end
+
+    def parse_unreplaced_segments(uri_template)
+      URL_SEGMENT_REGEX.match(uri_template).to_a.uniq
+    end
 
     def warn_about_invalid_uri(uri)
       StubRequests.logger.warn("Uri (#{uri}) is not valid.") unless valid_uri?(uri)
