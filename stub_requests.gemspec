@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mikael@zoolutions.se"]
 
   spec.summary       = %q{Stubs HTTP requests using webmock}
-  spec.description   = %q{}
+  spec.description   = %q{An abstraction on top of WebMock to build stubbed http requests}
   spec.homepage      = "https://mhenrixon.github.io/stub_requests/"
   spec.license       = "MIT"
 
@@ -34,20 +34,20 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "webmock" # TODO: Add version constraint
-  spec.add_dependency "concurrent-ruby" # TODO: Add version constraint
-  spec.add_dependency "public_suffix" # TODO: Add version constraint
-  spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake" # TODO: Add version constraint
-  spec.add_development_dependency "rspec" # TODO: Add version constraint
-  spec.add_development_dependency "rspec-its" # TODO: Add version constraint
-  spec.add_development_dependency "rubocop" # TODO: Add version constraint
-  spec.add_development_dependency "rubocop-rspec" # TODO: Add version constraint
-  spec.add_development_dependency "simplecov" # TODO: Add version constraint
-  spec.add_development_dependency "simplecov-json" # TODO: Add version constraint
-  spec.add_development_dependency "pry" # TODO: Add version constraint
-  spec.add_development_dependency "reek" # TODO: Add version constraint
-  spec.add_development_dependency "travis" # TODO: Add version constraint
-  spec.add_development_dependency "gem-release" # TODO: Add version constraint
-  spec.add_development_dependency "yard" # TODO: Add version constraint
+  spec.add_dependency "webmock",         "~> 3.0", "< 4.0"
+  spec.add_dependency "concurrent-ruby", "~> 1.0", "< 2"
+  spec.add_dependency "public_suffix",   "~> 3.0", "< 4"
+  spec.add_development_dependency "bundler",        ">= 2.0"
+  spec.add_development_dependency "rake",           ">= 10.0"
+  spec.add_development_dependency "rspec",          ">= 3.8"
+  spec.add_development_dependency "rspec-its",      ">= 1.2"
+  spec.add_development_dependency "rubocop",        "~> 0.63.1"
+  spec.add_development_dependency "rubocop-rspec",  "~> 1.32"
+  spec.add_development_dependency "simplecov",      ">= 0.16.1"
+  spec.add_development_dependency "simplecov-json", ">= 0.2"
+  spec.add_development_dependency "pry",            ">= 0.12"
+  spec.add_development_dependency "reek",           ">= 5.0"
+  spec.add_development_dependency "travis",         ">= 1.8.9"
+  spec.add_development_dependency "gem-release",    ">= 2.0"
+  spec.add_development_dependency "yard",           "~> 0.9.18"
 end
