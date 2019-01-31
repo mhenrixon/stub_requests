@@ -31,8 +31,6 @@ module StubRequests
     # @yield used by Enumerable
     #
     def each(&block)
-      return to_enum(:each) unless block
-
       @endpoints.each(&block)
     end
 

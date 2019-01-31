@@ -47,6 +47,7 @@ RSpec.describe StubRequests::API do
     let(:uri_replacements) { { file_id: 100 } }
     let(:options)          { {} }
     let(:service)          { nil }
+    let(:block)            { nil }
 
     context "when service is registered" do
       let!(:service) { described_class.register_service(service_id, service_uri) }
@@ -55,6 +56,16 @@ RSpec.describe StubRequests::API do
         let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
 
         it { is_expected.to be_a(WebMock::RequestStub) }
+      end
+
+      context "when given a block" do
+        let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+
+        it "yields the stub to the block" do
+          stub_endpoint do |stub|
+            expect(stub).to be_a(WebMock::RequestStub)
+          end
+        end
       end
 
       context "when endpoint is unregistered" do
@@ -77,9 +88,9 @@ RSpec.describe StubRequests::API do
     end
   end
 
-  describe ".stub_http_request" do
-    subject(:stub_http_request) do
-      described_class.stub_http_request(verb, uri, options)
+  describe ".create_webmock_stub" do
+    subject(:create_webmock_stub) do
+      described_class.create_webmock_stub(verb, uri, options)
     end
 
     it { is_expected.to be_a(WebMock::RequestStub) }
@@ -97,7 +108,7 @@ RSpec.describe StubRequests::API do
         let(:request_query) { { abd: :def } }
 
         it "configures webmock with query" do
-          stub_http_request
+          create_webmock_stub
           expect(request_stub).to have_received(:with).with(a_hash_including(query: request_query))
         end
       end
@@ -106,7 +117,7 @@ RSpec.describe StubRequests::API do
         let(:request_headers) { { "Accept" => "N/A" } }
 
         it "configures webmock with request_headers" do
-          stub_http_request
+          create_webmock_stub
           expect(request_stub).to have_received(:with).with(a_hash_including(headers: request_headers))
         end
       end
@@ -115,7 +126,7 @@ RSpec.describe StubRequests::API do
         let(:request_body) { { rock: "'n'roll" } }
 
         it "configures webmock with request_body" do
-          stub_http_request
+          create_webmock_stub
           expect(request_stub).to have_received(:with).with(a_hash_including(body: request_body))
         end
       end
@@ -124,7 +135,7 @@ RSpec.describe StubRequests::API do
         let(:response_status) { 500 }
 
         it "configures webmock with response_status" do
-          stub_http_request
+          create_webmock_stub
           expect(request_stub).to have_received(:to_return).with(a_hash_including(status: response_status))
         end
       end
@@ -133,7 +144,7 @@ RSpec.describe StubRequests::API do
         let(:response_headers) { { "Accept" => "application/crashes" } }
 
         it "configures webmock with response_headers" do
-          stub_http_request
+          create_webmock_stub
           expect(request_stub).to have_received(:to_return).with(a_hash_including(headers: response_headers))
         end
       end
@@ -142,7 +153,7 @@ RSpec.describe StubRequests::API do
         let(:response_body) { { float: :my_boat } }
 
         it "configures webmock with response_body" do
-          stub_http_request
+          create_webmock_stub
           expect(request_stub).to have_received(:to_return).with(a_hash_including(body: response_body))
         end
       end

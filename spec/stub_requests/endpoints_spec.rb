@@ -23,6 +23,39 @@ RSpec.describe StubRequests::Endpoints do
     it { is_expected.to eq(endpoint) }
   end
 
+  describe "#each" do
+    subject(:each) { endpoints.each }
+
+    context "when given no block" do
+      it { is_expected.to be_a(::Enumerator) }
+    end
+
+    context "when given a block" do
+      context "when endpoint is unregistered" do
+        specify do
+          value = nil
+          each { |endpoint| value = endpoint.id }
+          expect(value).to eq(nil)
+        end
+      end
+
+      context "when endpoint is registered" do
+        before { endpoints.register(endpoint) }
+
+        specify do
+          each { |ep| expect(ep.id).to eq(endpoint.id) }
+        end
+      end
+
+      it "delegates to @endpoints" do
+        block = ->(endpoint) { endpoint }
+        allow(endpoints.endpoints).to receive(:each).and_call_original
+        each(&block)
+        expect(endpoints.endpoints).to have_received(:each).with(no_args, &block)
+      end
+    end
+  end
+
   describe "#registered?" do
     subject(:registered) { endpoints.registered?(endpoint_id) }
 

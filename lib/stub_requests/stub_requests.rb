@@ -15,7 +15,7 @@ module StubRequests
   #
   # Class InvalidArgument provides base class for all argument errors
   #
-  # @author Joe Blog <Joe.Blog@nowhere.com>
+  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class InvalidArgument < ::ArgumentError
     def super(argument:, value:)
@@ -30,7 +30,7 @@ module StubRequests
   #
   class InvalidArgumentType < InvalidArgument
     def initialize(actual:, expected:)
-      super("Expected '#{actual}' to be any of ['#{expected}']")
+      super("Expected `#{actual}` to be any of [#{expected}]")
     end
   end
 

@@ -71,16 +71,17 @@ module StubRequests
     # @see #stub_http_request
     # @return [WebMock::RequestStub] a mocked request
     #
-    def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, options = {})
+    def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, options = {}, &block)
       service  = service_registry.get_service!(service_id)
       endpoint = service.get_endpoint!(endpoint_id)
       url      = uri_for(service.uri, endpoint.uri_template, uri_replacements)
 
-      stub_http_request(endpoint.verb, url, options)
+      request_stub = create_webmock_stub(endpoint.verb, url, options, &block)
+      WebMock::StubRegistry.instance.register_request_stub(request_stub)
     end
 
     #
-    # Stub a HTTP Request with WebMock
+    # Create a WebMock::RequestStub
     #
     # @param [Symbol] verb the http method
     # @param [String] uri the uri to stub
@@ -100,18 +101,22 @@ module StubRequests
     #
     # @return [WebMock::RequestStub] a mocked request
     #
-    def stub_http_request(verb, uri, options = {})
+    def create_webmock_stub(verb, uri, options = {})
       request  = prepare_request(options[:request])
       response = prepare_response(options[:response])
       error    = prepare_error(options[:error])
 
       request_stub = WebMock::RequestStub.new(verb, uri)
-      request_stub.with(request)       if request.present?
-      request_stub.to_return(response) if response.present?
-      request_stub.to_raise(*error)    if error.present?
-      request_stub.to_timeout          if options[:timeout]
+      if block_given?
+        yield request_stub
+      else
+        request_stub.with(request)       if request.present?
+        request_stub.to_return(response) if response.present?
+        request_stub.to_raise(*error)    if error.present?
+        request_stub.to_timeout          if options[:timeout]
+      end
 
-      WebMock::StubRegistry.instance.register_request_stub(request_stub)
+      request_stub
     end
 
     #

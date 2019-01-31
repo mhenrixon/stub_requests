@@ -13,9 +13,9 @@ RSpec.describe StubRequests::Endpoint do
   describe "#initialize" do
     subject { endpoint }
 
-    its(:id) { is_expected.to eq(endpoint_id) }
-    its(:verb) { is_expected.to eq(verb) }
-    its(:uri_template) { is_expected.to eq(uri_template) }
+    its(:id)              { is_expected.to eq(endpoint_id) }
+    its(:verb)            { is_expected.to eq(verb) }
+    its(:uri_template)    { is_expected.to eq(uri_template) }
     its(:default_options) { is_expected.to eq(default_options) }
   end
 
@@ -26,9 +26,9 @@ RSpec.describe StubRequests::Endpoint do
     let(:new_uri_template)    { "resource/:resource_id/collection/:collection_id" }
     let(:new_default_options) { { response: { body: "" } } }
 
-    its(:id) { is_expected.to eq(endpoint_id) }
-    its(:verb) { is_expected.to eq(new_verb) }
-    its(:uri_template) { is_expected.to eq(new_uri_template) }
+    its(:id)              { is_expected.to eq(endpoint_id) }
+    its(:verb)            { is_expected.to eq(new_verb) }
+    its(:uri_template)    { is_expected.to eq(new_uri_template) }
     its(:default_options) { is_expected.to eq(new_default_options) }
   end
 
