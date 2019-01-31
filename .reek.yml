@@ -15,7 +15,7 @@ detectors:
     exclude:
     - initialize
     - StubRequests::API#stub_http_request
-    - StubRequests::Service#to_s
+    - tubRequests::API#create_webmock_stub
   UncommunicativeVariableName:
     exclude:
     - StubRequests::API#prepare_request
