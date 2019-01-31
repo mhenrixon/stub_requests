@@ -49,9 +49,7 @@ module StubRequests
     # @raise [ServiceNotFound] when the service was not removed
     #
     def remove_service(service_id)
-      services.delete(service_id)&.tap { |service| return service }
-
-      raise(ServiceNotFound, service_id)
+      services.delete(service_id) || raise(ServiceNotFound, service_id)
     end
 
     #
@@ -75,9 +73,7 @@ module StubRequests
     # @return [Endpoint, nil]
     #
     def get_service!(service_id)
-      get_service(service_id)&.tap { |service| return service }
-
-      raise(ServiceNotFound, service_id)
+      get_service(service_id) || raise(ServiceNotFound, service_id)
     end
   end
 end

@@ -29,7 +29,7 @@ RSpec.describe StubRequests do
 
     it "changes the logger" do
       expect { set_logger }
-        .to change { described_class.logger }
+        .to change(described_class, :logger)
         .from(logwas)
         .to(logger)
     end

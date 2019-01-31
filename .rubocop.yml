@@ -53,33 +53,12 @@ Naming/UncommunicativeMethodParamName:
   AllowedNames:
     - ex
 
-RSpec/DescribeClass:
-  Enabled: false
-
-RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/ExpectActual:
-  Enabled: false
-
-RSpec/ExpectChange:
-  Enabled: false
-
-RSpec/ExpectInHook:
-  Enabled: false
-
-RSpec/MessageSpies:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
+RSpec/AlignLeftLetBrace:
+  Enabled: true
 
 RSpec/NestedGroups:
   Max: 4
   Enabled: true
-
-RSpec/RepeatedExample:
-  Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: true

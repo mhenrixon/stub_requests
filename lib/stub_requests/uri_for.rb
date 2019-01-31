@@ -109,9 +109,10 @@ module StubRequests
     end
 
     def valid_uri?(value)
-      uri = URI.parse(value)
-      host = uri&.host
-      scheme = uri&.scheme
+      return unless (uri = URI.parse(value))
+
+      host   = uri.host
+      scheme = uri.scheme
 
       valid_scheme?(host, scheme) && valid_suffix?(host)
     rescue URI::InvalidURIError

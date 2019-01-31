@@ -6,8 +6,8 @@ RSpec.describe StubRequests::UriFor do
   describe "#uri_for" do
     subject(:uri_for) { described_class.uri_for(service_uri, uri_template, uri_replacements) }
 
-    let(:service_uri)  { "http://service-name:9292/internal" }
-    let(:uri_template) { "another/:bogus/endpoint" }
+    let(:service_uri)      { "http://service-name:9292/internal" }
+    let(:uri_template)     { "another/:bogus/endpoint" }
     let(:uri_replacements) { { bogus: :random } }
 
     it { is_expected.to eq("http://service-name:9292/internal/another/random/endpoint") }
@@ -26,6 +26,7 @@ RSpec.describe StubRequests::UriFor do
     context "when endpoint has unreplaced uri segments" do
       let(:uri_template) { "another/:bogus/endpoint/:without_any/value" }
 
+      # rubocop:disable RSpec/ExampleLength
       specify do
         expect { uri_for }.to raise_error(
           StubRequests::UriSegmentMismatch,
@@ -34,17 +35,24 @@ RSpec.describe StubRequests::UriFor do
           " Given uri_replacements=[bogus]",
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context "when constructed uri is invalid" do
       let(:uri_template) { "another/:bogus/end point\ /thjat doesn't work" }
 
+      before do
+        allow(StubRequests.logger).to receive(:warn)
+      end
+
       it "logs a helpful warning message" do
-        expect(StubRequests.logger).to receive(:warn).with(
+        uri_for
+        expect(StubRequests.logger).to have_received(:warn).with(
           "Uri (http://service-name:9292/internal/another/random/end point /thjat doesn't work) is not valid.",
         )
-        expect(uri_for).to eq("http://service-name:9292/internal/another/random/end point /thjat doesn't work")
       end
+
+      it { is_expected.to eq("http://service-name:9292/internal/another/random/end point /thjat doesn't work") }
     end
   end
 end

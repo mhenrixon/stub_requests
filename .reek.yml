@@ -67,6 +67,3 @@ detectors:
   NestedIterators:
     exclude:
     - StubRequests::UriFor#validate_segments_replaced!
-  NilCheck:
-    exclude:
-    - StubRequests::UriFor#valid_uri?

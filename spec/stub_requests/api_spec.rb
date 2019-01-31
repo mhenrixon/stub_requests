@@ -178,8 +178,8 @@ RSpec.describe StubRequests::API do
 
     context "when all arguments are nil" do
       let(:request_query)           { nil }
-      let(:request_headers) { nil }
-      let(:request_body)    { nil }
+      let(:request_headers)         { nil }
+      let(:request_body)            { nil }
 
       it { is_expected.to eq({}) }
     end

@@ -18,8 +18,9 @@ RSpec.describe StubRequests::Endpoints do
 
     it "registers the endpoint in the collection" do
       expect { register }.to change { endpoints.endpoints.size }.by(1)
-      expect(register).to eq(endpoint)
     end
+
+    it { is_expected.to eq(endpoint) }
   end
 
   describe "#registered?" do
@@ -120,20 +121,16 @@ RSpec.describe StubRequests::Endpoints do
       let(:endpoint_two) { StubRequests::Endpoint.new(:bogus_id, :any, "documents/:document_id") }
 
       before do
-        endpoints.register(endpoint)
         endpoints.register(endpoint_two)
       end
 
-      # rubocop:disable Metrics/LineLength
       specify do
         expect(to_s).to eq(
-          "#<StubRequests::Endpoints endpoints=[" \
-          "#<StubRequests::Endpoint id=:resource_collection verb=:get uri_template='resource/:resource_id/collection'>," \
-          "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>" \
+          "#<StubRequests::Endpoints endpoints=["\
+            "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
           "]>",
         )
       end
-      # rubocop:enable Metrics/LineLength
     end
   end
 end
