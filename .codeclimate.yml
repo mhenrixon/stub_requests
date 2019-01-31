@@ -1,13 +1,25 @@
+---
+version: '2'
 plugins:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - ruby
   editorconfig:
     enabled: true
   fixme:
     enabled: true
   flog:
     enabled: true
-    config:
-      score_threshold: 20.0
+  markdownlint:
+    enabled: true
   reek:
     enabled: true
+    config:
+      file: .reek.yml
   rubocop:
     enabled: true
+    channel: rubocop-0-63
+    config:
+      file: .rubocop.yml
