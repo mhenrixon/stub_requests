@@ -42,10 +42,13 @@ module StubRequests
     #
     # @return [Service] a new service or a previously registered service
     #
-    def register_service(service_id, service_uri)
-      service_registry.register_service(
+    def register_service(service_id, service_uri, &block)
+      service = service_registry.register_service(
         Service.new(service_id, service_uri),
       )
+
+      Docile.dsl_eval(service.endpoint_registry, &block) if block.present?
+      service
     end
 
     #
@@ -101,14 +104,14 @@ module StubRequests
     #
     # @return [WebMock::RequestStub] a mocked request
     #
-    def create_webmock_stub(verb, uri, options = {})
+    def create_webmock_stub(verb, uri, options = {}, &block)
       request  = prepare_request(options[:request])
       response = prepare_response(options[:response])
       error    = prepare_error(options[:error])
 
       request_stub = WebMock::RequestStub.new(verb, uri)
-      if block_given?
-        yield request_stub
+      if block.present?
+        Docile.dsl_eval(request_stub, &block)
       else
         request_stub.with(request)       if request.present?
         request_stub.to_return(response) if response.present?

@@ -38,11 +38,11 @@ module StubRequests
     # @return [Service] the service that was just registered
     #
     def register_service(service)
-      old_service = get_service(service.id)
-      return old_service if old_service
-
+      if (old_service = get_service(service.id))
+        StubRequests.logger.warn("Service already registered #{service}")
+        raise ServiceHaveEndpoints, old_service if old_service.endpoints?
+      end
       services[service.id] = service
-      service
     end
 
     #

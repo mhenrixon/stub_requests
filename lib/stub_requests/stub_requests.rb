@@ -6,43 +6,43 @@
 #
 module StubRequests
   #
-  # Class Error a base class for all gem errors
+  # Error is a base class for all gem errors
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Error < StandardError; end
 
   #
-  # Class InvalidArgument provides base class for all argument errors
+  # ServiceHaveEndpoints is raised to prevent overwriting a registered service's endpoints
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
-  class InvalidArgument < ::ArgumentError
-    def super(argument:, value:)
-      super("Invalid value #{value} for argument #{argument}")
+  class ServiceHaveEndpoints < StandardError
+    def initialize(service)
+      super("Service with id #{service.id} have already been registered. #{service}")
     end
   end
 
   #
-  # Class InvalidArgumentType is raised when an argument is invalid
+  # InvalidType is raised when an argument is invalid
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
-  class InvalidArgumentType < InvalidArgument
+  class InvalidType < Error
     def initialize(actual:, expected:)
       super("Expected `#{actual}` to be any of [#{expected}]")
     end
   end
 
   #
-  # Class EndpointNotFound is raised when an endpoint cannot be found
+  # EndpointNotFound is raised when an endpoint cannot be found
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class EndpointNotFound < Error; end
 
   #
-  # Class ServiceNotFound is raised when a service cannot be found
+  # ServiceNotFound is raised when a service cannot be found
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
@@ -53,7 +53,7 @@ module StubRequests
   end
 
   #
-  # Class UriSegmentMismatch is raised when a segment cannot be replaced
+  # UriSegmentMismatch is raised when a segment cannot be replaced
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #

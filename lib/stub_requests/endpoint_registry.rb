@@ -6,17 +6,17 @@
 #
 module StubRequests
   #
-  # Class Endpoints holds a collection of {Endpoint}
+  # Class EndpointRegistry holds a collection of {Endpoint}
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
-  class Endpoints
+  class EndpointRegistry
     include Enumerable
 
     #
     # @!attribute [rw] endpoints
     #   @return [Concurrent::Map] a map with endpoints
-    attr_accessor :endpoints
+    attr_reader :endpoints
 
     def initialize
       @endpoints = Concurrent::Map.new
@@ -25,24 +25,34 @@ module StubRequests
     #
     # Required by Enumerable
     #
-    #
     # @return [Array<Endpoint>] an array of endpoints
     #
     # @yield used by Enumerable
     #
     def each(&block)
-      @endpoints.each(&block)
+      endpoints.each(&block)
     end
 
     #
     # Registers an endpoint in the collection
     #
-    # @param [Endpoint] endpoint the endpoint to register
+    # @param [Symbol] endpoint_id the id of this Endpoint
+    # @param [Symbol] verb a HTTP verb
+    # @param [String] uri_template the URI to reach the endpoint
+    # @param [optional, Hash<Symbol>] default_options default options
     #
     # @return [Endpoint]
     #
-    def register(endpoint)
-      @endpoints[endpoint.id] = endpoint
+    def register(endpoint_id, verb, uri_template, default_options = {})
+      endpoint =
+        if (endpoint = get(endpoint_id))
+          StubRequests.logger.warn("Endpoint already registered: #{endpoint}")
+          endpoint.update(verb, uri_template, default_options)
+        else
+          Endpoint.new(endpoint_id, verb, uri_template, default_options)
+        end
+
+      endpoints[endpoint.id] = endpoint
       endpoint
     end
 
@@ -54,7 +64,7 @@ module StubRequests
     # @return [true, false]
     #
     def registered?(endpoint_id)
-      @endpoints.key?(endpoint_id)
+      endpoints[endpoint_id].present?
     end
 
     #
@@ -76,7 +86,6 @@ module StubRequests
     def update(endpoint_id, verb, uri_template, default_options)
       endpoint = get!(endpoint_id)
       endpoint.update(verb, uri_template, default_options)
-      register(endpoint)
     end
 
     #
@@ -87,7 +96,7 @@ module StubRequests
     # @return [Endpoint] the endpoint that was removed
     #
     def remove(endpoint_id)
-      @endpoints.delete(endpoint_id)
+      endpoints.delete(endpoint_id)
     end
 
     #
@@ -98,7 +107,7 @@ module StubRequests
     # @return [Endpoint]
     #
     def get(endpoint_id)
-      @endpoints[endpoint_id]
+      endpoints[endpoint_id]
     end
 
     #

@@ -12,18 +12,19 @@ module StubRequests
   #
   class Service
     include ArgumentValidation
+    include Comparable
 
     # @!attribute [rw] id
-    #   @return [Endpoints] the id of the service
+    #   @return [EndpointRegistry] the id of the service
     attr_accessor :id
 
     # @!attribute [rw] uri
-    #   @return [Endpoints] the base uri to the service
+    #   @return [EndpointRegistry] the base uri to the service
     attr_accessor :uri
 
-    # @!attribute [rw] endpoints
-    #   @return [Endpoints] a list with defined endpoints
-    attr_accessor :endpoints
+    # @!attribute [rw] endpoint_registry
+    #   @return [EndpointRegistry] a list with defined endpoints
+    attr_reader :endpoint_registry
 
     #
     # Initializes a new instance of a Service
@@ -37,7 +38,7 @@ module StubRequests
 
       @id        = service_id
       @uri       = service_uri
-      @endpoints = Endpoints.new
+      @endpoint_registry = EndpointRegistry.new
     end
 
     #
@@ -47,23 +48,25 @@ module StubRequests
     # @param [Symbol] endpoint_id the id of this Endpoint
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template the URI to reach the endpoint
-    # @param [optional, Hash<Symbol>] default_options default request options
+    # @param [optional, Hash<Symbol>] default_options default options
     #
     # @return [Endpoint] either the new endpoint or the updated one
     #
     def register_endpoint(endpoint_id, verb, uri_template, default_options = {})
-      endpoint =
-        if endpoints.registered?(endpoint_id)
-          endpoints.update(endpoint_id, verb, uri_template, default_options)
-        else
-          Endpoint.new(endpoint_id, verb, uri_template, default_options)
-        end
-
-      endpoints.register(endpoint)
+      endpoint_registry.register(endpoint_id, verb, uri_template, default_options)
     end
 
     #
-    # Gets an endpoint from the {#endpoints} collection
+    # Check if the endpoint registry has endpoints
+    #
+    # @return [true,false]
+    #
+    def endpoints?
+      endpoint_registry.any?
+    end
+
+    #
+    # Gets an endpoint from the {#endpoint_registry} collection
     #
     # @param [Symbol] endpoint_id the id of the endpoint
     #
@@ -72,18 +75,18 @@ module StubRequests
     # @return [Endpoint]
     #
     def get_endpoint!(endpoint_id)
-      endpoints.get!(endpoint_id)
+      endpoint_registry.get!(endpoint_id)
     end
 
     #
-    # Gets an endpoint from the {#endpoints} collection
+    # Gets an endpoint from the {#endpoint_registry} collection
     #
     # @param [Symbol] endpoint_id the id of the endpoint
     #
     # @return [Endpoint, nil]
     #
     def get_endpoint(endpoint_id)
-      endpoints.get(endpoint_id)
+      endpoint_registry.get(endpoint_id)
     end
 
     #
@@ -96,9 +99,19 @@ module StubRequests
         +"#<#{self.class}",
         +" id=#{id}",
         +" uri=#{uri}",
-        +" endpoints=#{endpoints.endpoints_string}",
+        +" endpoints=#{endpoint_registry.endpoints_string}",
         +">",
       ].join("")
     end
+
+    def <=>(other)
+      id <=> other.id
+    end
+
+    def hash
+      [id, self.class].hash
+    end
+
+    alias eql? ==
   end
 end

@@ -9,8 +9,9 @@ detectors:
   LongParameterList:
     exclude:
     - StubRequests::API#stub_endpoint
-    - StubRequests::Endpoints#update
+    - StubRequests::EndpointRegistry#update
     - StubRequests::Service#register_endpoint
+    - StubRequests::EndpointRegistry#register
   TooManyStatements:
     exclude:
     - initialize
@@ -49,7 +50,7 @@ detectors:
     - StubRequests::Endpoint#id
     - StubRequests::Endpoint#uri_template
     - StubRequests::Endpoint#verb
-    - StubRequests::Endpoints#endpoints
+    - StubRequests::EndpointRegistry#endpoints
     - StubRequests::Service#endpoints
     - StubRequests::Service#id
     - StubRequests::Service#uri

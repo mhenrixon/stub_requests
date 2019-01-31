@@ -12,10 +12,37 @@ RSpec.describe StubRequests::ServiceRegistry do
     subject(:register_service) { registry.register_service(service) }
 
     it { is_expected.to be_a(StubRequests::Service) }
+
     its(:id) { is_expected.to eq(service_id) }
     its(:uri) { is_expected.to eq(service_uri) }
 
-    it {}
+    context "when service is registered" do
+      let(:other) { StubRequests::Service.new(service_id, service_uri) }
+
+      before do
+        allow(StubRequests.logger).to receive(:warn)
+        registry.register_service(other)
+      end
+
+      context "without registered endpoints" do
+        it "logs a helpful error message" do
+          register_service
+
+          expect(StubRequests.logger).to have_received(:warn)
+            .with("Service already registered #{service}")
+        end
+      end
+
+      context "with registered endpoints" do
+        before { other.register_endpoint(:bogus, :delete, "bogus/:id") }
+
+        specify do
+          expect { register_service }.to raise_error(
+            StubRequests::ServiceHaveEndpoints, "Service with id basecamp have already been registered. #{other}"
+          )
+        end
+      end
+    end
   end
 
   describe "#reset!" do

@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "docile"
   spec.add_dependency "webmock",         "~> 3.0", "< 4.0"
   spec.add_dependency "concurrent-ruby", "~> 1.0", "< 2"
   spec.add_dependency "public_suffix",   "~> 3.0", "< 4"

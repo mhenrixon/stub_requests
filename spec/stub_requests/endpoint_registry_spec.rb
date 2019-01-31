@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Endpoints do
-  let(:endpoints)    { described_class.new }
+RSpec.describe StubRequests::EndpointRegistry do
+  let(:registry)     { described_class.new }
   let(:endpoint)     { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
   let(:endpoint_id)  { :resource_collection }
   let(:verb)         { :get }
@@ -14,17 +14,17 @@ RSpec.describe StubRequests::Endpoints do
   end
 
   describe "#register" do
-    subject(:register) { endpoints.register(endpoint) }
+    subject(:register) { registry.register(endpoint_id, verb, uri_template) }
 
     it "registers the endpoint in the collection" do
-      expect { register }.to change { endpoints.endpoints.size }.by(1)
+      expect { register }.to change { registry.endpoints.size }.by(1)
     end
 
     it { is_expected.to eq(endpoint) }
   end
 
   describe "#each" do
-    subject(:each) { endpoints.each }
+    subject(:each) { registry.each }
 
     context "when given no block" do
       it { is_expected.to be_a(::Enumerator) }
@@ -40,7 +40,7 @@ RSpec.describe StubRequests::Endpoints do
       end
 
       context "when endpoint is registered" do
-        before { endpoints.register(endpoint) }
+        before { registry.register(endpoint_id, verb, uri_template) }
 
         specify do
           each { |ep| expect(ep.id).to eq(endpoint.id) }
@@ -49,43 +49,43 @@ RSpec.describe StubRequests::Endpoints do
 
       it "delegates to @endpoints" do
         block = ->(endpoint) { endpoint }
-        allow(endpoints.endpoints).to receive(:each).and_call_original
+        allow(registry.endpoints).to receive(:each).and_call_original
         each(&block)
-        expect(endpoints.endpoints).to have_received(:each).with(no_args, &block)
+        expect(registry.endpoints).to have_received(:each).with(no_args, &block)
       end
     end
   end
 
   describe "#registered?" do
-    subject(:registered) { endpoints.registered?(endpoint_id) }
+    subject(:registered) { registry.registered?(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(false) }
     end
 
     context "when endpoint is registered" do
-      before { endpoints.register(endpoint) }
+      before { registry.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(true) }
     end
   end
 
   describe "#get" do
-    subject(:get) { endpoints.get(endpoint_id) }
+    subject(:get) { registry.get(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
     end
 
     context "when endpoint is registered" do
-      before { endpoints.register(endpoint) }
+      before { registry.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(endpoint) }
     end
   end
 
   describe "#get!" do
-    subject(:get) { endpoints.get!(endpoint_id) }
+    subject(:get) { registry.get!(endpoint_id) }
 
     context "when endpoint is unregistered" do
       specify do
@@ -97,14 +97,14 @@ RSpec.describe StubRequests::Endpoints do
     end
 
     context "when endpoint is registered" do
-      before { endpoints.register(endpoint) }
+      before { registry.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(endpoint) }
     end
   end
 
   describe "#update" do
-    subject(:update) { endpoints.update(endpoint_id, new_verb, new_uri_template, new_default_options) }
+    subject(:update) { registry.update(endpoint_id, new_verb, new_uri_template, new_default_options) }
 
     let(:new_verb)            { :post }
     let(:new_uri_template)    { "resource/:resource_id" }
@@ -120,46 +120,44 @@ RSpec.describe StubRequests::Endpoints do
     end
 
     context "when endpoint is registered" do
-      before { endpoints.register(endpoint) }
+      before { registry.register(endpoint_id, verb, uri_template) }
 
-      its(:id) { is_expected.to eq(endpoint_id) }
-      its(:verb) { is_expected.to eq(new_verb) }
-      its(:uri_template) { is_expected.to eq(new_uri_template) }
+      its(:id)              { is_expected.to eq(endpoint_id) }
+      its(:verb)            { is_expected.to eq(new_verb) }
+      its(:uri_template)    { is_expected.to eq(new_uri_template) }
       its(:default_options) { is_expected.to eq(new_default_options) }
     end
   end
 
   describe "#remove" do
-    subject(:remove) { endpoints.remove(endpoint_id) }
+    subject(:remove) { registry.remove(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
     end
 
     context "when endpoint is registered" do
-      before { endpoints.register(endpoint) }
+      before { registry.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(endpoint) }
     end
   end
 
   describe "#to_s" do
-    subject(:to_s) { endpoints.to_s }
+    subject(:to_s) { registry.to_s }
 
     context "when no endpoints are registered" do
-      it { is_expected.to eq("#<StubRequests::Endpoints endpoints=[]>") }
+      it { is_expected.to eq("#<StubRequests::EndpointRegistry endpoints=[]>") }
     end
 
     context "when endpoints are registered" do
-      let(:endpoint_two) { StubRequests::Endpoint.new(:bogus_id, :any, "documents/:document_id") }
-
       before do
-        endpoints.register(endpoint_two)
+        registry.register(:bogus_id, :any, "documents/:document_id")
       end
 
       specify do
         expect(to_s).to eq(
-          "#<StubRequests::Endpoints endpoints=["\
+          "#<StubRequests::EndpointRegistry endpoints=["\
             "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
           "]>",
         )

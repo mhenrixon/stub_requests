@@ -23,7 +23,7 @@ module StubRequests
     # @param [Object] value the value to validate
     # @param [Array<Class>, Array<Module>, Class, Module] is_a
     #
-    # @raise [InvalidArgumentType] when the value is disallowed
+    # @raise [InvalidType] when the value is disallowed
     #
     # @return [true] when the value is allowed
     #
@@ -31,7 +31,7 @@ module StubRequests
       expected_types = Array(is_a)
       return true if expected_types.any? { |type| value.is_a?(type) }
 
-      raise StubRequests::InvalidArgumentType,
+      raise StubRequests::InvalidType,
             actual: value.class,
             expected: expected_types.join(", ")
     end

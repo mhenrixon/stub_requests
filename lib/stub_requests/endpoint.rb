@@ -12,6 +12,7 @@ module StubRequests
   #
   class Endpoint
     include ArgumentValidation
+    include Comparable
 
     #
     # @!attribute [rw] id
@@ -76,6 +77,16 @@ module StubRequests
       @default_options = default_options
       self
     end
+
+    def <=>(other)
+      id <=> other.id
+    end
+
+    def hash
+      [id, self.class].hash
+    end
+
+    alias eql? ==
 
     #
     # Returns a descriptive string of this endpoint

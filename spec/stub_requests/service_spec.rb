@@ -28,9 +28,10 @@ RSpec.describe StubRequests::Service do
 
     context "when endpoint is unregistered" do
       it { is_expected.to be_a(StubRequests::Endpoint) }
-      its(:id) { is_expected.to eq(endpoint_id) }
-      its(:verb) { is_expected.to eq(verb) }
-      its(:uri_template) { is_expected.to eq(uri_template) }
+
+      its(:id)              { is_expected.to eq(endpoint_id) }
+      its(:verb)            { is_expected.to eq(verb) }
+      its(:uri_template)    { is_expected.to eq(uri_template) }
       its(:default_options) { is_expected.to eq(default_options) }
     end
 
@@ -41,9 +42,9 @@ RSpec.describe StubRequests::Service do
       let(:old_uri_template)    { "concrete" }
       let(:old_default_options) { { request: { body: "" } } }
 
-      its(:id) { is_expected.to eq(endpoint_id) }
-      its(:verb) { is_expected.to eq(verb) }
-      its(:uri_template) { is_expected.to eq(uri_template) }
+      its(:id)              { is_expected.to eq(endpoint_id) }
+      its(:verb)            { is_expected.to eq(verb) }
+      its(:uri_template)    { is_expected.to eq(uri_template) }
       its(:default_options) { is_expected.to eq(default_options) }
     end
   end
@@ -59,6 +60,36 @@ RSpec.describe StubRequests::Service do
       let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
 
       it { is_expected.to eq(endpoint) }
+    end
+  end
+
+  describe "#endpoints?" do
+    subject { service.endpoints? }
+
+    context "when endpoint is unregistered" do
+      it { is_expected.to eq(false) }
+    end
+
+    context "when endpoint is registered" do
+      before { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
+
+      it { is_expected.to eq(true) }
+    end
+  end
+
+  describe "#==" do
+    let(:other)     { described_class.new(other_id, other_uri) }
+    let(:other_id)  { :another }
+    let(:other_uri) { "service/:with/endpoints" }
+
+    context "when `other` have same id" do
+      let(:other_id) { service_id }
+
+      specify { expect(service).to eq(other) }
+    end
+
+    context "when `other` has a different id" do
+      specify { expect(service).not_to eq(other) }
     end
   end
 
@@ -79,6 +110,12 @@ RSpec.describe StubRequests::Service do
 
       it { is_expected.to eq(endpoint) }
     end
+  end
+
+  describe "#hash" do
+    subject(:hash) { service.hash }
+
+    it { is_expected.to be_a(Integer) }
   end
 
   describe "#to_s" do

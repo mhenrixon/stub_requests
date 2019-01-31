@@ -32,6 +32,28 @@ RSpec.describe StubRequests::Endpoint do
     its(:default_options) { is_expected.to eq(new_default_options) }
   end
 
+  describe "#==" do
+    let(:other)     { described_class.new(other_id, verb, uri_template, default_options) }
+    let(:other_id)  { :another }
+    let(:other_uri) { "endpoint/:with/endpoints" }
+
+    context "when `other` have same id" do
+      let(:other_id) { endpoint_id }
+
+      specify { expect(endpoint).to eq(other) }
+    end
+
+    context "when `other` has a different id" do
+      specify { expect(endpoint).not_to eq(other) }
+    end
+  end
+
+  describe "#hash" do
+    subject(:hash) { endpoint.hash }
+
+    it { is_expected.to be_a(Integer) }
+  end
+
   describe "#to_s" do
     subject(:to_s) { endpoint.to_s }
 

@@ -25,7 +25,7 @@ RSpec.describe StubRequests::ArgumentValidation do
 
         specify do
           expect { validate }.to raise_error(
-            StubRequests::InvalidArgumentType,
+            StubRequests::InvalidType,
             "Expected `String` to be any of [TrueClass, FalseClass, NilClass]",
           )
         end
