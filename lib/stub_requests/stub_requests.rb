@@ -6,18 +6,23 @@
 #
 module StubRequests
   #
-  # Class Error provides a base class for all gem errors
+  # Class Error a base class for all gem errors
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Error < StandardError; end
 
+
   #
-  # Class UriSegmentMismatch is raised when a segment cannot be replaced
+  # Class InvalidArgument is raised when an argument is invalid
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
-  class UriSegmentMismatch < Error; end
+  class InvalidArgument < StandardError
+    def initialize(attribute, value, reason)
+
+    end
+  end
 
   #
   # Class EndpointNotFound is raised when an endpoint cannot be found
@@ -36,6 +41,13 @@ module StubRequests
       super("Couldn't find a service with id=:#{service_id}")
     end
   end
+
+  #
+  # Class UriSegmentMismatch is raised when a segment cannot be replaced
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
+  class UriSegmentMismatch < Error; end
 
   extend self
   include StubRequests::API

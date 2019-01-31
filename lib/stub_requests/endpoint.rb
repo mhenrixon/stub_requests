@@ -41,8 +41,13 @@ module StubRequests
     # @option default_options [optional, TrueClass] :timeout if the stubbed request should raise Timeout
     #
     def initialize(endpoint_id, verb, uri_template, default_options = {})
-      # TODO: Validate verb, endpoint_id and uri_template
+      # TODO: Validate endpoint_id, verb and uri_template
       # TODO: Implement default options
+
+      # validate! endpoint_id,  is: Symbol, allow_nil: false
+      # validate! verb,         is: Symbol, allow_nil: false
+      # validate! uri_template, is: String, allow_nil: false
+
       @id              = endpoint_id
       @verb            = verb
       @uri_template    = uri_template

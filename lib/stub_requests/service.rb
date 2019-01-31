@@ -26,7 +26,8 @@ module StubRequests
     # @param [String] service_uri the base uri to reach the service
     #
     def initialize(service_id, service_uri)
-      # TODO: Validate id, verb and service_uri
+      raise InvalidArgument, service_id: service_id if service_id.blank?
+      raise InvalidArgument, service_uri: service_uri if service_id.blank?
       @id        = service_id
       @uri       = service_uri
       @endpoints = Endpoints.new
