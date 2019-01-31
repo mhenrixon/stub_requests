@@ -12,8 +12,9 @@ if RUBY_ENGINE == "ruby" && RUBY_VERSION >= "2.5.1"
 end
 
 require "stub_requests"
+StubRequests.logger = Logger.new('/dev/null')
+
 require "rspec/its"
-StubRequests.logger = Logger.new("/dev/null")
 
 Dir[File.join(File.dirname(__FILE__), "support", "**", "*.rb")].each { |f| require f }
 
