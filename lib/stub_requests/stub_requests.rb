@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Abstraction over WebMock that reduces the need to spread out stub_request everywhere.
+# Abstraction over WebMock to reduce duplication
 # @since 0.1.0
 #
 module StubRequests
@@ -11,7 +11,6 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Error < StandardError; end
-
 
   #
   # Class InvalidArgument is raised when an argument is invalid
@@ -49,12 +48,24 @@ module StubRequests
   #
   class UriSegmentMismatch < Error; end
 
+  # extends "self"
+  # @!parse extend self
   extend self
-  include StubRequests::API
+
+  # includes "UriFor" and extends "UriFor"
+  # using the API.included callback
+  # @!parse include UriFor
+  # @!parse extend UriFor
+
+  # includes "API" and extends "API"
+  # using the API.included callback
+  # @!parse include API
+  # @!parse extend API
+  include API
 
   attr_accessor :logger
 
   def version
-    StubRequests::VERSION
+    VERSION
   end
 end

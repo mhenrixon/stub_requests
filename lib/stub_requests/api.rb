@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+#
+# Abstraction over WebMock to reduce duplication
+# @since 0.1.0
+#
 module StubRequests
   #
   # Module API abstraction to reduce the amount of WebMock.stub_request
@@ -10,10 +14,17 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   module API
+    # extends "self"
+    # @!parse extend self
     extend self
 
-    include StubRequests::UriFor
+    # includes "UriFor" and extends "UriFor"
+    # using the UriFor.included callback
+    # @!parse include UriFor
+    # @!parse extend UriFor
+    include UriFor
 
+    # :nodoc:
     def self.included(base)
       base.send(:extend, self)
     end

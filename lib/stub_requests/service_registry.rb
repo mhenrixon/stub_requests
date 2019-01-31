@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 require "singleton"
-require "concurrent/array"
+require "concurrent/map"
 
+#
+# Abstraction over WebMock to reduce duplication
+# @since 0.1.0
+#
 module StubRequests
   #
   # Class ServiceRegistry provides registration of services
@@ -66,7 +70,7 @@ module StubRequests
     #
     # Fetches a service from the registry
     #
-    # @param [Symbol] endpoint_id the id of the endpoint
+    # @param [Symbol] service_id the id of a service
     #
     # @raise [ServiceNotFound] when an endpoint couldn't be found
     #

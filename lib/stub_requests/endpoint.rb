@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+#
+# Abstraction over WebMock to reduce duplication
+# @since 0.1.0
+#
 module StubRequests
   #
   # Class Endpoint provides registration of stubbed endpoints

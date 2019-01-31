@@ -2,9 +2,9 @@
 
 require "concurrent/map"
 
-# :nocov:
-
 # Copied from https://raw.githubusercontent.com/rails/rails/d66e7835bea9505f7003e5038aa19b6ea95ceea1/activesupport/lib/active_support/core_ext/object/blank.rb
+
+# @see Object
 class Object
   # An object is blank if it's false, empty, or a whitespace string.
   # For example, +nil+, '', '   ', [], {}, and +false+ are all blank.
@@ -20,14 +20,14 @@ class Object
   # @return [true, false]
   def blank?
     respond_to?(:empty?) ? !!empty? : !self # rubocop:disable Style/DoubleNegation
-  end
+  end unless respond_to?(:blank?)
 
   # An object is present if it's not blank.
   #
   # @return [true, false]
   def present?
     !blank?
-  end
+  end unless respond_to?(:present?)
 
   # Returns the receiver if it's present otherwise returns +nil+.
   # <tt>object.presence</tt> is equivalent to
@@ -47,9 +47,10 @@ class Object
   # @return [Object]
   def presence
     self if present?
-  end
+  end unless respond_to?(:presence)
 end
 
+# @see NilClass
 class NilClass
   # +nil+ is blank:
   #
@@ -58,9 +59,10 @@ class NilClass
   # @return [true]
   def blank?
     true
-  end
+  end unless respond_to?(:blank?)
 end
 
+# @see FalseClass
 class FalseClass
   # +false+ is blank:
   #
@@ -69,9 +71,10 @@ class FalseClass
   # @return [true]
   def blank?
     true
-  end
+  end unless respond_to?(:blank?)
 end
 
+# @see TrueClass
 class TrueClass
   # +true+ is not blank:
   #
@@ -80,9 +83,10 @@ class TrueClass
   # @return [false]
   def blank?
     false
-  end
+  end unless respond_to?(:blank?)
 end
 
+# @see Array
 class Array
   # An array is blank if it's empty:
   #
@@ -93,6 +97,7 @@ class Array
   alias blank? empty?
 end
 
+# @see Hash
 class Hash
   # A hash is blank if it's empty:
   #
@@ -103,8 +108,11 @@ class Hash
   alias blank? empty?
 end
 
+# @see String
 class String
+  # :nodoc:
   BLANK_RE = /\A[[:space:]]*\z/.freeze
+  # :nodoc:
   ENCODED_BLANKS = Concurrent::Map.new do |h, enc|
     h[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
   end
@@ -131,9 +139,10 @@ class String
       rescue Encoding::CompatibilityError
         ENCODED_BLANKS[encoding].match?(self)
       end
-  end
+  end unless respond_to?(:blank?)
 end
 
+# @see Numeric
 class Numeric #:nodoc:
   # No number is blank:
   #
@@ -143,9 +152,10 @@ class Numeric #:nodoc:
   # @return [false]
   def blank?
     false
-  end
+  end unless respond_to?(:blank?)
 end
 
+# @see Time
 class Time #:nodoc:
   # No Time is blank:
   #
@@ -154,5 +164,5 @@ class Time #:nodoc:
   # @return [false]
   def blank?
     false
-  end
+  end unless respond_to?(:blank?)
 end

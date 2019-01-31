@@ -3,6 +3,10 @@
 require "addressable/uri"
 require "public_suffix"
 
+#
+# Abstraction over WebMock to reduce duplication
+# @since 0.1.0
+#
 module StubRequests
   #
   # Module UriFor provides constructing URI templates to full valid URI's
@@ -12,11 +16,16 @@ module StubRequests
   module UriFor
     extend self
 
+    # :nodoc:
     def self.included(base)
       base.send(:extend, self)
     end
 
+    #
+    # @return [Array<String>] a list of valid HTTP schemes
     SCHEMES           = %w[http https].freeze
+    #
+    # @return [Regexp] A pattern for matching url segment keys
     URL_SEGMENT_REGEX = /(:\w+)/.freeze
 
     #
@@ -52,7 +61,7 @@ module StubRequests
     # Validates that all uri_replacements have been used
     #
     # @param [String, Symbol] uri_template an endpoint uri_template
-    # @param [Array] unused_uri_replacements a list of not used uri_replacements
+    # @param [Array] unused_replacements a list of not used uri_replacements
     #
     # @raise [UriSegmentMismatch] when there are unused uri segments
     #
