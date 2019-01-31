@@ -5,13 +5,13 @@ require "concurrent/map"
 
 #
 # Abstraction over WebMock to reduce duplication
+#
+# @author Mikael Henriksson <mikael@zoolutions.se>
 # @since 0.1.0
 #
 module StubRequests
   #
   # Class ServiceRegistry provides registration of services
-  #
-  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class ServiceRegistry
     include Singleton

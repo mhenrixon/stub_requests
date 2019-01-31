@@ -5,13 +5,13 @@ require "public_suffix"
 
 #
 # Abstraction over WebMock to reduce duplication
+#
+# @author Mikael Henriksson <mikael@zoolutions.se>
 # @since 0.1.0
 #
 module StubRequests
   #
   # Module UriFor provides constructing URI templates to full valid URI's
-  #
-  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   module UriFor
     extend self

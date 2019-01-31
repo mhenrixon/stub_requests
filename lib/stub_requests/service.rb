@@ -2,13 +2,13 @@
 
 #
 # Abstraction over WebMock to reduce duplication
+#
+# @author Mikael Henriksson <mikael@zoolutions.se>
 # @since 0.1.0
 #
 module StubRequests
   #
   # Class Service provides details for a registered service
-  #
-  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Service
     include ArgumentValidation

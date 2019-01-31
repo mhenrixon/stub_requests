@@ -3,7 +3,6 @@
 detectors:
   FeatureEnvy:
     exclude:
-    - StubRequests::API#stub_http_request
     - StubRequests::UriFor#validate_segments_replaced!
     - StubRequests::UriFor#validate_replacements_used!
   LongParameterList:
@@ -12,20 +11,15 @@ detectors:
     - StubRequests::EndpointRegistry#update
     - StubRequests::Service#register_endpoint
     - StubRequests::EndpointRegistry#register
+    - StubRequests::Endpoint#initialize
+  UncommunicativeVariableName:
+    - String
   TooManyStatements:
     exclude:
-    - initialize
     - StubRequests::API#stub_http_request
     - tubRequests::API#create_webmock_stub
-  UncommunicativeVariableName:
-    exclude:
-    - StubRequests::API#prepare_request
-    - StubRequests::API#prepare_response
-    - String
   UtilityFunction:
     exclude:
-    - StubRequests::API#prepare_request
-    - StubRequests::API#prepare_response
     - StubRequests::API#service_registry
     - StubRequests::UriFor#valid_scheme?
     - StubRequests::UriFor#valid_suffix?
