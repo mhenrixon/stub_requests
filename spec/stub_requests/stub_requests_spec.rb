@@ -9,7 +9,7 @@ RSpec.describe StubRequests do
     end
 
     let(:service_id)  { :person_identification }
-    let(:service_uri) { "http://person-identification:9292/internal" }
+    let(:service_uri) { "http://example.org/api/v1/internal" }
 
     it "updates service_registry with the new service" do
       expect { register_service }

@@ -11,6 +11,8 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Service
+    include ArgumentValidation
+
     # @!attribute [rw] id
     #   @return [Endpoints] the id of the service
     attr_accessor :id
@@ -30,8 +32,8 @@ module StubRequests
     # @param [String] service_uri the base uri to reach the service
     #
     def initialize(service_id, service_uri)
-      raise InvalidArgument, service_id: service_id if service_id.blank?
-      raise InvalidArgument, service_uri: service_uri if service_id.blank?
+      validate! service_id,  is_a: Symbol
+      validate! service_uri, is_a: String
 
       @id        = service_id
       @uri       = service_uri

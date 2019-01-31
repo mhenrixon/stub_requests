@@ -11,6 +11,8 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Endpoint
+    include ArgumentValidation
+
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
@@ -45,12 +47,9 @@ module StubRequests
     # @option default_options [optional, TrueClass] :timeout if the stubbed request should raise Timeout
     #
     def initialize(endpoint_id, verb, uri_template, default_options = {})
-      # TODO: Validate endpoint_id, verb and uri_template
-      # TODO: Implement default options
-
-      # validate! endpoint_id,  is: Symbol, allow_nil: false
-      # validate! verb,         is: Symbol, allow_nil: false
-      # validate! uri_template, is: String, allow_nil: false
+      validate! endpoint_id,  is_a: Symbol
+      validate! verb,         is_a: Symbol
+      validate! uri_template, is_a: String
 
       @id              = endpoint_id
       @verb            = verb

@@ -13,13 +13,24 @@ module StubRequests
   class Error < StandardError; end
 
   #
-  # Class InvalidArgument is raised when an argument is invalid
+  # Class InvalidArgument provides base class for all argument errors
+  #
+  # @author Joe Blog <Joe.Blog@nowhere.com>
+  #
+  class InvalidArgument < ::ArgumentError
+    def super(argument:, value:)
+      super("Invalid value #{value} for argument #{argument}")
+    end
+  end
+
+  #
+  # Class InvalidArgumentType is raised when an argument is invalid
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
-  class InvalidArgument < StandardError
-    def initialize(attribute, value, reason)
-
+  class InvalidArgumentType < InvalidArgument
+    def initialize(actual:, expected:)
+      super("Expected '#{actual}' to be any of ['#{expected}']")
     end
   end
 
@@ -63,6 +74,9 @@ module StubRequests
   # @!parse extend API
   include API
 
+  #
+  # @!attribute [rw] logger
+  #   @return [Logger] the logger to use in the gem
   attr_accessor :logger
 
   def version

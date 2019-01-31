@@ -4,8 +4,11 @@ require "concurrent/map"
 
 # Copied from https://raw.githubusercontent.com/rails/rails/d66e7835bea9505f7003e5038aa19b6ea95ceea1/activesupport/lib/active_support/core_ext/object/blank.rb
 
+# :nodoc:
+# :nocov:
+
 # @see Object
-class Object
+class Object # :nodoc: # :nocov:
   # An object is blank if it's false, empty, or a whitespace string.
   # For example, +nil+, '', '   ', [], {}, and +false+ are all blank.
   #
@@ -143,7 +146,7 @@ class String
 end
 
 # @see Numeric
-class Numeric #:nodoc:
+class Numeric
   # No number is blank:
   #
   #   1.blank? # => false
@@ -156,7 +159,7 @@ class Numeric #:nodoc:
 end
 
 # @see Time
-class Time #:nodoc:
+class Time
   # No Time is blank:
   #
   #   Time.now.blank? # => false

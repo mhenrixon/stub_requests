@@ -37,15 +37,15 @@ module StubRequests
     #
     # @example Construct a valid uri
     #   UriFor.uri_for(
-    #     "http://service-name:9292/internal",
-    #     "persons/:person_id/identifications",
-    #     { person_id: "abcdefabper" }) #=> "http://service-name:9292/internal/persons/abcdefabper/identifications
+    #     "http://api.example.org/internal",
+    #     "resources/:resource_id/nested_resources",
+    #     { resource_id: "abcdefabper" }) #=> "http://api.example.org/internal/resources/abcdefabper/nested_resources
     #
     # @raise [UriSegmentMismatch] if uri_replacements passed in are not used
     # @raise [UriSegmentMismatch] if the uri has unreplacded uri segments
     #
     # @return [String] the full uri to the endpoint,
-    #   `"http://service-name:9292/internal/persons/abcdefabper/identifications"`
+    #   `"http://api.example.org/internal/resources/abcdefabper/nested_resources"`
     #
     def uri_for(service_uri, uri_template, uri_replacements)
       uri                 = +uri_template
