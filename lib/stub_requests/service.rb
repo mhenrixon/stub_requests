@@ -86,8 +86,8 @@ module StubRequests
     def to_s
       string = +"#<#{self.class}"
       string << +" id=#{id}"
-      string << +" service_uri=#{service_uri}"
-      string << +endpoints.endpoints_string
+      string << +" uri=#{uri}"
+      string << +" endpoints=#{endpoints.endpoints_string}"
       string << +">"
       string
     end
