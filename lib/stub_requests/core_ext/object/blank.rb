@@ -116,8 +116,8 @@ class String
   # :nodoc:
   BLANK_RE = /\A[[:space:]]*\z/.freeze
   # :nodoc:
-  ENCODED_BLANKS = Concurrent::Map.new do |h, enc|
-    h[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
+  ENCODED_BLANKS = Concurrent::Map.new do |map, enc|
+    map[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
   end
 
   # A string is blank if it's empty or contains whitespaces only:

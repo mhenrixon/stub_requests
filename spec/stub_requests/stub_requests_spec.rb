@@ -13,7 +13,7 @@ RSpec.describe StubRequests do
 
     it "updates service_registry with the new service" do
       expect { register_service }
-        .to change { described_class.service_registry.services.size }
+        .to change { StubRequests::ServiceRegistry.instance.services.size }
         .by(1)
     end
   end

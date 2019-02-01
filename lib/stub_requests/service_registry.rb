@@ -17,36 +17,41 @@ module StubRequests
     include Singleton
 
     # @return [Concurrent::Map] the map with registered services
-    attr_accessor :services
+    attr_reader :services
 
     def initialize
-      self.services = Concurrent::Map.new
+      @services = Concurrent::Map.new
     end
 
     #
     # Resets the map with registered services
+    #
+    #
     # @api private
-    def reset!
+    def reset
       services.clear
     end
 
     #
     # Registers a service in the registry
     #
-    # @param [Service] service the service to add to the registry
+    #
+    # @param [Symbol] service_id a symbolic id of the service
+    # @param [String] service_uri a string with a base_uri to the service
     #
     # @return [Service] the service that was just registered
     #
-    def register_service(service)
-      if (old_service = get_service(service.id))
+    def register_service(service_id, service_uri)
+      if (service = get_service(service_id))
         StubRequests.logger.warn("Service already registered #{service}")
-        raise ServiceHaveEndpoints, old_service if old_service.endpoints?
+        raise ServiceHaveEndpoints, service if service.endpoints?
       end
-      services[service.id] = service
+      services[service_id] = Service.new(service_id, service_uri)
     end
 
     #
     # Removes a service from the registry
+    #
     #
     # @param [Symbol] service_id the service_id to remove
     #
@@ -59,6 +64,7 @@ module StubRequests
     #
     # Fetches a service from the registry
     #
+    #
     # @param [Symbol] service_id id of the service to remove
     #
     # @return [Service] the found service
@@ -68,13 +74,14 @@ module StubRequests
     end
 
     #
-    # Fetches a service from the registry
+    # Fetches a service from the registry or raises {ServiceNotFound}
+    #
     #
     # @param [Symbol] service_id the id of a service
     #
     # @raise [ServiceNotFound] when an endpoint couldn't be found
     #
-    # @return [Endpoint, nil]
+    # @return [Endpoint]
     #
     def get_service!(service_id)
       get_service(service_id) || raise(ServiceNotFound, service_id)

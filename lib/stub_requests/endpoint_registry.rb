@@ -43,6 +43,7 @@ module StubRequests
     #
     # @return [Endpoint]
     #
+    # :reek:LongParameterList { max_params: 4 }
     def register(endpoint_id, verb, uri_template, default_options = {})
       endpoint =
         if (endpoint = get(endpoint_id))
@@ -74,15 +75,16 @@ module StubRequests
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template how to reach the endpoint
     # @param [optional, Hash<Symbol>] default_options
-    # @option default_options [optional, Hash<Symbol>] :request see {API.prepare_request}
-    # @option default_options [optional, Hash<Symbol>] :response see {API.prepare_response}
-    # @option default_options [optional, Array, Exception, StandardError, String] :error see {#API.prepare_error}
-    # @option default_options [optional, TrueClass] :timeout if the stubbed request should raise Timeout
+    # @option default_options [optional, Hash<Symbol>] :request request options
+    # @option default_options [optional, Hash<Symbol>] :response options
+    # @option default_options [optional, Array, Exception, StandardError, String] :error to raise
+    # @option default_options [optional, TrueClass] :timeout raise a timeout error?
     #
     # @raise [EndpointNotFound] when the endpoint couldn't be found
     #
     # @return [Endpoint] returns the updated endpoint
     #
+    # :reek:LongParameterList { max_params: 4 }
     def update(endpoint_id, verb, uri_template, default_options)
       endpoint = get!(endpoint_id)
       endpoint.update(verb, uri_template, default_options)

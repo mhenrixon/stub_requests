@@ -49,6 +49,15 @@ module StubRequests
   #
   class UriSegmentMismatch < Error; end
 
+  #
+  # InvalidUri is raised when a URI is invalid
+  #
+  class InvalidUri < Error
+    def initialize(uri)
+      super("#{uri}) is not a valid URI.")
+    end
+  end
+
   # extends "self"
   # @!parse extend self
   extend self

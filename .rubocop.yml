@@ -56,6 +56,11 @@ Naming/UncommunicativeMethodParamName:
 RSpec/AlignLeftLetBrace:
   Enabled: true
 
+RSpec/FilePath:
+  Enabled: true
+  Exclude:
+    - 'spec/stub_requests/webmock_builder_spec.rb'
+
 RSpec/NestedGroups:
   Max: 4
   Enabled: true

@@ -9,7 +9,7 @@ RSpec.describe StubRequests::ServiceRegistry do
   let(:service_uri) { "http://basecamp.com/v3" }
 
   describe "#register_service" do
-    subject(:register_service) { registry.register_service(service) }
+    subject(:register_service) { registry.register_service(service_id, service_uri) }
 
     it { is_expected.to be_a(StubRequests::Service) }
 
@@ -17,11 +17,13 @@ RSpec.describe StubRequests::ServiceRegistry do
     its(:uri) { is_expected.to eq(service_uri) }
 
     context "when service is registered" do
-      let(:other) { StubRequests::Service.new(service_id, service_uri) }
+      let(:other_service)     { registry.register_service(other_service_id, other_service_uri) }
+      let(:other_service_id)  { service_id }
+      let(:other_service_uri) { service_uri }
 
       before do
         allow(StubRequests.logger).to receive(:warn)
-        registry.register_service(other)
+        other_service
       end
 
       context "without registered endpoints" do
@@ -34,19 +36,19 @@ RSpec.describe StubRequests::ServiceRegistry do
       end
 
       context "with registered endpoints" do
-        before { other.register_endpoint(:bogus, :delete, "bogus/:id") }
+        before { other_service.register_endpoint(:bogus, :delete, "bogus/:id") }
 
-        specify do
-          expect { register_service }.to raise_error(
-            StubRequests::ServiceHaveEndpoints, "Service with id basecamp have already been registered. #{other}"
-          )
+        let(:error_message) do
+          "Service with id basecamp have already been registered. #{other_service}"
         end
+
+        specify { expect { register_service }.to raise_error(StubRequests::ServiceHaveEndpoints, error_message) }
       end
     end
   end
 
-  describe "#reset!" do
-    subject(:reset) { registry.reset! }
+  describe "#reset" do
+    subject(:reset) { registry.reset }
 
     context "when no services are registered" do
       specify do
@@ -55,7 +57,7 @@ RSpec.describe StubRequests::ServiceRegistry do
     end
 
     context "when services are registered" do
-      before { registry.register_service(service) }
+      before { registry.register_service(service_id, service_uri) }
 
       specify do
         expect { reset }.to change { registry.services.size }.from(1).to(0)
@@ -76,7 +78,7 @@ RSpec.describe StubRequests::ServiceRegistry do
     end
 
     context "when service is registered" do
-      before { registry.register_service(service) }
+      before { registry.register_service(service_id, service_uri) }
 
       specify do
         expect { remove_service }.to change { registry.services.size }.from(1).to(0)
@@ -92,7 +94,7 @@ RSpec.describe StubRequests::ServiceRegistry do
     end
 
     context "when service is registered" do
-      before { registry.register_service(service) }
+      before { registry.register_service(service_id, service_uri) }
 
       it { is_expected.to eq(service) }
     end
@@ -111,7 +113,7 @@ RSpec.describe StubRequests::ServiceRegistry do
     end
 
     context "when service is registered" do
-      before { registry.register_service(service) }
+      before { registry.register_service(service_id, service_uri) }
 
       it { is_expected.to eq(service) }
     end

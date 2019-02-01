@@ -17,23 +17,23 @@ module StubRequests
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
-    attr_accessor :id
+    attr_reader :id
 
     #
     # @!attribute [rw] verb
     #   @return [Symbol] a HTTP verb
-    attr_accessor :verb
+    attr_reader :verb
 
     #
     # @!attribute [rw] uri_template
     #   @return [String] a string template for the endpoint
-    attr_accessor :uri_template
+    attr_reader :uri_template
 
     #
     # @!attribute [rw] default_options
     #   @see
     #   @return [Hash<Symbol>] a string template for the endpoint
-    attr_accessor :default_options
+    attr_reader :default_options
 
     #
     # An endpoint for a specific {Service}
@@ -42,10 +42,10 @@ module StubRequests
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template how to reach the endpoint
     # @param [optional, Hash<Symbol>] default_options
-    # @option default_options [optional, Hash<Symbol>] :request see {API.prepare_request}
-    # @option default_options [optional, Hash<Symbol>] :response see {API.prepare_response}
-    # @option default_options [optional, Array, Exception, StandardError, String] :error see {#API.prepare_error}
-    # @option default_options [optional, TrueClass] :timeout if the stubbed request should raise Timeout
+    # @option default_options [optional, Hash<Symbol>] :request for request_stub.with
+    # @option default_options [optional, Hash<Symbol>] :response for request_stub.to_return
+    # @option default_options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
+    # @option default_options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
     def initialize(endpoint_id, verb, uri_template, default_options = {})
       validate! endpoint_id,  is_a: Symbol
@@ -64,10 +64,10 @@ module StubRequests
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template how to reach the endpoint
     # @param [optional, Hash<Symbol>] default_options
-    # @option default_options [optional, Hash<Symbol>] :request see {API.prepare_request}
-    # @option default_options [optional, Hash<Symbol>] :response see {API.prepare_response}
-    # @option default_options [optional, Array, Exception, StandardError, String] :error see {#API.prepare_error}
-    # @option default_options [optional, TrueClass] :timeout if the stubbed request should raise Timeout
+    # @option default_options [optional, Hash<Symbol>] :request for request_stub.with
+    # @option default_options [optional, Hash<Symbol>] :response for request_stub.to_return
+    # @option default_options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
+    # @option default_options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
     # @return [Endpoint] returns the updated endpoint
     #

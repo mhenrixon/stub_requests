@@ -16,11 +16,11 @@ module StubRequests
 
     # @!attribute [rw] id
     #   @return [EndpointRegistry] the id of the service
-    attr_accessor :id
+    attr_reader :id
 
     # @!attribute [rw] uri
     #   @return [EndpointRegistry] the base uri to the service
-    attr_accessor :uri
+    attr_reader :uri
 
     # @!attribute [rw] endpoint_registry
     #   @return [EndpointRegistry] a list with defined endpoints
@@ -52,6 +52,7 @@ module StubRequests
     #
     # @return [Endpoint] either the new endpoint or the updated one
     #
+    # :reek:LongParameterList { max_params: 5 }
     def register_endpoint(endpoint_id, verb, uri_template, default_options = {})
       endpoint_registry.register(endpoint_id, verb, uri_template, default_options)
     end

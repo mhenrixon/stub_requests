@@ -20,7 +20,7 @@ Dir[File.join(File.dirname(__FILE__), "support", "**", "*.rb")].each { |f| requi
 
 RSpec.configure do |config|
   config.after do
-    StubRequests::ServiceRegistry.instance.reset!
+    StubRequests::ServiceRegistry.instance.reset
   end
 
   config.define_derived_metadata do |meta|

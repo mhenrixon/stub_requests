@@ -19,10 +19,13 @@ module StubRequests
     #
     # Builds and registers a WebMock::RequestStub
     #
-    # @param [WebMock::RequestStub] request_stub the request to stub
-    # @param [Hash<Symbol>] options for the :request_stub
+    #
+    # @param [Symbol] verb a HTTP verb/method
+    # @param [String] uri a URI to call
+    # @param [Hash<Symbol>] options request/response options for Webmock::RequestStub
     #
     # @yield a callback to eventually yield to the caller
+    #
     # @return [WebMock::RequestStub] the registered stub
     #
     def self.build(verb, uri, options = {}, &callback)
@@ -45,8 +48,10 @@ module StubRequests
     #
     # Initializes a new instance of
     #
-    # @param [WebMock::RequestStub] request_stub the request to stub
-    # @param [Hash<Symbol>] options for the :request_stub
+    #
+    # @param [Symbol] verb a HTTP verb/method
+    # @param [String] uri a URI to call
+    # @param [Hash<Symbol>] options request/response options for Webmock::RequestStub
     #
     # @yield a block to eventually yield to the caller
     #
@@ -57,7 +62,8 @@ module StubRequests
     end
 
     #
-    # Registers a request_stub in WebMock
+    # Prepares a WebMock::RequestStub and registers it in WebMock
+    #
     #
     # @return [WebMock::RequestStub] the registered stub
     #

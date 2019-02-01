@@ -3,6 +3,7 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::API do
+  let(:service_registry) { ServiceRegistry.instance }
   let(:verb)             { :get }
   let(:uri)              { "http://service-less:9292/internal/accounts/acoolaccountuid" }
   let(:request_query)    { nil }
@@ -32,6 +33,12 @@ RSpec.describe StubRequests::API do
       headers: response_headers,
       body: response_body,
     }
+  end
+
+  describe "#register_service" do
+    subject(:register_service) do
+      described_class.register_service(service_id, endpoint_id, uri_replacements, options)
+    end
   end
 
   describe "#stub_endpoint" do
