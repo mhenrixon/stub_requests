@@ -6,11 +6,6 @@ plugins:
     config:
       languages:
         - ruby
-  editorconfig:
-    enabled: true
-    channel: beta
-      config:
-        editorconfig: .editorconfig
   fixme:
     enabled: true
   flog:
