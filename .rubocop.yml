@@ -1,0 +1,112 @@
+require:
+  - rubocop-rspec
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Include:
+    - "Rakefile"
+    - "lib/**/*"
+    - "bin/**/*"
+    - "spec/**/*"
+  Exclude:
+    - "lib/stub_requests/core_ext/**/*"
+    - "Gemfile.lock"
+    - "bin/setup"
+
+Lint/HandleExceptions:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Metrics/AbcSize:
+  Max: 38
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 13
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - '**/spec/**/*.rb'
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Naming/AccessorMethodName:
+  Enabled: true
+
+Naming/ConstantName:
+  Enabled: true
+
+Naming/FileName:
+  Enabled: true
+  Exclude:
+    - '**/Gemfile'
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - ex
+
+RSpec/AlignLeftLetBrace:
+  Enabled: true
+
+RSpec/FilePath:
+  Enabled: true
+  Exclude:
+    - 'spec/stub_requests/webmock_builder_spec.rb'
+
+RSpec/NestedGroups:
+  Max: 4
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: true
+
+Style/GlobalVars:
+  Enabled: true
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: true
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+
+Style/SymbolArray:
+  Enabled: true
+  EnforcedStyle: brackets
+
+Style/TernaryParentheses:
+  Enabled: true
+  EnforcedStyle: require_parentheses_when_complex
+  AllowSafeAssignment: true
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma

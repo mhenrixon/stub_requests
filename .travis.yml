@@ -1,0 +1,37 @@
+language: ruby
+cache: bundler
+env:
+  matrix:
+    - COV=false
+  global:
+    - CC_TEST_REPORTER_ID=8ef08c06ceb394c164b97b5d4c5874b016b1a85a760cf05521503dac6dde0eeb
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct;
+      else git log -1 --skip 1 --pretty=format:%ct; fi)
+before_install:
+  - gem install bundler -v 2.0.1
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+before_script:
+  - "./cc-test-reporter before-build"
+script:
+  - if [[ "${COV}" = "true" ]]; then bundle exec rubocop -P; fi;
+  - if [[ "${COV}" = "true" ]]; then bundle exec reek .; fi;
+  - bundle exec rspec
+after_script:
+  - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
+rvm:
+  - 2.3.7
+  - 2.4.5
+matrix:
+  fast_finish: true
+  include:
+    - rvm: 2.5.3
+      env: COV=true
+deploy:
+  provider: rubygems
+  api_key:
+    secure: EhdN7pRCvnoI/WYKo4/B4NzzT+OAswhlDrW56KK0CmKmR8SrEBOwBB10MxEmOM24cMSrZGYb1MQCGqQ7yt2Erx4Z2E6OVSAlUIlWjhNaFhyTFmxQB5pP3ulH5gGJuw6BYFomPTW504BKIMay/IzMnbcx9fORsKlckU9W0WC7jMrVkmhPrMRBrrxaLW7ZJuV3CxsdVVLm4c1CQiGu3Lm6oXPBGe2L1Ctw+q/BHQvXJIDE3smJ4aNZBSpQouzlw8HSJd3Poq7m8AP8foc7oA9brrx55to3dBkhVJxeZa7fvYP+3J3IZUVL+5mOr+QXwivZnqL2NmIOZZjOisf1njQO5Mk4v/HM5wBgi8R5RMBp55A6iz7ZPca9Tj5DoVEINGfncQ0JGAeovx2/Z/g9/Dj3zr2kU9fI51tomnSJbmgxZ4wzwTP8afUdGEa013AeVcGQlXUnBljsU4MttVXufXPptWm9ABtN2oTvPNs4pYzXliGjT97d1TS4hhf7I+Fd6yUXPOyNokmrVMT68ZWou3IBM+gm8He41oNe9l/17vevG+GpOMjPo54ASpTuOc6DcuWGJPkvBPZ3ijz7kn3c/YT+LpSy7zxwjn3QA4VGj4W5JzlsLmlCSBsan9X8SIgmqY41Z/J/R86L+ndW+TY8m4oxl86LF0J2w0JAX97pcyD4Bo4=
+  gem: stub_requests
+  on:
+    tags: true
+    repo: mhenrixon/stub_requests
