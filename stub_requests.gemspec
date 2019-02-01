@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Mikael Henriksson"]
   spec.email         = ["mikael@zoolutions.se"]
 
-  spec.summary       = %q{Abstraction over WebMock}
+  spec.summary       = %q{Abstraction over WebMock to ease setting up request stubs }
   spec.description   = %q{An abstraction on top of WebMock to build stubbed HTTP requests}
   spec.homepage      = "https://mhenrixon.github.io/stub_requests/"
   spec.license       = "MIT"
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "docile",          "~> 1.0", "< 2"
-  spec.add_dependency "webmock",         "~> 3.0", "< 4.0"
+  spec.add_dependency "webmock",         ">= 2.3", "< 4.0"
   spec.add_dependency "concurrent-ruby", "~> 1.0", "< 2"
   spec.add_dependency "public_suffix",   "~> 3.0", "< 4"
 
@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake",           ">= 10.0"
 
   # ===== Testing =====
+  spec.add_development_dependency "appraisal",      ">= 2.2.0"
   spec.add_development_dependency "json_spec",      ">= 1.1.5"
   spec.add_development_dependency "rspec",          ">= 3.8"
   spec.add_development_dependency "rspec-its",      ">= 1.2"

@@ -21,3 +21,10 @@ plugins:
     channel: rubocop-0-63
     config:
       file: .rubocop.yml
+
+exclude_patterns:
+  - "doc/"
+  - "docs/"
+  - "gemfiles/"
+  - "pkg/"
+  - "lib/stub_requests/core_ext/"

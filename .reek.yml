@@ -10,3 +10,4 @@ detectors:
 
 exclude_paths:
   - vendor/bundle
+  - gemfiles

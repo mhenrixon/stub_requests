@@ -7,10 +7,12 @@ env:
     - CC_TEST_REPORTER_ID=8ef08c06ceb394c164b97b5d4c5874b016b1a85a760cf05521503dac6dde0eeb
     - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct;
       else git log -1 --skip 1 --pretty=format:%ct; fi)
+
 before_install:
   - gem install bundler -v 2.0.1
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
+
 before_script:
   - "./cc-test-reporter before-build"
 script:
@@ -19,14 +21,27 @@ script:
   - bundle exec rspec
 after_script:
   - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
+
 rvm:
   - 2.3.7
   - 2.4.5
+
 matrix:
   fast_finish: true
   include:
     - rvm: 2.5.3
       env: COV=true
+
+gemfile:
+  - gemfiles/webmock_2.3.gemfile
+  - gemfiles/webmock_3.5.gemfile
+  - gemfiles/webmock_develop.gemfile
+
+notifications:
+  email:
+    recipients:
+      - mikael@zoolutions.se
+
 deploy:
   provider: rubygems
   api_key:
