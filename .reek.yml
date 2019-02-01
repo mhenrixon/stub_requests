@@ -7,3 +7,6 @@ detectors:
   Attribute:
     exclude:
     - StubRequests#logger
+
+exclude_paths:
+  - "vendor/bundle"
