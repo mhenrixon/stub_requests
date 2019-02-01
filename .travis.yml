@@ -37,6 +37,11 @@ gemfile:
   - gemfiles/webmock_3.5.gemfile
   - gemfiles/webmock_develop.gemfile
 
+notifications:
+  email:
+    recipients:
+      - mikael@zoolutions.se
+
 deploy:
   provider: rubygems
   api_key:

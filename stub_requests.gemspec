@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Mikael Henriksson"]
   spec.email         = ["mikael@zoolutions.se"]
 
-  spec.summary       = %q{Abstraction over WebMock}
+  spec.summary       = %q{Abstraction over WebMock to ease setting up request stubs }
   spec.description   = %q{An abstraction on top of WebMock to build stubbed HTTP requests}
   spec.homepage      = "https://mhenrixon.github.io/stub_requests/"
   spec.license       = "MIT"
