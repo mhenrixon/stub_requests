@@ -1,7 +1,15 @@
 # Change Log
 
+## [Unreleased](https://github.com/mhenrixon/stub_requests/tree/HEAD)
+
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.0...HEAD)
+
+**Merged pull requests:**
+
+- Add docs folder and CHANGELOG.md [\#2](https://github.com/mhenrixon/stub_requests/pull/2) ([mhenrixon](https://github.com/mhenrixon))
+
 ## [v0.1.0](https://github.com/mhenrixon/stub_requests/tree/v0.1.0) (2019-02-01)
-Merged PRs:
+**Merged pull requests:**
 
 - Add rough initial implementation [\#1](https://github.com/mhenrixon/stub_requests/pull/1) ([mhenrixon](https://github.com/mhenrixon))
 
