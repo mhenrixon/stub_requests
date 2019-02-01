@@ -26,6 +26,7 @@ This is achieve by keeping a registry over the service endpoints.
 
 <!-- /MarkdownTOC -->
 
+<a id="installation"></a>
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -36,12 +37,17 @@ gem "stub_requests"
 
 And then execute:
 
-`bundle`
+```
+bundle
+```
 
 Or install it yourself as:
 
-`gem install stub_requests`
+```
+gem install stub_requests
+```
 
+<a id="usage"></a>
 ## Usage
 
 To use the gem we need to register some service endpoints. In the following example we are connecting to a rails inspired service.
@@ -93,8 +99,10 @@ Imagine a code base with thousands of stubbed request. You always have to look a
 
 Madness!!
 
+<a id="future-improvements"></a>
 ## Future Improvements
 
+<a id="api-client-gem"></a>
 ### API Client Gem
 
 Since we have a service + endpoint registry, I was thinking it might make
@@ -103,10 +111,12 @@ sense to make this into an API client. Not sure yet, maybe this will become mult
 Anyway, the idea was to provide endpoint calls in production and stubbed
 requests in tests using the same registry.
 
+<a id="debugging"></a>
 ### Debugging
 
 I want to provide information about where a request stub was created from. In the project I am currently working this would have saved me a days work already.
 
+<a id="development"></a>
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies.
@@ -116,6 +126,7 @@ interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
+<a id="contributing"></a>
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at:
@@ -124,10 +135,12 @@ Bug reports and pull requests are welcome on GitHub at:
 This project is intended to be a safe, welcoming space for collaboration, and
 contributors are expected to adhere to the [Contributor Covenant](cc) code of conduct.
 
+<a id="license"></a>
 ## License
 
 The gem is available as open source under the terms of the [MIT License](mit).
 
+<a id="code-of-conduct"></a>
 ## Code of Conduct
 
 Everyone interacting in the StubRequests project’s codebases, issue trackers,

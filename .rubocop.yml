@@ -39,6 +39,7 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - '**/spec/**/*.rb'
+    - '**/*.rake'
 
 Metrics/PerceivedComplexity:
   Max: 8
