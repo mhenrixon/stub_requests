@@ -54,7 +54,7 @@ module StubRequests
   #
   class InvalidUri < Error
     def initialize(uri)
-      super("#{uri}) is not a valid URI.")
+      super("'#{uri}' is not a valid URI.")
     end
   end
 
