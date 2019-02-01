@@ -9,4 +9,4 @@ detectors:
     - StubRequests#logger
 
 exclude_paths:
-  - "vendor/bundle"
+  - vendor/bundle
