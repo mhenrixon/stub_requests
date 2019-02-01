@@ -11,15 +11,3 @@ indent_size = 2
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-# Markdown
-[*.{markdown,mdown,mkdn,md,mkd,mdwn,mdtxt,mdtext,text,Rmd}]
-trim_trailing_whitespace = false
-
-# Ruby view template languages
-[*.{slim,haml}]
-trim_trailing_whitespace = false
-
-# Tab indentation (no size specified)
-[Makefile]
-indent_style = tab
