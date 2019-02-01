@@ -15,10 +15,10 @@ before_install:
 before_script:
   - "./cc-test-reporter before-build"
 script:
-  - if [[ "${COV}" = "true" ]]; then
-      bundle exec rubocop -P
-      bundle exec reek .
-    fi
+  - if [[ "${COV}" = "true" ]]; then \
+      bundle exec rubocop -P;
+      bundle exec reek .; \
+    fi;
   - bundle exec rspec
 after_script:
   - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
