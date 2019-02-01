@@ -1,6 +1,5 @@
 require:
   - rubocop-rspec
-  - rubocop-md
 
 inherit_mode:
   merge:
