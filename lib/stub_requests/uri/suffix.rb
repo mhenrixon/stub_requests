@@ -24,8 +24,6 @@ module StubRequests
       # @return [true,false]
       #
       def self.valid?(host)
-        return true if host.match?(PORT_REGEX)
-
         PublicSuffix.valid?(host, default_rule: nil)
       end
     end
