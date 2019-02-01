@@ -3,7 +3,9 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::API do
-  let(:service_registry) { ServiceRegistry.instance }
+  let(:service_registry) { StubRequests::ServiceRegistry.instance }
+  let(:service_id)       { :api }
+  let(:service_uri)      { "https://api.com/v1" }
   let(:verb)             { :get }
   let(:uri)              { "http://service-less:9292/internal/accounts/acoolaccountuid" }
   let(:request_query)    { nil }
@@ -37,7 +39,26 @@ RSpec.describe StubRequests::API do
 
   describe "#register_service" do
     subject(:register_service) do
-      described_class.register_service(service_id, endpoint_id, uri_replacements, options)
+      described_class.register_service(service_id, service_uri)
+    end
+
+    shared_examples "a successful registration" do
+      it { is_expected.to be_a(StubRequests::Service) }
+
+      its(:id)  { is_expected.to eq(service_id) }
+      its(:uri) { is_expected.to eq(service_uri) }
+
+      specify do
+        expect { register_service }.to change(service_registry, :count).by(1)
+      end
+    end
+
+    it_behaves_like "a successful registration"
+
+    context "when given a block" do
+      specify { register_service { expect(self).to be_a(StubRequests::EndpointRegistry) } }
+
+      it_behaves_like "a successful registration"
     end
   end
 
@@ -46,8 +67,6 @@ RSpec.describe StubRequests::API do
       described_class.stub_endpoint(service_id, endpoint_id, uri_replacements, options)
     end
 
-    let(:service_id)       { :api }
-    let(:service_uri)      { "https://api.com/v1" }
     let(:endpoint_id)      { :files }
     let(:verb)             { :get }
     let(:uri_template)     { "files/:file_id" }

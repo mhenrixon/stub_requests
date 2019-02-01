@@ -15,8 +15,11 @@ module StubRequests
   #
   class ServiceRegistry
     include Singleton
+    include Enumerable
 
-    # @return [Concurrent::Map] the map with registered services
+    #
+    # @!attribute [rw] services
+    #   @return [Concurrent::Map<Symbol, Service>] a map with services
     attr_reader :services
 
     def initialize
@@ -30,6 +33,18 @@ module StubRequests
     # @api private
     def reset
       services.clear
+    end
+
+    #
+    # Required by Enumerable
+    #
+    #
+    # @return [Concurrent::Map<Symbol, Service>] an map with services
+    #
+    # @yield used by Enumerable
+    #
+    def each(&block)
+      services.each(&block)
     end
 
     #

@@ -15,7 +15,7 @@ module StubRequests
 
     #
     # @!attribute [rw] endpoints
-    #   @return [Concurrent::Map] a map with endpoints
+    #   @return [Concurrent::Map<Symbol, Endpoint>] a map with endpoints
     attr_reader :endpoints
 
     def initialize
@@ -25,7 +25,7 @@ module StubRequests
     #
     # Required by Enumerable
     #
-    # @return [Array<Endpoint>] an array of endpoints
+    # @return [Concurrent::Map<Symbol, Service>] a map with endpoints
     #
     # @yield used by Enumerable
     #
