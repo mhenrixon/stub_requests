@@ -34,15 +34,17 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "docile"
+  spec.add_dependency "docile",          "~> 1.0", "< 2"
   spec.add_dependency "webmock",         "~> 3.0", "< 4.0"
   spec.add_dependency "concurrent-ruby", "~> 1.0", "< 2"
   spec.add_dependency "public_suffix",   "~> 3.0", "< 4"
+
   spec.add_development_dependency "bundler",        ">= 2.0"
   spec.add_development_dependency "rake",           ">= 10.0"
   spec.add_development_dependency "rspec",          ">= 3.8"
   spec.add_development_dependency "rspec-its",      ">= 1.2"
   spec.add_development_dependency "rubocop",        "~> 0.63.1"
+  spec.add_development_dependency "rubocop-md",     "~> 0.2"
   spec.add_development_dependency "rubocop-rspec",  "~> 1.32"
   spec.add_development_dependency "simplecov",      ">= 0.16.1"
   spec.add_development_dependency "simplecov-json", ">= 0.2"
@@ -51,5 +53,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "travis",         ">= 1.8.9"
   spec.add_development_dependency "gem-release",    ">= 2.0"
   spec.add_development_dependency "yard",           "~> 0.9.18"
-  spec.add_development_dependency "json_spec"
+  spec.add_development_dependency "json_spec",      ">= 1.1.5"
 end
