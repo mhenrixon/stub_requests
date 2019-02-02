@@ -41,18 +41,18 @@ module StubRequests
     # @param [Symbol] endpoint_id the id of this Endpoint
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template the URI to reach the endpoint
-    # @param [optional, Hash<Symbol>] default_options default options
+    # @param [optional, Hash<Symbol>] options default options
     #
     # @return [Endpoint]
     #
     # :reek:LongParameterList { max_params: 4 }
-    def register(endpoint_id, verb, uri_template, default_options = {})
+    def register(endpoint_id, verb, uri_template, options = {})
       endpoint =
         if (endpoint = find(endpoint_id))
           StubRequests.logger.warn("Endpoint already registered: #{endpoint}")
-          endpoint.update(verb, uri_template, default_options)
+          endpoint.update(verb, uri_template, options)
         else
-          Endpoint.new(endpoint_id, verb, uri_template, default_options)
+          Endpoint.new(endpoint_id, verb, uri_template, options)
         end
 
       endpoints[endpoint.id] = endpoint
@@ -76,20 +76,20 @@ module StubRequests
     # @param [Symbol] endpoint_id the id of the endpoint
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template how to reach the endpoint
-    # @param [optional, Hash<Symbol>] default_options
-    # @option default_options [optional, Hash<Symbol>] :request request options
-    # @option default_options [optional, Hash<Symbol>] :response options
-    # @option default_options [optional, Array, Exception, StandardError, String] :error to raise
-    # @option default_options [optional, TrueClass] :timeout raise a timeout error?
+    # @param [optional, Hash<Symbol>] options
+    # @option options [optional, Hash<Symbol>] :request request options
+    # @option options [optional, Hash<Symbol>] :response options
+    # @option options [optional, Array, Exception, StandardError, String] :error to raise
+    # @option options [optional, TrueClass] :timeout raise a timeout error?
     #
     # @raise [EndpointNotFound] when the endpoint couldn't be found
     #
     # @return [Endpoint] returns the updated endpoint
     #
     # :reek:LongParameterList { max_params: 4 }
-    def update(endpoint_id, verb, uri_template, default_options)
+    def update(endpoint_id, verb, uri_template, options)
       endpoint = find!(endpoint_id)
-      endpoint.update(verb, uri_template, default_options)
+      endpoint.update(verb, uri_template, options)
     end
 
     #
