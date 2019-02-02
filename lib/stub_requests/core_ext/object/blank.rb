@@ -110,7 +110,9 @@ end
 
 # @see String
 class String
+  # :nodoc:
   BLANK_RE = /\A[[:space:]]*\z/.freeze
+  # :nodoc:
   ENCODED_BLANKS = Concurrent::Map.new do |map, enc|
     map[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
   end
