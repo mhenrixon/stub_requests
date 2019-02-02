@@ -74,7 +74,7 @@ module StubRequests
         prepare_mock_request
       end
 
-      WebMock::StubRegistry.instance.register_request_stub(request_stub)
+      request_stub
     end
 
     private
