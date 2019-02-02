@@ -14,9 +14,7 @@ RSpec.describe StubRequests::URI::Validator do
     context "when given an invalid URI" do
       let(:uri) { "a random bogus string" }
 
-      specify do
-        expect { valid }.to raise_error(StubRequests::InvalidUri, "'a random bogus string' is not a valid URI.")
-      end
+      it! { is_expected.to raise_error(StubRequests::InvalidUri, "'a random bogus string' is not a valid URI.") }
     end
   end
 end

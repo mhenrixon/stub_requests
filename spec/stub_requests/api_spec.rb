@@ -48,9 +48,7 @@ RSpec.describe StubRequests::API do
       its(:id)  { is_expected.to eq(service_id) }
       its(:uri) { is_expected.to eq(service_uri) }
 
-      specify do
-        expect { register_service }.to change(service_registry, :count).by(1)
-      end
+      it! { is_expected.to change(service_registry, :count).by(1) }
     end
 
     it_behaves_like "a successful registration"
@@ -95,8 +93,8 @@ RSpec.describe StubRequests::API do
       end
 
       context "when endpoint is unregistered" do
-        specify do
-          expect { stub_endpoint }.to raise_error(
+        it! do
+          is_expected.to raise_error(
             StubRequests::EndpointNotFound,
             "Couldn't find an endpoint with id=:files",
           )
@@ -105,8 +103,8 @@ RSpec.describe StubRequests::API do
     end
 
     context "when service is unregistered" do
-      specify do
-        expect { stub_endpoint }.to raise_error(
+      it! do
+        is_expected.to raise_error(
           StubRequests::ServiceNotFound,
           "Couldn't find a service with id=:api",
         )

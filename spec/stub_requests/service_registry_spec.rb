@@ -51,17 +51,13 @@ RSpec.describe StubRequests::ServiceRegistry do
     subject(:reset) { registry.reset }
 
     context "when no services are registered" do
-      specify do
-        expect { reset }.not_to change { registry.services.size }.from(0)
-      end
+      it! { is_expected.not_to change { registry.services.size }.from(0) }
     end
 
     context "when services are registered" do
       before { registry.register(service_id, service_uri) }
 
-      specify do
-        expect { reset }.to change { registry.services.size }.from(1).to(0)
-      end
+      it! { is_expected.to change { registry.services.size }.from(1).to(0) }
     end
   end
 
@@ -69,20 +65,16 @@ RSpec.describe StubRequests::ServiceRegistry do
     subject(:remove) { registry.remove(service_id) }
 
     context "when service is unregistered" do
-      specify do
-        expect { remove }.to raise_error(
-          StubRequests::ServiceNotFound,
-          "Couldn't find a service with id=:basecamp",
-        )
-      end
+      let(:error)   { StubRequests::ServiceNotFound }
+      let(:message) { "Couldn't find a service with id=:basecamp" }
+
+      it! { is_expected.to raise_error(error, message) }
     end
 
     context "when service is registered" do
       before { registry.register(service_id, service_uri) }
 
-      specify do
-        expect { remove }.to change { registry.services.size }.from(1).to(0)
-      end
+      it! { is_expected.to change { registry.services.size }.from(1).to(0) }
     end
   end
 
@@ -104,12 +96,10 @@ RSpec.describe StubRequests::ServiceRegistry do
     subject(:find) { registry.find!(service_id) }
 
     context "when service is unregistered" do
-      specify do
-        expect { find }.to raise_error(
-          StubRequests::ServiceNotFound,
-          "Couldn't find a service with id=:basecamp",
-        )
-      end
+      let(:error)   { StubRequests::ServiceNotFound }
+      let(:message) { "Couldn't find a service with id=:basecamp" }
+
+      it! { is_expected.to raise_error(error, message) }
     end
 
     context "when service is registered" do

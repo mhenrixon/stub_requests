@@ -87,13 +87,11 @@ RSpec.describe StubRequests::EndpointRegistry do
   describe "#find!" do
     subject(:find) { registry.find!(endpoint_id) }
 
+    let(:error)   { StubRequests::EndpointNotFound }
+    let(:message) { "Couldn't find an endpoint with id=:resource_collection" }
+
     context "when endpoint is unregistered" do
-      specify do
-        expect { find }.to raise_error(
-          StubRequests::EndpointNotFound,
-          "Couldn't find an endpoint with id=:resource_collection",
-        )
-      end
+      it! { is_expected.to raise_error(error, message)}
     end
 
     context "when endpoint is registered" do
@@ -110,22 +108,20 @@ RSpec.describe StubRequests::EndpointRegistry do
     let(:new_uri_template)    { "resource/:resource_id" }
     let(:new_default_options) { { response: { body: "" } } }
 
+    let(:error)   { StubRequests::EndpointNotFound }
+    let(:message) { "Couldn't find an endpoint with id=:resource_collection" }
+
     context "when endpoint is unregistered" do
-      specify do
-        expect { update }.to raise_error(
-          StubRequests::EndpointNotFound,
-          "Couldn't find an endpoint with id=:resource_collection",
-        )
-      end
+      it! { is_expected.to raise_error(error, message) }
     end
 
     context "when endpoint is registered" do
       before { registry.register(endpoint_id, verb, uri_template) }
 
-      its(:id)              { is_expected.to eq(endpoint_id) }
-      its(:verb)            { is_expected.to eq(new_verb) }
-      its(:uri_template)    { is_expected.to eq(new_uri_template) }
-      its(:default_options) { is_expected.to eq(new_default_options) }
+      its(:id)           { is_expected.to eq(endpoint_id) }
+      its(:verb)         { is_expected.to eq(new_verb) }
+      its(:uri_template) { is_expected.to eq(new_uri_template) }
+      its(:options)      { is_expected.to eq(new_default_options) }
     end
   end
 
@@ -155,13 +151,13 @@ RSpec.describe StubRequests::EndpointRegistry do
         registry.register(:bogus_id, :any, "documents/:document_id")
       end
 
-      specify do
-        expect(to_s).to eq(
-          "#<StubRequests::EndpointRegistry endpoints=["\
-            "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
-          "]>",
-        )
+      let(:expected_output) do
+        "#<StubRequests::EndpointRegistry endpoints=["\
+          "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
+        "]>"
       end
+
+      it { is_expected.to eq(expected_output) }
     end
   end
 end

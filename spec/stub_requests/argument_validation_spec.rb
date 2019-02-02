@@ -23,12 +23,10 @@ RSpec.describe StubRequests::ArgumentValidation do
       context "when an array excluding String is allowed" do
         let(:is_a) { [TrueClass, FalseClass, NilClass] }
 
-        specify do
-          expect { validate }.to raise_error(
-            StubRequests::InvalidType,
-            "Expected `String` to be any of [TrueClass, FalseClass, NilClass]",
-          )
-        end
+        let(:error)   { StubRequests::InvalidType }
+        let(:message) { "Expected `String` to be any of [TrueClass, FalseClass, NilClass]" }
+
+        it! { is_expected.to raise_error(error, message) }
       end
     end
   end
