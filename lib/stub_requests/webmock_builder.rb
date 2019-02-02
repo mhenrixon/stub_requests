@@ -56,7 +56,7 @@ module StubRequests
     # @yield a block to eventually yield to the caller
     #
     def initialize(verb, uri, options = {}, &callback)
-      @request_stub = WebMock::RequestStub.new(verb, uri)
+      @request_stub = ::WebMock::RequestStub.new(verb, uri)
       @options      = options
       @callback     = callback
     end

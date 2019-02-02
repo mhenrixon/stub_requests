@@ -83,7 +83,7 @@ module StubRequests
     end
 
     def register_request_stub(request_stub)
-      WebMock::StubRegistry.instance.register_request_stub(request_stub)
+      ::WebMock::StubRegistry.instance.register_request_stub(request_stub)
     end
   end
 end
