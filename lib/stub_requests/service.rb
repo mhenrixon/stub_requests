@@ -13,16 +13,16 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Service
-    include ArgumentValidation
     include Comparable
+    include Properties
 
     # @!attribute [rw] id
     #   @return [EndpointRegistry] the id of the service
-    attr_reader :id
+    property :id, type: Symbol
 
     # @!attribute [rw] uri
     #   @return [EndpointRegistry] the base uri to the service
-    attr_reader :uri
+    property :uri, type: String
 
     # @!attribute [rw] endpoints
     #   @return [EndpointRegistry] a list with defined endpoints
@@ -35,11 +35,8 @@ module StubRequests
     # @param [String] service_uri the base uri to reach the service
     #
     def initialize(service_id, service_uri)
-      validate! service_id,  is_a: Symbol
-      validate! service_uri, is_a: String
-
-      @id        = service_id
-      @uri       = service_uri
+      self.id    = service_id
+      self.uri   = service_uri
       @endpoints = EndpointRegistry.new
     end
 

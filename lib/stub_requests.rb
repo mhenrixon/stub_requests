@@ -12,8 +12,11 @@ require "webmock/request_stub"
 require "stub_requests/version"
 
 require "stub_requests/core_ext"
+require "stub_requests/exceptions"
 require "stub_requests/hash_util"
 require "stub_requests/argument_validation"
+require "stub_requests/properties"
+require "stub_requests/configuration"
 
 require "stub_requests/endpoint"
 require "stub_requests/endpoint_registry"

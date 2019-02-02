@@ -24,6 +24,8 @@ module StubRequests
     # @return [EndpointStat] the stat that was recorded
     #
     def self.record(service, endpoint, endpoint_stub)
+      return unless StubRequests.config.record_metrics?
+
       Registry.instance.record(service, endpoint, endpoint_stub)
     end
   end
