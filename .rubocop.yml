@@ -12,11 +12,16 @@ AllCops:
     - "lib/**/*"
     - "bin/**/*"
     - "spec/**/*"
+    - ".simplecov"
   Exclude:
     - "lib/stub_requests/core_ext/**/*"
     - "Gemfile.lock"
     - "bin/setup"
     - "gemfiles/**/*"
+
+Layout/IndentArray:
+  Enabled: true
+  EnforcedStyle: consistent
 
 Lint/HandleExceptions:
   Enabled: true

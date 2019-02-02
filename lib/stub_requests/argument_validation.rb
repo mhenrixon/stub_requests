@@ -13,6 +13,8 @@ module StubRequests
   #
   # Module ArgumentValidation provides validation of method arguments
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   module ArgumentValidation
     extend self
 

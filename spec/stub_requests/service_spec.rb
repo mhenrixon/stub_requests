@@ -18,8 +18,8 @@ RSpec.describe StubRequests::Service do
     its(:uri) { is_expected.to eq(service_uri) }
   end
 
-  describe "#register_endpoint" do
-    subject(:register_endpoint) { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
+  describe "#register" do
+    subject(:register) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
 
     let(:endpoint_id)     { :concrete }
     let(:verb)            { :get }
@@ -36,7 +36,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoint is registered" do
-      before { service.register_endpoint(endpoint_id, old_verb, old_uri_template, old_default_options) }
+      before { service.endpoints.register(endpoint_id, old_verb, old_uri_template, old_default_options) }
 
       let(:old_verb)            { :post }
       let(:old_uri_template)    { "concrete" }
@@ -49,15 +49,15 @@ RSpec.describe StubRequests::Service do
     end
   end
 
-  describe "#get_endpoint" do
-    subject(:get_endpoint) { service.get_endpoint(endpoint_id) }
+  describe "#find_endpoint" do
+    subject(:find_endpoint) { service.endpoints.find(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
     end
 
     context "when endpoint is registered" do
-      let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
+      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
 
       it { is_expected.to eq(endpoint) }
     end
@@ -71,7 +71,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoint is registered" do
-      before { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
+      before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
 
       it { is_expected.to eq(true) }
     end
@@ -93,12 +93,12 @@ RSpec.describe StubRequests::Service do
     end
   end
 
-  describe "#get_endpoint!" do
-    subject(:get_endpoint) { service.get_endpoint!(endpoint_id) }
+  describe "#find_endpoint!" do
+    subject(:find_endpoint) { service.endpoints.find!(endpoint_id) }
 
     context "when endpoint is unregistered" do
       specify do
-        expect { get_endpoint }.to raise_error(
+        expect { find_endpoint }.to raise_error(
           StubRequests::EndpointNotFound,
           "Couldn't find an endpoint with id=:concrete",
         )
@@ -106,7 +106,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoint is registered" do
-      let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
+      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
 
       it { is_expected.to eq(endpoint) }
     end
@@ -126,7 +126,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoints are registered" do
-      before { service.register_endpoint(endpoint_id, verb, uri_template, default_options) }
+      before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
 
       specify do
         expect(to_s).to eq(

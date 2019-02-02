@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "singleton"
-require "concurrent/array"
-
 #
 # Abstraction over WebMock to reduce duplication
 #
@@ -11,100 +8,60 @@ require "concurrent/array"
 #
 module StubRequests
   #
-  # Module Metrics contains logic for recording endpoint_stubs about stubs
+  # Module Metrics contains logic for collecting metrics about {EndpointStat} and {StubStat}
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  # @since 0.1.2
+  #
+  # :reek:DataClump
   module Metrics
-    class EndpointStub
-      include Enumerable
-
-      attr_reader :service_id
-      attr_reader :endpoint_id
-      attr_reader :uri_template
-      attr_reader :records
-
-      def initialize(service, endpoint)
-        @service_id   = service.id
-        @endpoint_id  = endpoint.id
-        @uri_template = [service.uri, endpoint.uri_template].join("/")
-        @records = []
-      end
-
-      #
-      # Required by Enumerable
-      #
-      #
-      # @return [Concurrent::Map<Symbol, Service>] an map with services
-      #
-      # @yield used by Enumerable
-      #
-      def each(&block)
-        records.each(&block)
-      end
-
-      def record(request_stub)
-        records.push(Record.new(self, request_stub))
-      end
-    end
-
-    class Record
-      attr_reader :verb
-      attr_reader :uri
-      attr_reader :headers
-      attr_reader :request_signature
-      attr_reader :request_stub
-      attr_reader :recorded_at
-      attr_reader :recorded_from
-      attr_reader :responded_at
-
-      def initialize(endpoint, request_stub)
-        @endpoint      = endpoint
-        @verb          = request_stub.request_pattern.method_pattern.to_s.to_sym
-        @uri           = request_stub.request_pattern.uri_pattern.to_s
-        @request_stub  = request_stub
-        @recorded_at   = Time.now
-        @recorded_from = RSpec.current_example.metadata[:location]
-        @responded_at  = nil
-      end
-
-      def mark_as_responded!
-        @responded_at = Time.now
-      end
-    end
-
+    #
+    # Class Registry maintains a registry of stubbed endpoints.
+    #   Also allows provides querying capabilities for said entities.
+    #
+    # @author Mikael Henriksson <mikael@zoolutions.se>
+    # @since 0.1.2
+    #
     class Registry
+      # includes "Singleton"
+      # @!parse include Singleton
       include Singleton
+      # includes "Enumerable"
+      # @!parse include Enumerable
       include Enumerable
 
-      RECORD_BY_REQUEST_STUB = ->(recorded) { recorded.request_stub == request_stub }
-      ENDPOINT_STUB_BY_REQUEST_STUB = ->(endpoint) { endpoint.find(RECORD_BY_REQUEST_STUB) }
       #
       # @!attribute [rw] services
-      #   @return [Concurrent::Map<Symbol, Service>] a map with services
-      attr_reader :endpoint_stubs
+      #   @return [Concurrent::Array<EndpointStat>] a map with stubbed endpoints
+      attr_reader :stats
 
+      #
+      # Initialize a new registry
+      #
+      #
       def initialize
-        @endpoint_stubs = Concurrent::Array.new
+        @stats = Concurrent::Array.new
       end
 
       #
-      # Resets the map with registered services
+      # Resets the map with stubbed endpoints
       #
       #
       # @api private
       def reset
-        endpoint_stubs.clear
+        stats.clear
       end
 
       #
       # Required by Enumerable
       #
       #
-      # @return [Concurrent::Map<Symbol, Service>] an map with services
+      # @return [Concurrent::Array<EndpointStat>] an array with stubbed endpoints
       #
       # @yield used by Enumerable
       #
       def each(&block)
-        endpoint_stubs.each(&block)
+        stats.each(&block)
       end
 
       #
@@ -117,32 +74,50 @@ module StubRequests
       #
       # @return [Service] the service that was just registered
       #
-      def record_metric(service, endpoint, request_stub)
-        # TODO: Allow this to be switched off/on via configuration
-        endpoint_stub = find_or_initialize_endpoint_stub(service, endpoint)
-        endpoint_stub.record(request_stub)
+      def record_request_stub(service, endpoint, request_stub)
+        stat = find_or_initialize_stat(service, endpoint)
+        stat.record(request_stub)
 
-        endpoint_stubs.push(endpoint_stub)
+        stats.push(stat)
+        stat
       end
 
-      def find_record(_request_stub)
-        endpoint_stub = find { |endstub| endstub.find(RECORD_BY_REQUEST_STUB) }
-        endpoint_stub.find(RECORD_BY_REQUEST_STUB)
+      def mark_as_responded(request_stub)
+        return unless (stat = find_stub_stat(request_stub))
+
+        stat.mark_as_responded
       end
 
-      def find_or_initialize_endpoint_stub(service, endpoint)
-        find_endpoint_stub(service, endpoint) || initialize_endpoint_stub(service, endpoint)
+      #
+      # Finds a {StubStat} amongst the endpoint stubs
+      #
+      #
+      # @param [WebMock::RequestStub] request_stub a stubbed webmock response
+      #
+      # @return [StubStat] the stub_stat matching the request stub
+      #
+      # :reek:NestedIterators
+      def find_stub_stat(request_stub)
+        map do |endpoint|
+          endpoint.find_by(attribute: :request_stub, value: request_stub)
+        end.compact.first
       end
 
-      def find_endpoint_stub(service, endpoint)
-        endpoint_stubs.find do |endpoint_stub|
-          endpoint_stub.service_id == service.id &&
-            endpoint_stub.endpoint_id == endpoint.id
-        end
+      private
+
+      def find_or_initialize_stat(service, endpoint)
+        find_stat(service, endpoint) || initialize_stat(service, endpoint)
       end
 
-      def initialize_endpoint_stub(service, endpoint)
-        Metrics::EndpointStub.new(service, endpoint)
+      # :reek:UtilityFunction
+      # :reek:FeatureEnvy
+      def find_stat(service, endpoint)
+        find { |stat| stat.service_id == service.id && stat.endpoint_id == endpoint.id }
+      end
+
+      # :reek:UtilityFunction
+      def initialize_stat(service, endpoint)
+        Metrics::EndpointStat.new(service, endpoint)
       end
     end
   end

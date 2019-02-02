@@ -10,6 +10,8 @@ module StubRequests
   #
   # Class Endpoint provides registration of stubbed endpoints
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   class Endpoint
     include ArgumentValidation
     include Comparable

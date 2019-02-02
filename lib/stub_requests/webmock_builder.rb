@@ -13,6 +13,8 @@ module StubRequests
   # @note This module can either be used by its class methods
   #   or included in say RSpec
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   class WebMockBuilder
     include HashUtil
 

@@ -10,6 +10,8 @@ module StubRequests
   #
   # Provides convenience methods for hashes
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   module HashUtil
     #
     # Removes all entries with nil values (first level only)

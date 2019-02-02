@@ -6,7 +6,7 @@ RSpec.describe StubRequests::EndpointRegistry do
   let(:registry)     { described_class.new }
   let(:endpoint)     { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
   let(:endpoint_id)  { :resource_collection }
-  let(:verb)         { :get }
+  let(:verb)         { :find }
   let(:uri_template) { "resource/:resource_id/collection" }
 
   describe "#initialize" do
@@ -70,8 +70,8 @@ RSpec.describe StubRequests::EndpointRegistry do
     end
   end
 
-  describe "#get" do
-    subject(:get) { registry.get(endpoint_id) }
+  describe "#find" do
+    subject(:find) { registry.find(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
@@ -84,12 +84,12 @@ RSpec.describe StubRequests::EndpointRegistry do
     end
   end
 
-  describe "#get!" do
-    subject(:get) { registry.get!(endpoint_id) }
+  describe "#find!" do
+    subject(:find) { registry.find!(endpoint_id) }
 
     context "when endpoint is unregistered" do
       specify do
-        expect { get }.to raise_error(
+        expect { find }.to raise_error(
           StubRequests::EndpointNotFound,
           "Couldn't find an endpoint with id=:resource_collection",
         )

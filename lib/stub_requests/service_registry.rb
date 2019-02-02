@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "singleton"
-require "concurrent/map"
-
 #
 # Abstraction over WebMock to reduce duplication
 #
@@ -12,6 +9,8 @@ require "concurrent/map"
 module StubRequests
   #
   # Class ServiceRegistry provides registration of services
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class ServiceRegistry
     include Singleton
@@ -56,8 +55,8 @@ module StubRequests
     #
     # @return [Service] the service that was just registered
     #
-    def register_service(service_id, service_uri)
-      if (service = get_service(service_id))
+    def register(service_id, service_uri)
+      if (service = find(service_id))
         StubRequests.logger.warn("Service already registered #{service}")
         raise ServiceHaveEndpoints, service if service.endpoints?
       end
@@ -72,7 +71,7 @@ module StubRequests
     #
     # @raise [ServiceNotFound] when the service was not removed
     #
-    def remove_service(service_id)
+    def remove(service_id)
       services.delete(service_id) || raise(ServiceNotFound, service_id)
     end
 
@@ -84,7 +83,7 @@ module StubRequests
     #
     # @return [Service] the found service
     #
-    def get_service(service_id)
+    def find(service_id)
       services[service_id]
     end
 
@@ -98,8 +97,8 @@ module StubRequests
     #
     # @return [Endpoint]
     #
-    def get_service!(service_id)
-      get_service(service_id) || raise(ServiceNotFound, service_id)
+    def find!(service_id)
+      find(service_id) || raise(ServiceNotFound, service_id)
     end
   end
 end

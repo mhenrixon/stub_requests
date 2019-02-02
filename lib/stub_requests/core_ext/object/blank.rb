@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-require "concurrent/map"
-
 # Copied from https://raw.githubusercontent.com/rails/rails/d66e7835bea9505f7003e5038aa19b6ea95ceea1/activesupport/lib/active_support/core_ext/object/blank.rb
 
 # :nodoc:
-# :nocov:
 
 # @see Object
-class Object # :nodoc: # :nocov:
+class Object
   # An object is blank if it's false, empty, or a whitespace string.
   # For example, +nil+, '', '   ', [], {}, and +false+ are all blank.
   #
@@ -113,9 +110,7 @@ end
 
 # @see String
 class String
-  # :nodoc:
   BLANK_RE = /\A[[:space:]]*\z/.freeze
-  # :nodoc:
   ENCODED_BLANKS = Concurrent::Map.new do |map, enc|
     map[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
   end

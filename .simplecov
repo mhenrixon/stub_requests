@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require "simplecov-json"
 
-SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::JSONFormatter,
-])
+SimpleCov.formatters =
+  SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::JSONFormatter,
+  ])
 
 SimpleCov.configure do
   command_name "RSpec"
@@ -16,8 +19,8 @@ SimpleCov.configure do
 end
 
 SimpleCov.start do
-  add_filter '/spec/'
-  add_filter '/bin/'
-  add_filter '/gemfiles/'
-  add_filter '/examples/'
+  add_filter "/spec/"
+  add_filter "/bin/"
+  add_filter "/gemfiles/"
+  add_filter "/lib/stub_requests/core_ext/object/blank.rb"
 end

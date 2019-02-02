@@ -9,7 +9,7 @@ RSpec.describe "Stubs HTTP requests" do # rubocop:disable RSpec/DescribeClass
 
   let(:service_id)   { :example_api }
   let(:service_uri)  { "https://example.com/api/v1" }
-  let(:endpoint)     { service.register_endpoint(endpoint_id, verb, uri_template) }
+  let(:endpoint)     { service.endpoints.register(endpoint_id, verb, uri_template) }
   let(:endpoint_id)  { :list_task }
   let(:verb)         { :get }
   let(:uri_template) { "lists/:list_id/tasks/:task_id" }

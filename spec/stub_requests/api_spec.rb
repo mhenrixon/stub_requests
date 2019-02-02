@@ -79,13 +79,13 @@ RSpec.describe StubRequests::API do
       let!(:service) { described_class.register_service(service_id, service_uri) }
 
       context "when endpoint is registered" do
-        let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
 
         it { is_expected.to be_a(WebMock::RequestStub) }
       end
 
       context "when given a block" do
-        let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
 
         it "yields the stub to the block" do
           stub_endpoint do |stub|

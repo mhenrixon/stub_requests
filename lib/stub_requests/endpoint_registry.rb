@@ -10,6 +10,8 @@ module StubRequests
   #
   # Class EndpointRegistry holds a collection of {Endpoint}
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   class EndpointRegistry
     include Enumerable
 
@@ -46,7 +48,7 @@ module StubRequests
     # :reek:LongParameterList { max_params: 4 }
     def register(endpoint_id, verb, uri_template, default_options = {})
       endpoint =
-        if (endpoint = get(endpoint_id))
+        if (endpoint = find(endpoint_id))
           StubRequests.logger.warn("Endpoint already registered: #{endpoint}")
           endpoint.update(verb, uri_template, default_options)
         else
@@ -86,7 +88,7 @@ module StubRequests
     #
     # :reek:LongParameterList { max_params: 4 }
     def update(endpoint_id, verb, uri_template, default_options)
-      endpoint = get!(endpoint_id)
+      endpoint = find!(endpoint_id)
       endpoint.update(verb, uri_template, default_options)
     end
 
@@ -108,7 +110,7 @@ module StubRequests
     #
     # @return [Endpoint]
     #
-    def get(endpoint_id)
+    def find(endpoint_id)
       endpoints[endpoint_id]
     end
 
@@ -121,8 +123,8 @@ module StubRequests
     #
     # @return [Endpoint, nil]
     #
-    def get!(endpoint_id)
-      get(endpoint_id) || raise(EndpointNotFound, "Couldn't find an endpoint with id=:#{endpoint_id}")
+    def find!(endpoint_id)
+      find(endpoint_id) || raise(EndpointNotFound, "Couldn't find an endpoint with id=:#{endpoint_id}")
     end
 
     #
