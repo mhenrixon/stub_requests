@@ -21,28 +21,13 @@ module StubRequests
     # @!parse extend self
     extend self
 
-    # @api private
-    def self.build_endpoint_stub(verb, uri, options, &callback)
-      StubRequests::WebMockBuilder.build(verb, uri, options, &callback)
-    end
-
-    # @api private
-    def self.record_metrics(service, endpoint, endpoint_stub)
-      StubRequests::Metrics::Registry.instance.record_request_stub(service, endpoint, endpoint_stub)
-    end
-
-    # @api private
-    def self.register_endpoint_stub(endpoint_stub)
-      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
-    end
-
     # :reek:LongParameterList { max_params: 4 }
     # @api private
     def self._stub_endpoint(service_id, endpoint_id, uri_replacements = {}, options = {})
       _service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, uri_replacements)
+      endpoint_stub           = WebMockBuilder.build(endpoint.verb, uri, options)
 
-      endpoint_stub = API.build_endpoint_stub(endpoint.verb, uri, options)
-      API.register_endpoint_stub(endpoint_stub)
+      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
     end
 
     # :nodoc:
@@ -113,9 +98,10 @@ module StubRequests
     # :reek:LongParameterList { max_params: 5 }
     def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, options = {}, &callback)
       service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, uri_replacements)
-      endpoint_stub          = API.build_endpoint_stub(endpoint.verb, uri, options, &callback)
-      API.record_metrics(service, endpoint, endpoint_stub)
-      API.register_endpoint_stub(endpoint_stub)
+      endpoint_stub          = WebMockBuilder.build(endpoint.verb, uri, options, &callback)
+
+      Metrics.record(service, endpoint, endpoint_stub)
+      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
     end
   end
 end

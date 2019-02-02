@@ -65,7 +65,7 @@ module StubRequests
       end
 
       #
-      # Registers a service in the registry
+      # Records metrics about stubbed endpoints
       #
       #
       # @param [Service] service a symbolic id of the service
@@ -74,7 +74,7 @@ module StubRequests
       #
       # @return [Service] the service that was just registered
       #
-      def record_request_stub(service, endpoint, request_stub)
+      def record(service, endpoint, request_stub)
         stat = find_or_initialize_stat(service, endpoint)
         stat.record(request_stub)
 
@@ -82,6 +82,15 @@ module StubRequests
         stat
       end
 
+      #
+      # Mark a {StubStat} as having responded
+      #
+      # @note Called when webmock responds successfully
+      #
+      # @param [WebMock::RequestStub] request_stub the stubbed webmock request
+      #
+      # @return [void]
+      #
       def mark_as_responded(request_stub)
         return unless (stat = find_stub_stat(request_stub))
 
@@ -96,7 +105,6 @@ module StubRequests
       #
       # @return [StubStat] the stub_stat matching the request stub
       #
-      # :reek:NestedIterators
       def find_stub_stat(request_stub)
         map do |endpoint|
           endpoint.find_by(attribute: :request_stub, value: request_stub)

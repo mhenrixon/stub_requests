@@ -26,8 +26,8 @@ RSpec.describe StubRequests::Metrics::Registry do
     metrics_registry.reset
   end
 
-  describe "#record_request_stub" do
-    subject(:record_request_stub) { metrics_registry.record_request_stub(service, endpoint, request_stub) }
+  describe "#record" do
+    subject(:record) { metrics_registry.record(service, endpoint, request_stub) }
 
     before do
       register_service(service_id, service_uri)
@@ -51,7 +51,7 @@ RSpec.describe StubRequests::Metrics::Registry do
     end
 
     context "when stats have been recorded" do
-      before { metrics_registry.record_request_stub(service, endpoint, request_stub) }
+      before { metrics_registry.record(service, endpoint, request_stub) }
 
       it { is_expected.to be_a(StubRequests::Metrics::StubStat) }
 
