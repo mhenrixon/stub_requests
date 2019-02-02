@@ -71,7 +71,7 @@ RSpec/AlignLeftLetBrace:
 RSpec/FilePath:
   Enabled: true
   Exclude:
-    - 'spec/stub_requests/webmock_builder_spec.rb'
+    - 'spec/stub_requests/webmock/builder_spec.rb'
 
 RSpec/NestedGroups:
   Max: 4

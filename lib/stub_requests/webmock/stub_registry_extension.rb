@@ -8,7 +8,7 @@
 #
 module StubRequests
   #
-  # Module WebMock provides a namespace for extensions of WebMock
+  # Module WebMock extends WebMock with more functionality
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
