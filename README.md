@@ -14,6 +14,7 @@ This is achieve by keeping a registry over the service endpoints.
 
 <!-- MarkdownTOC -->
 
+- [Required ruby version](#required-ruby-version)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Register service endpoints](#register-service-endpoints)
@@ -27,6 +28,11 @@ This is achieve by keeping a registry over the service endpoints.
 - [Code of Conduct](#code-of-conduct)
 
 <!-- /MarkdownTOC -->
+
+<a id="required-ruby-version"></a>
+## Required ruby version
+
+Ruby version >= 2.3
 
 <a id="installation"></a>
 ## Installation
