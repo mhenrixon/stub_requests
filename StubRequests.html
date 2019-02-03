@@ -94,7 +94,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/stub_requests/api.rb<span class="defines">,<br />
-  lib/stub_requests/service.rb,<br /> lib/stub_requests/version.rb,<br /> lib/stub_requests/endpoint.rb,<br /> lib/stub_requests/hash_util.rb,<br /> lib/stub_requests/uri/scheme.rb,<br /> lib/stub_requests/uri/suffix.rb,<br /> lib/stub_requests/uri/builder.rb,<br /> lib/stub_requests/stub_requests.rb,<br /> lib/stub_requests/uri/validator.rb,<br /> lib/stub_requests/webmock_builder.rb,<br /> lib/stub_requests/service_registry.rb,<br /> lib/stub_requests/endpoint_registry.rb,<br /> lib/stub_requests/argument_validation.rb</span>
+  lib/stub_requests/uri.rb,<br /> lib/stub_requests/metrics.rb,<br /> lib/stub_requests/service.rb,<br /> lib/stub_requests/version.rb,<br /> lib/stub_requests/endpoint.rb,<br /> lib/stub_requests/property.rb,<br /> lib/stub_requests/hash_util.rb,<br /> lib/stub_requests/exceptions.rb,<br /> lib/stub_requests/uri/scheme.rb,<br /> lib/stub_requests/uri/suffix.rb,<br /> lib/stub_requests/uri/builder.rb,<br /> lib/stub_requests/configuration.rb,<br /> lib/stub_requests/stub_requests.rb,<br /> lib/stub_requests/uri/validator.rb,<br /> lib/stub_requests/webmock/builder.rb,<br /> lib/stub_requests/metrics/registry.rb,<br /> lib/stub_requests/service_registry.rb,<br /> lib/stub_requests/endpoint_registry.rb,<br /> lib/stub_requests/metrics/stub_stat.rb,<br /> lib/stub_requests/property/validator.rb,<br /> lib/stub_requests/argument_validation.rb,<br /> lib/stub_requests/metrics/endpoint_stat.rb,<br /> lib/stub_requests/webmock/stub_registry_extension.rb</span>
 </dd>
   </dl>
   
@@ -144,11 +144,11 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="StubRequests/API.html" title="StubRequests::API (module)">API</a></span>, <span class='object_link'><a href="StubRequests/ArgumentValidation.html" title="StubRequests::ArgumentValidation (module)">ArgumentValidation</a></span>, <span class='object_link'><a href="StubRequests/HashUtil.html" title="StubRequests::HashUtil (module)">HashUtil</a></span>, <span class='object_link'><a href="StubRequests/URI.html" title="StubRequests::URI (module)">URI</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="StubRequests/API.html" title="StubRequests::API (module)">API</a></span>, <span class='object_link'><a href="StubRequests/ArgumentValidation.html" title="StubRequests::ArgumentValidation (module)">ArgumentValidation</a></span>, <span class='object_link'><a href="StubRequests/HashUtil.html" title="StubRequests::HashUtil (module)">HashUtil</a></span>, <span class='object_link'><a href="StubRequests/Metrics.html" title="StubRequests::Metrics (module)">Metrics</a></span>, <span class='object_link'><a href="StubRequests/Property.html" title="StubRequests::Property (module)">Property</a></span>, <span class='object_link'><a href="StubRequests/URI.html" title="StubRequests::URI (module)">URI</a></span>, <span class='object_link'><a href="StubRequests/WebMock.html" title="StubRequests::WebMock (module)">WebMock</a></span>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="StubRequests/Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span>, <span class='object_link'><a href="StubRequests/EndpointNotFound.html" title="StubRequests::EndpointNotFound (class)">EndpointNotFound</a></span>, <span class='object_link'><a href="StubRequests/EndpointRegistry.html" title="StubRequests::EndpointRegistry (class)">EndpointRegistry</a></span>, <span class='object_link'><a href="StubRequests/Error.html" title="StubRequests::Error (class)">Error</a></span>, <span class='object_link'><a href="StubRequests/InvalidType.html" title="StubRequests::InvalidType (class)">InvalidType</a></span>, <span class='object_link'><a href="StubRequests/InvalidUri.html" title="StubRequests::InvalidUri (class)">InvalidUri</a></span>, <span class='object_link'><a href="StubRequests/Service.html" title="StubRequests::Service (class)">Service</a></span>, <span class='object_link'><a href="StubRequests/ServiceHaveEndpoints.html" title="StubRequests::ServiceHaveEndpoints (class)">ServiceHaveEndpoints</a></span>, <span class='object_link'><a href="StubRequests/ServiceNotFound.html" title="StubRequests::ServiceNotFound (class)">ServiceNotFound</a></span>, <span class='object_link'><a href="StubRequests/ServiceRegistry.html" title="StubRequests::ServiceRegistry (class)">ServiceRegistry</a></span>, <span class='object_link'><a href="StubRequests/UriSegmentMismatch.html" title="StubRequests::UriSegmentMismatch (class)">UriSegmentMismatch</a></span>, <span class='object_link'><a href="StubRequests/WebMockBuilder.html" title="StubRequests::WebMockBuilder (class)">WebMockBuilder</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span>, <span class='object_link'><a href="StubRequests/Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span>, <span class='object_link'><a href="StubRequests/EndpointNotFound.html" title="StubRequests::EndpointNotFound (class)">EndpointNotFound</a></span>, <span class='object_link'><a href="StubRequests/EndpointRegistry.html" title="StubRequests::EndpointRegistry (class)">EndpointRegistry</a></span>, <span class='object_link'><a href="StubRequests/Error.html" title="StubRequests::Error (class)">Error</a></span>, <span class='object_link'><a href="StubRequests/InvalidArgumentType.html" title="StubRequests::InvalidArgumentType (class)">InvalidArgumentType</a></span>, <span class='object_link'><a href="StubRequests/InvalidType.html" title="StubRequests::InvalidType (class)">InvalidType</a></span>, <span class='object_link'><a href="StubRequests/InvalidUri.html" title="StubRequests::InvalidUri (class)">InvalidUri</a></span>, <span class='object_link'><a href="StubRequests/PropertyDefined.html" title="StubRequests::PropertyDefined (class)">PropertyDefined</a></span>, <span class='object_link'><a href="StubRequests/Service.html" title="StubRequests::Service (class)">Service</a></span>, <span class='object_link'><a href="StubRequests/ServiceHaveEndpoints.html" title="StubRequests::ServiceHaveEndpoints (class)">ServiceHaveEndpoints</a></span>, <span class='object_link'><a href="StubRequests/ServiceNotFound.html" title="StubRequests::ServiceNotFound (class)">ServiceNotFound</a></span>, <span class='object_link'><a href="StubRequests/ServiceRegistry.html" title="StubRequests::ServiceRegistry (class)">ServiceRegistry</a></span>, <span class='object_link'><a href="StubRequests/UriSegmentMismatch.html" title="StubRequests::UriSegmentMismatch (class)">UriSegmentMismatch</a></span>
     
   
 </p>
@@ -259,6 +259,52 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#config-instance_method" title="#config (instance method)">#<strong>config</strong>  &#x21d2; Configuration </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Contains gem configuration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#configure-instance_method" title="#configure (instance method)">#<strong>configure</strong> {|config| ... } &#x21d2; Configuration </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Allows the gem to be configured.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#version-instance_method" title="#version (instance method)">#<strong>version</strong>  &#x21d2; String </a>
     
 
@@ -293,7 +339,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="StubRequests/API.html" title="StubRequests::API (module)">API</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="StubRequests/API.html#included-class_method" title="StubRequests::API.included (method)">included</a></span>, <span class='object_link'><a href="StubRequests/API.html#register_service-instance_method" title="StubRequests::API#register_service (method)">#register_service</a></span>, <span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">#stub_endpoint</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="StubRequests/API.html#_stub_endpoint-class_method" title="StubRequests::API._stub_endpoint (method)">_stub_endpoint</a></span>, <span class='object_link'><a href="StubRequests/API.html#included-class_method" title="StubRequests::API.included (method)">included</a></span>, <span class='object_link'><a href="StubRequests/API.html#register_service-instance_method" title="StubRequests::API#register_service (method)">#register_service</a></span>, <span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">#stub_endpoint</a></span></p>
 
   
   <div id="instance_attr_details" class="attr_details">
@@ -343,12 +389,12 @@
       <pre class="lines">
 
 
-79
-80
-81</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_requests.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_requests.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logger'>logger</span>
   <span class='ivar'>@logger</span>
@@ -366,7 +412,185 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="version-instance_method">
+  <h3 class="signature first" id="config-instance_method">
+  
+    #<strong>config</strong>  &#x21d2; <tt><span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Contains gem configuration</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_requests.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
+  <span class='ivar'>@config</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="configure-instance_method">
+  
+    #<strong>configure</strong> {|config| ... } &#x21d2; <tt><span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Allows the gem to be configured</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><description></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Returns:</p>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>&lt;type&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><describe what yield should return></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="StubRequests/Configuration.html" title="StubRequests::Configuration (class)">Configuration</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><description></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_requests.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span>
+  <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+  <span class='id identifier rubyid_config'>config</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="version-instance_method">
   
     #<strong>version</strong>  &#x21d2; <tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt> 
   
@@ -422,12 +646,12 @@
       <pre class="lines">
 
 
-87
-88
-89</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_requests.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_requests.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version'>version</span>
   <span class='const'><span class='object_link'><a href="#VERSION-constant" title="StubRequests::VERSION (constant)">VERSION</a></span></span>
@@ -442,9 +666,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb  1 22:52:55 2019 by
+  Generated on Sun Feb  3 21:08:26 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.18 (ruby-2.5.3).
+  0.9.18 (ruby-2.3.8).
 </div>
 
     </div>

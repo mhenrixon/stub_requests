@@ -75,12 +75,17 @@
 
 <ul>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a></li>
+<li><a href="#usage">Usage</a>
+
+<ul>
+<li><a href="#register-service-endpoints">Register service endpoints</a></li>
+<li><a href="#stubbing-service-endpoints">Stubbing service endpoints</a></li>
+<li><a href="#metrics">Metrics</a></li>
+</ul></li>
 <li><a href="#future-improvements">Future Improvements</a>
 
 <ul>
 <li><a href="#api-client-gem">API Client Gem</a></li>
-<li><a href="#debugging">Debugging</a></li>
 </ul></li>
 <li><a href="#development">Development</a></li>
 <li><a href="#contributing">Contributing</a></li>
@@ -117,6 +122,10 @@
 
 <p>The naming of the <code>service_id</code> and <code>endpoint_id</code>&#39;s is irrelevant. This is just how we look things up in the registry.</p>
 
+<p><a id="register-service-endpoints"></a></p>
+
+<h3>Register service endpoints</h3>
+
 <pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_service'><span class='object_link'><a href="StubRequests/API.html#register_service-instance_method" title="StubRequests::API#register_service (method)">register_service</a></span></span><span class='lparen'>(</span><span class='symbol'>:google_ads</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://api.google.com/v5</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:index</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -128,6 +137,10 @@
 
 <p>Now we have a list of endpoints we can stub.</p>
 
+<p><a id="stubbing-service-endpoints"></a></p>
+
+<h3>Stubbing service endpoints</h3>
+
 <pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:google_ads</span><span class='comma'>,</span> <span class='symbol'>:index</span><span class='rparen'>)</span>
             <span class='period'>.</span><span class='id identifier rubyid_to_return'>to_return</span><span class='lparen'>(</span><span class='label'>code:</span> <span class='int'>204</span><span class='comma'>,</span> <span class='label'>body:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
@@ -137,8 +150,6 @@
 <span class='const'>WebMock</span><span class='period'>.</span><span class='id identifier rubyid_stub_request'>stub_request</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Settings</span><span class='period'>.</span><span class='id identifier rubyid_google_ads_base_uri'>google_ads_base_uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>/ads</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
        <span class='period'>.</span><span class='id identifier rubyid_to_return'>to_return</span><span class='lparen'>(</span><span class='label'>status:</span> <span class='int'>204</span><span class='comma'>,</span> <span class='label'>body:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 </code></pre>
-
-<p>So far so good but not much of a gain yet. The real power comes when we don&#39;t have to interpolate a bunch of URLs all the time.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:google_ads</span><span class='comma'>,</span> <span class='symbol'>:update</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_with'>with</span><span class='lparen'>(</span><span class='label'>body:</span> <span class='id identifier rubyid_request_body'>request_body</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span>
@@ -153,11 +164,18 @@
        <span class='period'>.</span><span class='id identifier rubyid_to_return'>to_return</span><span class='lparen'>(</span><span class='label'>status:</span> <span class='int'>200</span><span class='comma'>,</span> <span class='label'>body:</span> <span class='id identifier rubyid_response_body'>response_body</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span>
 </code></pre>
 
-<p>First of all we reduce a lot of duplication.</p>
+<p>This reduces the need to spread out URI&#39;s in the test suite without having to resort to shared examples.</p>
 
-<p>Imagine a code base with thousands of stubbed request. You always have to look at the defined URL to understand which request is actually being called.</p>
+<p><a id="metrics"></a></p>
 
-<p>Madness!!</p>
+<h3>Metrics</h3>
+
+<p>Metrics collection are by default turned off. It can be turned on by the following code.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="StubRequests.html#configure-instance_method" title="StubRequests#configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_record_metrics'>record_metrics</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span>
+</code></pre>
 
 <p><a id="future-improvements"></a></p>
 
@@ -172,12 +190,6 @@ sense to make this into an API client. Not sure yet, maybe this will become mult
 
 <p>Anyway, the idea was to provide endpoint calls in production and stubbed
 requests in tests using the same registry.</p>
-
-<p><a id="debugging"></a></p>
-
-<h3>Debugging</h3>
-
-<p>I want to provide information about where a request stub was created from. In the project I am currently working this would have saved me a days work already.</p>
 
 <p><a id="development"></a></p>
 
@@ -215,9 +227,9 @@ chat rooms and mailing lists is expected to follow the <a href="coc">code of con
 </div></div>
 
       <div id="footer">
-  Generated on Fri Feb  1 22:52:55 2019 by
+  Generated on Sun Feb  3 21:08:26 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.18 (ruby-2.5.3).
+  0.9.18 (ruby-2.3.8).
 </div>
 
     </div>
