@@ -22,30 +22,31 @@ module StubRequests
     #
     # :reek:TooManyInstanceVariables
     class StubStat
+      include Property
       #
       # @!attribute [r] verb
       #   @return [Symbol] a HTTP verb/method
-      attr_reader :verb
+      property :verb, type: Symbol
       #
       # @!attribute [r] uri
       #   @return [String] the full URI for this endpoint
-      attr_reader :uri
+      property :uri, type: String
       #
       # @!attribute [r] request_stub
       #   @return [WebMock::RequestStub] a webmock stubbed request
-      attr_reader :request_stub
+      property :request_stub, type: WebMock::RequestStub
       #
       # @!attribute [r] recorded_at
       #   @return [Time] the time this record was recorded
-      attr_reader :recorded_at
+      property :recorded_at, type: Time
       #
       # @!attribute [r] recorded_from
       #   @return [String] the relative path to the spec that recorded it
-      attr_reader :recorded_from
+      property :recorded_from, type: String
       #
       # @!attribute [r] responded_at
       #   @return [Time] the time this stubs response was used
-      attr_reader :responded_at
+      property :responded_at, type: Time
 
       #
       # Initialize a new Record

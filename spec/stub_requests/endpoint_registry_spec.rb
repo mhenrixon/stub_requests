@@ -91,7 +91,7 @@ RSpec.describe StubRequests::EndpointRegistry do
     let(:message) { "Couldn't find an endpoint with id=:resource_collection" }
 
     context "when endpoint is unregistered" do
-      it! { is_expected.to raise_error(error, message)}
+      it! { is_expected.to raise_error(error, message) }
     end
 
     context "when endpoint is registered" do

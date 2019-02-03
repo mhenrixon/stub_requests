@@ -31,8 +31,10 @@ RSpec.describe StubRequests::Configuration do
     context "when new value is invalid" do
       let(:new_value) { "I can't type" }
 
-      let(:error)   { StubRequests::InvalidType }
-      let(:message) { "Expected `String` to be any of [TrueClass, FalseClass]" }
+      let(:error) { StubRequests::InvalidArgumentType }
+      let(:message) do
+        "The argument `:record_metrics` was `String`, expected any of [TrueClass, FalseClass]"
+      end
 
       it! { is_expected.to raise_error(error, message) }
     end

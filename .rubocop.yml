@@ -53,6 +53,16 @@ Naming/UncommunicativeMethodParamName:
 AlignLeftLetBrace:
   Enabled: true
 
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - given
+    - for
+    - and
+
 RSpec/EmptyExampleGroup:
   Enabled: false
   CustomIncludeMethods:

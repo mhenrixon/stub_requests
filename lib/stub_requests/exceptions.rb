@@ -21,8 +21,22 @@ module StubRequests
   # InvalidType is raised when an argument is invalid
   #
   class InvalidType < Error
-    def initialize(actual:, expected:)
+    def initialize(actual, expected)
       super("Expected `#{actual}` to be any of [#{expected}]")
+    end
+  end
+
+  #
+  # InvalidArgumentType is raised when an argument is not of the expected type
+  #
+  class InvalidArgumentType < Error
+    #
+    # @param [Symbol] name the name of the argument
+    # @param [Object] actual the actual value of the argument
+    # @param [Array<Class>, Array<Module>] expected the types the argument is expected to be
+    #
+    def initialize(name:, actual:, expected:)
+      super("The argument `:#{name}` was `#{actual}`, expected any of [#{expected.join(', ')}]")
     end
   end
 
@@ -39,8 +53,8 @@ module StubRequests
   # PropertyDefined is raised when trying to add the same property twice
   #
   class PropertyDefined < Error
-    def initializer(name, type, default)
-      super("Property ##{name} was already defined with(type: #{type}, default: #{default})")
+    def initialize(name:, type:, default:)
+      super("Property ##{name} was already defined as `{ type: #{type}, default: #{default ? default : "nil"} }")
     end
   end
 

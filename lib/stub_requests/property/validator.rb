@@ -30,17 +30,17 @@ module StubRequests
       # @param [Symbol] name the name of the property
       # @param [Class, Module] type the type of the property
       # @param [Object] default the default value of the property
-      # @param [Hash] defined_properties the list of currently defined properties
+      # @param [Hash] properties the list of currently defined properties
       #
-      # @raise [InvalidType] when name is not a {Symbol}
-      # @raise [InvalidType] when default does not match {#type}
+      # @raise [InvalidArgumentType] when name is not a {Symbol}
+      # @raise [InvalidArgumentType] when default does not match {#type}
       # @raise [PropertyDefined] when property has already been defined
       #
       # @return [void]
       #
       # :reek:LongParameterList
-      def self.call(name, type, default, defined_properties)
-        new(name, type, default, defined_properties).run_validations!
+      def self.call(name, type, default, properties)
+        new(name, type, default, properties).run_validations
       end
 
       #
@@ -56,39 +56,39 @@ module StubRequests
       #   @return [Object] the default value of the property
       attr_reader :default
       #
-      # @!attribute [r] defined_properties
+      # @!attribute [r] properties
       #   @return [Hash] the list of currently defined properties
-      attr_reader :defined_properties
+      attr_reader :properties
 
       # Initializes a new {Validator}
       #
       # @param [Symbol] name the name of the property
       # @param [Class, Module] type the type of the property
       # @param [Object] default the default value of the property
-      # @param [Hash] defined_properties the list of currently defined properties
+      # @param [Hash] properties the list of currently defined properties
       #
       # :reek:LongParameterList
-      def initialize(name, type, default, defined_properties)
-        @name               = name
-        @type               = type
-        @default            = default
-        @defined_properties = defined_properties
+      def initialize(name, type, default, properties)
+        @name       = name
+        @type       = Array(type).flatten
+        @default    = default
+        @properties = properties
       end
 
       #
       # Performs all validations
       #
       #
-      # @raise [InvalidType] when name is not a {Symbol}
-      # @raise [InvalidType] when default does not match {#type}
+      # @raise [InvalidArgumentType] when name is not a {Symbol}
+      # @raise [InvalidArgumentType] when default does not match {#type}
       # @raise [PropertyDefined] when property has already been defined
       #
       # @return [void]
       #
       def run_validations
         validate_undefined
-        validate_type_of_name
-        validate_type_of_default
+        validate_name
+        validate_default
       end
 
       private
@@ -96,24 +96,25 @@ module StubRequests
       #
       # Validates that the name is of type Symbol
       #
-      # @raise [InvalidType] when name is not a {Symbol}
+      # @raise [InvalidArgumentType] when name is not a {Symbol}
       #
       # @return [void]
       #
-      def validate_type_of_name
-        validate! name, is_a: Symbol
+      def validate_name
+        validate! :name, name, is_a: Symbol
       end
 
       #
       # Validate that the default value matches the {#type}
       #
       #
-      # @raise [InvalidType] when default does not match {#type}
+      # @raise [InvalidArgumentType] when default does not match {#type}
       #
       # @return [void]
       #
-      def validate_type_of_default
-        validate! default, is_a: type if default || default == false
+      def validate_default
+        return unless default || default.is_a?(FalseClass)
+        validate! :default, default, is_a: type
       end
 
       #
@@ -125,8 +126,9 @@ module StubRequests
       # @return [void]
       #
       def validate_undefined
-        old_definition = defined_properties[name]
-        raise PropertyDefined, name, old_definition[:type], old_definition[:default] if old_definition.present?
+        return unless (prop = properties[name])
+
+        raise PropertyDefined, name: name, type: prop[:type], default: prop[:default]
       end
     end
   end

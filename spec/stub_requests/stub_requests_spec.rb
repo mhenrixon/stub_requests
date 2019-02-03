@@ -17,4 +17,12 @@ RSpec.describe StubRequests do
         .by(1)
     end
   end
+
+  describe ".configure" do
+    it "yields config" do
+      described_class.configure do |config|
+        expect(config).to be_a(StubRequests::Configuration)
+      end
+    end
+  end
 end

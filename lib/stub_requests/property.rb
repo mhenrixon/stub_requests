@@ -24,15 +24,8 @@ module StubRequests
     # @return [void]
     #
     def self.included(base)
-      base.instance_exec do
-        @properties = {}
-      end
-
+      base.class_attribute :properties, default: {}
       base.send(:extend, ClassMethods)
-    end
-
-    def properties
-      self.class.properties
     end
 
     #
@@ -51,46 +44,47 @@ module StubRequests
       # @return [void]
       #
       def property(name, type:, default: nil)
+        type = normalize_type(type, default)
+
         Property::Validator.call(name, type, default, properties)
 
-        instance_exec do
-          define_attribute_methods(name, type)
+        Docile.dsl_eval(self) do
+          property_reader(name)
+          property_predicate(name)
+          property_writer(name, type)
+
+          set_property_defined(name, type, default)
         end
       end
 
-      def properties
-        @properties
+      def normalize_type(type, default)
+        type_array = Array(type)
+        type_array.concat([default.class]).flatten.uniq
       end
 
-      def define_attribute_methods(name, type)
-        define_attr_reader(name)
-        define_attr_writer(name, type)
-        define_query_reader(name)
-      end
-
-      def define_attr_reader(name)
-        define_method(name) do
-          instance_variable_get(:"@#{name}")
-        end
-
-        define_method("default_value_for_#{name}") do
-          return nil unless (definition = properties[name])
-
-          definition[:default]
+      def property_reader(name)
+        silence_redefinition_of_method("#{name}")
+        redefine_method(name) do
+          instance_variable_get("@#{name}") || properties.dig(name, :default)
         end
       end
 
-      def define_attr_writer(name, type)
-        define_method("#{name}=") do |value|
-          validate! value, is_a: type
-          instance_variable_set(:"@#{name}", value)
+      def property_predicate(name)
+        silence_redefinition_of_method("#{name}?")
+        redefine_method("#{name}?") do
+          !!public_send(name)
         end
       end
 
-      def define_query_reader(name)
-        define_method("#{name}?") do
-          !!send(name) # rubocop:disable Style/DoubleNegation
+      def property_writer(name, type)
+        redefine_method("#{name}=") do |obj|
+          validate! name, obj, is_a: type
+          instance_variable_set("@#{name}", obj)
         end
+      end
+
+      def set_property_defined(name, type, default)
+        properties[name] = { type: type, default: default }
       end
     end
   end
