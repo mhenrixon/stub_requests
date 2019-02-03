@@ -7,10 +7,8 @@ rake yard
 
 git checkout gh-pages
 
-shopt -s extglob
-command="$(echo ./!(bin|_config.yml|_index.html))"
-echo "Cleaning up current documentation: rm -rf ${command}"
-rm -rf $command
+echo "Cleaning up current documentation"
+find . ! -path '*/.git*' ! -path '*/bin/update_docs.sh*' ! -path '*/_config.yml*' ! -path '*/_index.html*' ! -path '.' | xargs rm -rf
 
 echo "Copying new documentation"
 mv doc/* ./
