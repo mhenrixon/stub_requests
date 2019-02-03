@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
 git checkout master
-git pull --rebase
+git fetch
+stash_created=0
+
+if [[ "$(git diff --stat)" != "" ]]; then
+  stash_created=1
+  git stash push -u -a -m "Before updating docs"
+fi;
+
+git reset --hard origin/master
 
 rake yard
 
@@ -18,3 +26,8 @@ git add --all
 git commit -a -m 'Update documentation'
 git push
 
+if [[ $stash_created == 1 ]]; then
+  git stash pop
+fi;
+
+git checkout master
