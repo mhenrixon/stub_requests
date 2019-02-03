@@ -3,6 +3,11 @@
 require "rspec/core"
 
 module RSpec
+  #
+  # SubjectAsLambda provides a convenient way of turning a regular subject into a proc
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   module SubjectAsLambda
     # Creates a nested example group named by the submitted `attribute`,
     # and then generates an example using the submitted block.

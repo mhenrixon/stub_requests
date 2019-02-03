@@ -15,7 +15,7 @@ RSpec.describe StubRequests::Configuration do
     context "when configured with true" do
       before { config.record_metrics = true }
 
-      it { is_expected.to eq(true)  }
+      it { is_expected.to eq(true) }
     end
   end
 

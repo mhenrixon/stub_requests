@@ -51,10 +51,10 @@ module StubRequests
       # @return [void]
       #
       def property(name, type:, default: nil)
-        Property::Validator.validate!(name, type, default, properties)
+        Property::Validator.call(name, type, default, properties)
 
         instance_exec do
-          define_attribute_methods(name, type, default)
+          define_attribute_methods(name, type)
         end
       end
 
@@ -62,7 +62,7 @@ module StubRequests
         @properties
       end
 
-      def define_attribute_methods(name, type, default)
+      def define_attribute_methods(name, type)
         define_attr_reader(name)
         define_attr_writer(name, type)
         define_query_reader(name)
@@ -75,6 +75,7 @@ module StubRequests
 
         define_method("default_value_for_#{name}") do
           return nil unless (definition = properties[name])
+
           definition[:default]
         end
       end

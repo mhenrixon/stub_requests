@@ -14,7 +14,6 @@ module StubRequests
   # @since 0.1.2
   #
   module Property
-
     #
     # Class Validator provides validation for adding properties
     #
@@ -39,7 +38,8 @@ module StubRequests
       #
       # @return [void]
       #
-      def self.validate!(name, type, default, defined_properties)
+      # :reek:LongParameterList
+      def self.call(name, type, default, defined_properties)
         new(name, type, default, defined_properties).run_validations!
       end
 
@@ -67,6 +67,7 @@ module StubRequests
       # @param [Object] default the default value of the property
       # @param [Hash] defined_properties the list of currently defined properties
       #
+      # :reek:LongParameterList
       def initialize(name, type, default, defined_properties)
         @name               = name
         @type               = type
@@ -84,11 +85,13 @@ module StubRequests
       #
       # @return [void]
       #
-      def run_validations!
-        validate_undefined!
-        validate_type_of_name!
-        validate_type_of_default!
+      def run_validations
+        validate_undefined
+        validate_type_of_name
+        validate_type_of_default
       end
+
+      private
 
       #
       # Validates that the name is of type Symbol
@@ -97,7 +100,7 @@ module StubRequests
       #
       # @return [void]
       #
-      def validate_type_of_name!
+      def validate_type_of_name
         validate! name, is_a: Symbol
       end
 
@@ -109,7 +112,7 @@ module StubRequests
       #
       # @return [void]
       #
-      def validate_type_of_default!
+      def validate_type_of_default
         validate! default, is_a: type if default || default == false
       end
 
@@ -121,9 +124,9 @@ module StubRequests
       #
       # @return [void]
       #
-      def validate_undefined!
+      def validate_undefined
         old_definition = defined_properties[name]
-        raise PropertyDefined, name, old_definition if old_definition.present?
+        raise PropertyDefined, name, old_definition[:type], old_definition[:default] if old_definition.present?
       end
     end
   end

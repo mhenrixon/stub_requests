@@ -20,14 +20,7 @@ AllCops:
     - "gemfiles/**/*"
 
 Layout/IndentArray:
-  Enabled: true
   EnforcedStyle: consistent
-
-Lint/HandleExceptions:
-  Enabled: true
-
-Lint/UselessAssignment:
-  Enabled: true
 
 Metrics/AbcSize:
   Max: 38
@@ -42,7 +35,6 @@ Metrics/MethodLength:
   Max: 13
 
 Metrics/BlockLength:
-  Enabled: true
   Exclude:
     - '**/spec/**/*.rb'
     - '**/*.rake'
@@ -50,14 +42,7 @@ Metrics/BlockLength:
 Metrics/PerceivedComplexity:
   Max: 8
 
-Naming/AccessorMethodName:
-  Enabled: true
-
-Naming/ConstantName:
-  Enabled: true
-
 Naming/FileName:
-  Enabled: true
   Exclude:
     - '**/Gemfile'
 
@@ -65,55 +50,45 @@ Naming/UncommunicativeMethodParamName:
   AllowedNames:
     - ex
 
-RSpec/AlignLeftLetBrace:
+AlignLeftLetBrace:
   Enabled: true
 
+RSpec/EmptyExampleGroup:
+  Enabled: false
+  CustomIncludeMethods:
+    - let!
+    - specfify!
+
 RSpec/FilePath:
-  Enabled: true
   Exclude:
     - 'spec/stub_requests/webmock/builder_spec.rb'
 
+RSpec/ImplicitSubject:
+  Enabled: false
+  EnforcedStyle: single_statement_only
+
 RSpec/NestedGroups:
   Max: 4
-  Enabled: true
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-
-Style/Documentation:
-  Enabled: true
-
-Style/GlobalVars:
-  Enabled: true
 
 Style/ModuleFunction:
-  Enabled: false
+  EnforcedStyle: extend_self
 
 Style/StringLiterals:
-  Enabled: true
   EnforcedStyle: double_quotes
   ConsistentQuotesInMultiline: true
 
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-
 Style/SymbolArray:
-  Enabled: true
   EnforcedStyle: brackets
 
 Style/TernaryParentheses:
-  Enabled: true
   EnforcedStyle: require_parentheses_when_complex
   AllowSafeAssignment: true
 
 Style/TrailingCommaInArguments:
-  Enabled: true
   EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInArrayLiteral:
-  Enabled: true
   EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInHashLiteral:
-  Enabled: true
   EnforcedStyleForMultiline: comma

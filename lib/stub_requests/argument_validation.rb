@@ -29,6 +29,7 @@ module StubRequests
     #
     # @return [true] when the value is allowed
     #
+    # :reek:UtilityFunction
     def validate!(value, is_a:)
       expected_types = Array(is_a)
       return true if validate(value, expected_types)
@@ -38,6 +39,7 @@ module StubRequests
             expected: expected_types.join(", ")
     end
 
+    # :reek:UtilityFunction
     def validate(value, expected_types)
       expected_types.any? { |type| value.is_a?(type) }
     end

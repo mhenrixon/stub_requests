@@ -13,13 +13,9 @@ module StubRequests
   class Error < StandardError; end
 
   #
-  # ServiceHaveEndpoints is raised to prevent overwriting a registered service's endpoints
+  # EndpointNotFound is raised when an endpoint cannot be found
   #
-  class ServiceHaveEndpoints < StandardError
-    def initialize(service)
-      super("Service with id #{service.id} have already been registered. #{service}")
-    end
-  end
+  class EndpointNotFound < Error; end
 
   #
   # InvalidType is raised when an argument is invalid
@@ -31,18 +27,29 @@ module StubRequests
   end
 
   #
-  # EndpointNotFound is raised when an endpoint cannot be found
+  # InvalidUri is raised when a URI is invalid
   #
-  class EndpointNotFound < Error; end
+  class InvalidUri < Error
+    def initialize(uri)
+      super("'#{uri}' is not a valid URI.")
+    end
+  end
 
   #
   # PropertyDefined is raised when trying to add the same property twice
   #
   class PropertyDefined < Error
-    def initializer(name, definition)
-      type    = definition[:type]
-      default = definition[:default]
+    def initializer(name, type, default)
       super("Property ##{name} was already defined with(type: #{type}, default: #{default})")
+    end
+  end
+
+  #
+  # ServiceHaveEndpoints is raised to prevent overwriting a registered service's endpoints
+  #
+  class ServiceHaveEndpoints < StandardError
+    def initialize(service)
+      super("Service with id #{service.id} have already been registered. #{service}")
     end
   end
 
@@ -59,13 +66,4 @@ module StubRequests
   # UriSegmentMismatch is raised when a segment cannot be replaced
   #
   class UriSegmentMismatch < Error; end
-
-  #
-  # InvalidUri is raised when a URI is invalid
-  #
-  class InvalidUri < Error
-    def initialize(uri)
-      super("'#{uri}' is not a valid URI.")
-    end
-  end
 end

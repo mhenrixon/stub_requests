@@ -93,22 +93,18 @@ RSpec.describe StubRequests::API do
       end
 
       context "when endpoint is unregistered" do
-        it! do
-          is_expected.to raise_error(
-            StubRequests::EndpointNotFound,
-            "Couldn't find an endpoint with id=:files",
-          )
-        end
+        let(:error)  { StubRequests::EndpointNotFound }
+        let(:messge) { "Couldn't find an endpoint with id=:files" }
+
+        it! { is_expected.to raise_error(error, message) }
       end
     end
 
     context "when service is unregistered" do
-      it! do
-        is_expected.to raise_error(
-          StubRequests::ServiceNotFound,
-          "Couldn't find a service with id=:api",
-        )
-      end
+      let(:error)   { StubRequests::ServiceNotFound }
+      let(:message) { "Couldn't find an endpoint with id=:files" }
+
+      it! { is_expected.to raise_error(error, message) }
     end
   end
 end
