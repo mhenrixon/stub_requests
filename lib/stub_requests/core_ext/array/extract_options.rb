@@ -13,6 +13,7 @@ end
 # @api private
 class Array
   # @api private
+  # :reek:MissingSafeMethod
   def extract_options!
     if last.is_a?(Hash) && last.extractable_options?
       pop
