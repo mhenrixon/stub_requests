@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 git checkout master
-git pull --rebase
+git fetch
+git stash push -u -a -m "Before updating docs"
+git reset --hard origin/master
 
 rake yard
 
@@ -18,3 +20,4 @@ git add --all
 git commit -a -m 'Update documentation'
 git push
 
+git stash pop
