@@ -16,9 +16,11 @@ This is achieve by keeping a registry over the service endpoints.
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Register service endpoints](#register-service-endpoints)
+  - [Stubbing service endpoints](#stubbing-service-endpoints)
+  - [Metrics](#metrics)
 - [Future Improvements](#future-improvements)
   - [API Client Gem](#api-client-gem)
-  - [Debugging](#debugging)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -54,6 +56,9 @@ To use the gem we need to register some service endpoints. In the following exam
 
 The naming of the `service_id` and `endpoint_id`'s is irrelevant. This is just how we look things up in the registry.
 
+<a id="register-service-endpoints"></a>
+### Register service endpoints
+
 ```ruby
 StubRequests.register_service(:google_ads, "https://api.google.com/v5") do
   register(:index, :get, "ads")
@@ -66,6 +71,9 @@ end
 
 Now we have a list of endpoints we can stub.
 
+<a id="stubbing-service-endpoints"></a>
+### Stubbing service endpoints
+
 ```ruby
 StubRequests.stub_endpoint(:google_ads, :index)
             .to_return(code: 204, body: "")
@@ -76,8 +84,6 @@ Settings.google_ads_base_uri = "https://api.google.com/v5"
 WebMock.stub_request(:get, "#{Settings.google_ads_base_uri}/ads")
        .to_return(status: 204, body: "")
 ```
-
-So far so good but not much of a gain yet. The real power comes when we don't have to interpolate a bunch of URLs all the time.
 
 ```ruby
 StubRequests.stub_endpoint(:google_ads, :update, id: 1) do
@@ -93,11 +99,18 @@ WebMock.stub_request(:patch, "#{Settings.google_ads_base_uri}/ads/#{id}")
        .to_return(status: 200, body: response_body.to_json)
 ```
 
-First of all we reduce a lot of duplication.
+This reduces the need to spread out URI's in the test suite without having to resort to shared examples.
 
-Imagine a code base with thousands of stubbed request. You always have to look at the defined URL to understand which request is actually being called.
+<a id="metrics"></a>
+### Metrics
 
-Madness!!
+Metrics collection are by default turned off. It can be turned on by the following code.
+
+```ruby
+StubRequests.configure do |config|
+  config.record_metrics = true
+end
+```
 
 <a id="future-improvements"></a>
 ## Future Improvements
@@ -110,11 +123,6 @@ sense to make this into an API client. Not sure yet, maybe this will become mult
 
 Anyway, the idea was to provide endpoint calls in production and stubbed
 requests in tests using the same registry.
-
-<a id="debugging"></a>
-### Debugging
-
-I want to provide information about where a request stub was created from. In the project I am currently working this would have saved me a days work already.
 
 <a id="development"></a>
 ## Development

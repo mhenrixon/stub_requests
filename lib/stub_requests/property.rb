@@ -29,7 +29,7 @@ module StubRequests
     end
 
     #
-    # Module ClassMethods provides class methods for {Properties}
+    # Module ClassMethods provides class methods for {Property}
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     #
@@ -38,11 +38,12 @@ module StubRequests
       #
       # Define property methods for the name
       #
-      # @param [Symbol, String] name the name of the attribute
-      # @param [Array<Class>, Class] type: the expected type on the attribute
-      # @param [Object] default: nil the default value for the attribute
+      # @param [Symbol] name the name of the property
+      # @param [Object] type: the expected type of the property
+      # @param [Hash<Symbol>] **options a hash with options
+      # @option options [Object] :default a default value for the property
       #
-      # @return [void]
+      # @return [Object] the whatever
       #
       def property(name, type:, **options)
         type = normalize_type(type, options)

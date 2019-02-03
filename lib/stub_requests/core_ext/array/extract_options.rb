@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# @see {Hash}
+# @see Hash
 # @api private
 class Hash
   # @api private
@@ -9,7 +9,7 @@ class Hash
   end
 end
 
-# @see {Array}
+# @see Array
 # @api private
 class Array
   # @api private

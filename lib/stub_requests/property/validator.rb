@@ -32,8 +32,8 @@ module StubRequests
       # @param [Object] default the default value of the property
       # @param [Hash] properties the list of currently defined properties
       #
-      # @raise [InvalidArgumentType] when name is not a {Symbol}
-      # @raise [InvalidArgumentType] when default does not match {#type}
+      # @raise [InvalidArgumentType] when name is not a Symbol
+      # @raise [InvalidArgumentType] when default does not match type
       # @raise [PropertyDefined] when property has already been defined
       #
       # @return [void]
@@ -79,8 +79,8 @@ module StubRequests
       # Performs all validations
       #
       #
-      # @raise [InvalidArgumentType] when name is not a {Symbol}
-      # @raise [InvalidArgumentType] when default does not match {#type}
+      # @raise [InvalidArgumentType] when name is not a Symbol
+      # @raise [InvalidArgumentType] when default does not match type
       # @raise [PropertyDefined] when property has already been defined
       #
       # @return [void]
@@ -96,7 +96,7 @@ module StubRequests
       #
       # Validates that the name is of type Symbol
       #
-      # @raise [InvalidArgumentType] when name is not a {Symbol}
+      # @raise [InvalidArgumentType] when name is not a Symbol
       #
       # @return [void]
       #
@@ -105,10 +105,10 @@ module StubRequests
       end
 
       #
-      # Validate that the default value matches the {#type}
+      # Validate that the default value matches the type
       #
       #
-      # @raise [InvalidArgumentType] when default does not match {#type}
+      # @raise [InvalidArgumentType] when default does not match type
       #
       # @return [void]
       #
