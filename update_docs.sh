@@ -29,3 +29,5 @@ git push
 if [[ $stash_created == 1 ]]; then
   git stash pop
 fi;
+
+git checkout master
