@@ -63,7 +63,7 @@ module StubRequests
       end
 
       def property_reader(name)
-        silence_redefinition_of_method("#{name}")
+        silence_redefinition_of_method(name.to_s)
         redefine_method(name) do
           instance_variable_get("@#{name}") || properties.dig(name, :default)
         end
@@ -72,7 +72,7 @@ module StubRequests
       def property_predicate(name)
         silence_redefinition_of_method("#{name}?")
         redefine_method("#{name}?") do
-          !!public_send(name)
+          !!public_send(name) # rubocop:disable Style/DoubleNegation
         end
       end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Object do
   it { is_expected.to respond_to(:blank?) }
@@ -64,7 +64,7 @@ RSpec.describe Array do
   end
 
   context "with an array containing items" do
-    subject { %i[item] }
+    subject { [:item] }
 
     it { is_expected.not_to be_blank }
     it { is_expected.to be_present }

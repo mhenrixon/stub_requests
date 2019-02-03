@@ -114,6 +114,7 @@ module StubRequests
       #
       def validate_default
         return unless default || default.is_a?(FalseClass)
+
         validate! :default, default, is_a: type
       end
 

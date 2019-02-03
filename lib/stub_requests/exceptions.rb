@@ -54,7 +54,7 @@ module StubRequests
   #
   class PropertyDefined < Error
     def initialize(name:, type:, default:)
-      super("Property ##{name} was already defined as `{ type: #{type}, default: #{default ? default : "nil"} }")
+      super("Property ##{name} was already defined as `{ type: #{type}, default: #{default || 'nil'} }")
     end
   end
 

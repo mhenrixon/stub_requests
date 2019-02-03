@@ -112,7 +112,7 @@ module RSpec
           subject
         end
 
-        def is_expected
+        def is_expected # rubocop:disable Lint/NestedMethodDefinition, Naming/PredicateName
           expect { __it_lambda_subject }
         end
         alias_method :are_expected, :is_expected

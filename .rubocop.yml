@@ -71,11 +71,19 @@ RSpec/EmptyExampleGroup:
 
 RSpec/FilePath:
   Exclude:
-    - 'spec/stub_requests/webmock/builder_spec.rb'
+    - spec/stub_requests/webmock/builder_spec.rb
 
 RSpec/ImplicitSubject:
   Enabled: false
   EnforcedStyle: single_statement_only
+
+RSpec/MultipleDescribes:
+  Exclude:
+    - spec/stub_requests/core_ext/object/blank_spec.rb
+
+RSpec/NamedSubject:
+  Exclude:
+    - spec/stub_requests/core_ext/object/blank_spec.rb
 
 RSpec/NestedGroups:
   Max: 4
