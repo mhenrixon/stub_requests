@@ -12,11 +12,13 @@ RSpec.describe StubRequests::Property::Validator do
   describe ".call" do
     subject(:call) { described_class.call(name, type, default, properties) }
 
-    it "delegates to #run_validations" do
+    before do
       allow(described_class).to receive(:new).and_return(validator)
       allow(validator).to receive(:run_validations)
-
       call
+    end
+
+    it "delegates to #run_validations" do
       expect(validator).to have_received(:run_validations)
     end
   end
