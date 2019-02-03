@@ -7,6 +7,7 @@ RSpec.describe StubRequests::Property, ".property" do
 
   let(:test_instance) { test_class.new }
   let(:test_class) do
+    # :reek:IrresponsibleModule
     class TestProperty
       include StubRequests::Property
     end

@@ -33,6 +33,7 @@ module StubRequests
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     #
+    # :reek:DataClump
     module ClassMethods
       #
       # Define property methods for the name
@@ -43,23 +44,29 @@ module StubRequests
       #
       # @return [void]
       #
-      def property(name, type:, default: nil)
-        type = normalize_type(type, default)
-
+      def property(name, type:, **options)
+        type = normalize_type(type, options)
+        default = options[:default]
         Property::Validator.call(name, type, default, properties)
 
         Docile.dsl_eval(self) do
-          property_reader(name)
-          property_predicate(name)
-          property_writer(name, type)
-
-          set_property_defined(name, type, default)
+          define_property(name, type, default)
         end
       end
 
-      def normalize_type(type, default)
+      def normalize_type(type, **options)
         type_array = Array(type)
+        return type_array unless (default = options[:default])
+
         type_array.concat([default.class]).flatten.uniq
+      end
+
+      def define_property(name, type, default)
+        property_reader(name)
+        property_predicate(name)
+        property_writer(name, type)
+
+        set_property_defined(name, type, default)
       end
 
       def property_reader(name)

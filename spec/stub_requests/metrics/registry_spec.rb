@@ -63,4 +63,20 @@ RSpec.describe StubRequests::Metrics::Registry do
       its(:responded_at)  { is_expected.to eq(nil) }
     end
   end
+
+  describe "#mark_as_responded" do
+    subject(:mark_as_responded) { metrics_registry.mark_as_responded(request_stub) }
+
+    let(:stub_stat) { metrics_registry.find_stub_stat(request_stub) }
+
+    context "when no stats are recorded" do
+      it { is_expected.to eq(nil) }
+    end
+
+    context "when stats have been recorded" do
+      before { metrics_registry.record(service, endpoint, request_stub) }
+
+      it! { is_expected.to change(stub_stat, :responded_at).from(nil) }
+    end
+  end
 end

@@ -26,22 +26,25 @@ module StubRequests
       # @!parse include Enumerable
       include Enumerable
 
+      # @api private
+      include Property
+
       #
       # @!attribute [r] service_id
       #   @return [Symbol] the id of a {Service}
-      attr_reader :service_id
+      property :service_id, type: Symbol
       #
       # @!attribute [r] endpoint_id
       #   @return [Symbol] the id of an endpoint
-      attr_reader :endpoint_id
+      property :endpoint_id, type: Symbol
       #
       # @!attribute [r] verb
       #   @return [String] the HTTP verb/method for this endpoint
-      attr_reader :verb
+      property :verb, type: Symbol
       #
       # @!attribute [r] uri_template
       #   @return [String] the full URI template for the endpoint
-      attr_reader :uri_template
+      property :uri_template, type: Symbol
       #
       # @!attribute [r] stats
       #   @return [Array] an array with recorded request_stubs
