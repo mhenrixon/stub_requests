@@ -54,7 +54,8 @@ module StubRequests
   #
   class PropertyDefined < Error
     def initialize(name:, type:, default:)
-      super("Property ##{name} was already defined as `{ type: #{type}, default: #{default || 'nil'} }")
+      default = "nil" if default.is_a?(NilClass)
+      super("Property ##{name} was already defined as `{ type: #{type}, default: #{default} }")
     end
   end
 
