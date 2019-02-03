@@ -4,6 +4,14 @@
 
 [Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.0...HEAD)
 
+**Implemented enhancements:**
+
+- Script updating documentation [\#9](https://github.com/mhenrixon/stub_requests/pull/9) ([mhenrixon](https://github.com/mhenrixon))
+- Add a simple script to update documentation [\#8](https://github.com/mhenrixon/stub_requests/pull/8) ([mhenrixon](https://github.com/mhenrixon))
+- Improve documentation [\#7](https://github.com/mhenrixon/stub_requests/pull/7) ([mhenrixon](https://github.com/mhenrixon))
+- Initial metrics implementation [\#6](https://github.com/mhenrixon/stub_requests/pull/6) ([mhenrixon](https://github.com/mhenrixon))
+- Remove the docs folder in preference of a branch [\#5](https://github.com/mhenrixon/stub_requests/pull/5) ([mhenrixon](https://github.com/mhenrixon))
+
 **Merged pull requests:**
 
 - Allow older webmock versions [\#4](https://github.com/mhenrixon/stub_requests/pull/4) ([mhenrixon](https://github.com/mhenrixon))
