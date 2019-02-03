@@ -80,9 +80,17 @@ unless defined?(Rails) || defined?(ActiveSupport)
       # penalty for the rest of strings is marginal.
       empty? ||
         begin
-          BLANK_RE.match?(self)
+          if  RUBY_VERSION >= "2.4"
+            BLANK_RE.match?(self)
+          else
+            !!BLANK_RE.match(self)
+          end
         rescue Encoding::CompatibilityError
-          ENCODED_BLANKS[encoding].match?(self)
+          if  RUBY_VERSION >= "2.4"
+            ENCODED_BLANKS[encoding].match?(self)
+          else
+            !!ENCODED_BLANKS[encoding].match(self)
+          end
         end
     end
   end
