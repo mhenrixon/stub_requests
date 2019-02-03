@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require "forwardable"
+require "singleton"
+
 require "concurrent/array"
 require "concurrent/map"
 require "docile"
-require "singleton"
 require "webmock"
 require "webmock/api"
 require "webmock/stub_registry"
@@ -18,6 +20,8 @@ require "stub_requests/argument_validation"
 require "stub_requests/property"
 require "stub_requests/property/validator"
 require "stub_requests/configuration"
+
+require "stub_requests/subscription_registry"
 
 require "stub_requests/endpoint"
 require "stub_requests/endpoint_registry"

@@ -23,6 +23,13 @@ module StubRequests
     # :reek:TooManyInstanceVariables
     class StubStat
       include Property
+      extend Forwardable
+
+      delegate [:service_id, :endpoint_id, :verb, :uri_template] => :endpoint_stat
+      #
+      # @!attribute [r] endpoint_stat
+      #   @return [StubRequests::Metrics::EndpointStat] an endpoint stat
+      property :endpoint_stat, type: StubRequests::Metrics::EndpointStat
       #
       # @!attribute [r] verb
       #   @return [Symbol] a HTTP verb/method
@@ -74,6 +81,7 @@ module StubRequests
       #
       def mark_as_responded
         @responded_at = Time.now
+        SubscriptionRegistry.instance.notify(self)
       end
     end
   end

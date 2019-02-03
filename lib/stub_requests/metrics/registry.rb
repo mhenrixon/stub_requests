@@ -106,8 +106,8 @@ module StubRequests
       # @return [StubStat] the stub_stat matching the request stub
       #
       def find_stub_stat(request_stub)
-        map do |endpoint|
-          endpoint.find_by(attribute: :request_stub, value: request_stub)
+        map do |stat|
+          stat.find_by(attribute: :request_stub, value: request_stub)
         end.compact.first
       end
 

@@ -25,9 +25,9 @@ module StubRequests
       # includes "Enumerable"
       # @!parse include Enumerable
       include Enumerable
-
       # @api private
       include Property
+      # @api private
 
       #
       # @!attribute [r] service_id

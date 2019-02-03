@@ -16,13 +16,13 @@ RSpec.describe StubRequests::Metrics do
       record
     end
 
-    context "when StubRequests.config.record_metrics is true", :record_metrics do
+    context "when StubRequests.config.record_metrics is true", record_metrics: true do
       it "delegates to the registry instance" do
         expect(registry).to have_received(:record).with(service, endpoint, request_stub)
       end
     end
 
-    context "when StubRequests.config.record_metrics is false" do
+    context "when StubRequests.config.record_metrics is false", record_metrics: false do
       it "does not call registry.record" do
         expect(registry).not_to have_received(:record)
       end

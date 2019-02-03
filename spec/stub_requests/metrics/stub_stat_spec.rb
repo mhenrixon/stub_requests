@@ -23,6 +23,7 @@ RSpec.describe StubRequests::Metrics::StubStat do
 
     let(:expected_properties) do
       {
+        endpoint_stat: { default: nil, type: [StubRequests::Metrics::EndpointStat] },
         verb: { default: nil, type: [Symbol] },
         uri: { default: nil, type: [String] },
         request_stub: { default: nil, type: [WebMock::RequestStub] },

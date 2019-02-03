@@ -37,6 +37,8 @@ RSpec.describe "Stubs HTTP requests" do # rubocop:disable RSpec/DescribeClass
       register(endpoint_id, verb, uri_template)
     end
 
+    subscribe(service_id, endpoint_id)
+
     stub_endpoint(service_id, endpoint_id, uri_replacements) do
       to_return(
         body: example_api_list_task_response.to_json,
@@ -45,7 +47,7 @@ RSpec.describe "Stubs HTTP requests" do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  it "stubs the request nicely" do
+  it "stubs the request nicely", record_metrics: true do
     uri = URI("https://example.com/api/v1/lists/#{list_id}/tasks/#{task_id}")
     response = Net::HTTP.get(uri)
     expect(response).to be_json_eql(example_api_list_task_response.to_json)

@@ -62,6 +62,32 @@ module StubRequests
     end
 
     #
+    # Subscribe to notifications for a service endpoint
+    #
+    # @param [Symbol] service_id the id of a service
+    # @param [Symbol] endpoint_id the id of an endpoint
+    #
+    # @return [void]
+    #
+    # :reek:UtilityFunction
+    def subscribe(service_id, endpoint_id)
+      SubscriptionRegistry.instance.subscribe(service_id, endpoint_id)
+    end
+
+    #
+    # Unsubscribe from notifications for a service endpoint
+    #
+    # @param [Symbol] service_id the id of a service
+    # @param [Symbol] endpoint_id the id of an endpoint
+    #
+    # @return [void]
+    #
+    # :reek:UtilityFunction
+    def unsubscribe(service_id, endpoint_id)
+      SubscriptionRegistry.instance.unsubscribe(service_id, endpoint_id)
+    end
+
+    #
     # Stub a request to a registered service endpoint
     #
     #
