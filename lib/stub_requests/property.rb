@@ -13,7 +13,7 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
   #
-  module Properties
+  module Property
     include ArgumentValidation
 
     #
@@ -24,7 +24,15 @@ module StubRequests
     # @return [void]
     #
     def self.included(base)
+      base.instance_exec do
+        @properties = {}
+      end
+
       base.send(:extend, ClassMethods)
+    end
+
+    def properties
+      self.class.properties
     end
 
     #
@@ -34,25 +42,24 @@ module StubRequests
     #
     module ClassMethods
       #
-      # Generates attr_accessor for the name
+      # Define property methods for the name
       #
       # @param [Symbol, String] name the name of the attribute
       # @param [Array<Class>, Class] type: the expected type on the attribute
       # @param [Object] default: nil the default value for the attribute
       #
-      # @return [<type>] <description>
+      # @return [void]
       #
       def property(name, type:, default: nil)
-        ArgumentValidation.validate! default, is_a: type if default || default != false
-        defined_properties[name] = { type: type, default: default }
+        Property::Validator.validate!(name, type, default, properties)
 
         instance_exec do
           define_attribute_methods(name, type, default)
         end
       end
 
-      def defined_properties
-        @defined_properties ||= Concurrent::Map.new
+      def properties
+        @properties
       end
 
       def define_attribute_methods(name, type, default)
@@ -63,7 +70,12 @@ module StubRequests
 
       def define_attr_reader(name)
         define_method(name) do
-          instance_variable_get(:"@#{name}") || defined_properties[name][:default]
+          instance_variable_get(:"@#{name}")
+        end
+
+        define_method("default_value_for_#{name}") do
+          return nil unless (definition = properties[name])
+          definition[:default]
         end
       end
 

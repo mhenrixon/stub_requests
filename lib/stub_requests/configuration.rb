@@ -14,7 +14,7 @@ module StubRequests
   # @since 0.1.2
   #
   class Configuration
-    include Properties
+    include Property
 
     property :record_metrics, type: [TrueClass, FalseClass], default: false
   end

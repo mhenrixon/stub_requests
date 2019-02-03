@@ -36,6 +36,17 @@ module StubRequests
   class EndpointNotFound < Error; end
 
   #
+  # PropertyDefined is raised when trying to add the same property twice
+  #
+  class PropertyDefined < Error
+    def initializer(name, definition)
+      type    = definition[:type]
+      default = definition[:default]
+      super("Property ##{name} was already defined with(type: #{type}, default: #{default})")
+    end
+  end
+
+  #
   # ServiceNotFound is raised when a service cannot be found
   #
   class ServiceNotFound < Error

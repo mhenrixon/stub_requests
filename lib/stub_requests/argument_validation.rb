@@ -31,11 +31,15 @@ module StubRequests
     #
     def validate!(value, is_a:)
       expected_types = Array(is_a)
-      return true if expected_types.any? { |type| value.is_a?(type) }
+      return true if validate(value, expected_types)
 
       raise StubRequests::InvalidType,
             actual: value.class,
             expected: expected_types.join(", ")
+    end
+
+    def validate(value, expected_types)
+      expected_types.any? { |type| value.is_a?(type) }
     end
   end
 end

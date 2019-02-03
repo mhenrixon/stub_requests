@@ -14,7 +14,7 @@ module StubRequests
   #
   class Endpoint
     include Comparable
-    include Properties
+    include Property
 
     #
     # @!attribute [rw] id

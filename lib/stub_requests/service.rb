@@ -14,7 +14,7 @@ module StubRequests
   #
   class Service
     include Comparable
-    include Properties
+    include Property
 
     # @!attribute [rw] id
     #   @return [EndpointRegistry] the id of the service
