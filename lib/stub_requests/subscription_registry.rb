@@ -114,7 +114,6 @@ module StubRequests
     # :reek:FeatureEnvy
     # :reek:DuplicateMethodCall
     def notify(obj)
-      binding.pry
       return unless (subscription = find_by(obj.service_id, obj.endpoint_id, obj.verb))
 
       p "The service :#{obj.service_id} just received :#{obj.verb} to endpoint :#{obj.endpoint_id}."
