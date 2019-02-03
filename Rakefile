@@ -12,11 +12,9 @@ YARD::Rake::YardocTask.new do |t|
   t.files   = %w[lib/stub_requests/**/*.rb"]
   t.options = %w[
     --no-private
-    --output-dir docs
-    --readme README.md
-    --output-dir docs
     --markup=markdown
     --markup-provider=redcarpet
+    --readme README.md
   ]
 end
 

@@ -8,7 +8,9 @@
 #
 module StubRequests
   #
-  # Provides convenience methods for URI
+  # Module URI organizes all gem logic regarding URI
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   module URI
     #

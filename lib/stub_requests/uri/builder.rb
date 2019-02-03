@@ -8,11 +8,15 @@
 #
 module StubRequests
   #
-  # Builds a URI from a #host, #template and #replacements
+  # Module URI organizes all gem logic regarding URI
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   module URI
     #
     # Builder constructs and validates URIs
+    #
+    # @author Mikael Henriksson <mikael@zoolutions.se>
     #
     # :reek:TooManyInstanceVariables { max_instance_variables: 6 }
     class Builder

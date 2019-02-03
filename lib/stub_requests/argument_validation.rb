@@ -13,6 +13,8 @@ module StubRequests
   #
   # Module ArgumentValidation provides validation of method arguments
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   module ArgumentValidation
     extend self
 
@@ -23,17 +25,26 @@ module StubRequests
     # @param [Object] value the value to validate
     # @param [Array<Class>, Array<Module>, Class, Module] is_a
     #
-    # @raise [InvalidType] when the value is disallowed
+    # @raise [InvalidArgumentType] when the value is disallowed
     #
     # @return [true] when the value is allowed
     #
-    def validate!(value, is_a:)
-      expected_types = Array(is_a)
-      return true if expected_types.any? { |type| value.is_a?(type) }
+    # :reek:UtilityFunction
+    def validate!(name, value, is_a:)
+      validate! :name, name, is_a: [Symbol, String] unless name
 
-      raise StubRequests::InvalidType,
+      expected_types = Array(is_a).flatten
+      return true if validate(value, expected_types)
+
+      raise StubRequests::InvalidArgumentType,
+            name: name,
             actual: value.class,
-            expected: expected_types.join(", ")
+            expected: expected_types
+    end
+
+    # :reek:UtilityFunction
+    def validate(value, expected_types)
+      expected_types.any? { |type| value.is_a?(type) }
     end
   end
 end

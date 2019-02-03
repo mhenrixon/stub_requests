@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::WebMockBuilder do
+RSpec.describe StubRequests::WebMock::Builder do
   let(:builder)          { described_class.new(verb, uri, options) }
   let(:verb)             { :get }
   let(:uri)              { "http://service-less:9292/internal/accounts/acoolaccountuid" }

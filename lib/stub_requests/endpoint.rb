@@ -10,30 +10,32 @@ module StubRequests
   #
   # Class Endpoint provides registration of stubbed endpoints
   #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   class Endpoint
-    include ArgumentValidation
     include Comparable
+    include Property
 
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
-    attr_reader :id
+    property :id, type: Symbol
 
     #
     # @!attribute [rw] verb
     #   @return [Symbol] a HTTP verb
-    attr_reader :verb
+    property :verb, type: Symbol
 
     #
     # @!attribute [rw] uri_template
     #   @return [String] a string template for the endpoint
-    attr_reader :uri_template
+    property :uri_template, type: String
 
     #
-    # @!attribute [rw] default_options
+    # @!attribute [rw] options
     #   @see
-    #   @return [Hash<Symbol>] a string template for the endpoint
-    attr_reader :default_options
+    #   @return [Hash<Symbol>] a Hash with default request/response options
+    property :options, type: Hash, default: {}
 
     #
     # An endpoint for a specific {Service}
@@ -41,21 +43,17 @@ module StubRequests
     # @param [Symbol] endpoint_id a descriptive id for the endpoint
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template how to reach the endpoint
-    # @param [optional, Hash<Symbol>] default_options
-    # @option default_options [optional, Hash<Symbol>] :request for request_stub.with
-    # @option default_options [optional, Hash<Symbol>] :response for request_stub.to_return
-    # @option default_options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
-    # @option default_options [optional, TrueClass] :timeout for request_stub.to_timeout
+    # @param [optional, Hash<Symbol>] options
+    # @option options [optional, Hash<Symbol>] :request for request_stub.with
+    # @option options [optional, Hash<Symbol>] :response for request_stub.to_return
+    # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
+    # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
-    def initialize(endpoint_id, verb, uri_template, default_options = {})
-      validate! endpoint_id,  is_a: Symbol
-      validate! verb,         is_a: Symbol
-      validate! uri_template, is_a: String
-
-      @id              = endpoint_id
-      @verb            = verb
-      @uri_template    = uri_template
-      @default_options = default_options
+    def initialize(endpoint_id, verb, uri_template, options = {})
+      self.id              = endpoint_id
+      self.verb            = verb
+      self.uri_template    = uri_template
+      self.options         = options
     end
 
     #
@@ -63,18 +61,18 @@ module StubRequests
     #
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template how to reach the endpoint
-    # @param [optional, Hash<Symbol>] default_options
-    # @option default_options [optional, Hash<Symbol>] :request for request_stub.with
-    # @option default_options [optional, Hash<Symbol>] :response for request_stub.to_return
-    # @option default_options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
-    # @option default_options [optional, TrueClass] :timeout for request_stub.to_timeout
+    # @param [optional, Hash<Symbol>] options
+    # @option options [optional, Hash<Symbol>] :request for request_stub.with
+    # @option options [optional, Hash<Symbol>] :response for request_stub.to_return
+    # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
+    # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
     # @return [Endpoint] returns the updated endpoint
     #
-    def update(verb, uri_template, default_options)
-      @verb            = verb
-      @uri_template    = uri_template
-      @default_options = default_options
+    def update(verb, uri_template, options)
+      self.verb            = verb
+      self.uri_template    = uri_template
+      self.options = options
       self
     end
 

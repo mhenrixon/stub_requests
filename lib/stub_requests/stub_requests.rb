@@ -7,57 +7,6 @@
 # @since 0.1.0
 #
 module StubRequests
-  #
-  # Error is a base class for all gem errors
-  #
-  class Error < StandardError; end
-
-  #
-  # ServiceHaveEndpoints is raised to prevent overwriting a registered service's endpoints
-  #
-  class ServiceHaveEndpoints < StandardError
-    def initialize(service)
-      super("Service with id #{service.id} have already been registered. #{service}")
-    end
-  end
-
-  #
-  # InvalidType is raised when an argument is invalid
-  #
-  class InvalidType < Error
-    def initialize(actual:, expected:)
-      super("Expected `#{actual}` to be any of [#{expected}]")
-    end
-  end
-
-  #
-  # EndpointNotFound is raised when an endpoint cannot be found
-  #
-  class EndpointNotFound < Error; end
-
-  #
-  # ServiceNotFound is raised when a service cannot be found
-  #
-  class ServiceNotFound < Error
-    def initialize(service_id)
-      super("Couldn't find a service with id=:#{service_id}")
-    end
-  end
-
-  #
-  # UriSegmentMismatch is raised when a segment cannot be replaced
-  #
-  class UriSegmentMismatch < Error; end
-
-  #
-  # InvalidUri is raised when a URI is invalid
-  #
-  class InvalidUri < Error
-    def initialize(uri)
-      super("'#{uri}' is not a valid URI.")
-    end
-  end
-
   # extends "self"
   # @!parse extend self
   extend self
@@ -77,6 +26,29 @@ module StubRequests
   # @!attribute [rw] logger
   #   @return [Logger] the logger to use in the gem
   attr_accessor :logger
+
+  #
+  # Allows the gem to be configured
+  #
+  #
+  # @return [Configuration] <description>
+  #
+  # @yieldparam [Configuration] config <description>
+  # @yieldreturn [<type>] <describe what yield should return>
+  def configure
+    yield(config) if block_given?
+    config
+  end
+
+  #
+  # Contains gem configuration
+  #
+  #
+  # @return [Configuration]
+  #
+  def config
+    @config ||= Configuration.new
+  end
 
   #
   # The current version of the gem

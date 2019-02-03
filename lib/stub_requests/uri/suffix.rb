@@ -7,6 +7,11 @@
 # @since 0.1.0
 #
 module StubRequests
+  #
+  # Module URI organizes all gem logic regarding URI
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
   module URI
     #
     # Module Suffix deals with validating {URI} suffix

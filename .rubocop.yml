@@ -12,17 +12,15 @@ AllCops:
     - "lib/**/*"
     - "bin/**/*"
     - "spec/**/*"
+    - ".simplecov"
   Exclude:
     - "lib/stub_requests/core_ext/**/*"
     - "Gemfile.lock"
     - "bin/setup"
     - "gemfiles/**/*"
 
-Lint/HandleExceptions:
-  Enabled: true
-
-Lint/UselessAssignment:
-  Enabled: true
+Layout/IndentArray:
+  EnforcedStyle: consistent
 
 Metrics/AbcSize:
   Max: 38
@@ -37,7 +35,6 @@ Metrics/MethodLength:
   Max: 13
 
 Metrics/BlockLength:
-  Enabled: true
   Exclude:
     - '**/spec/**/*.rb'
     - '**/*.rake'
@@ -45,14 +42,7 @@ Metrics/BlockLength:
 Metrics/PerceivedComplexity:
   Max: 8
 
-Naming/AccessorMethodName:
-  Enabled: true
-
-Naming/ConstantName:
-  Enabled: true
-
 Naming/FileName:
-  Enabled: true
   Exclude:
     - '**/Gemfile'
 
@@ -60,55 +50,63 @@ Naming/UncommunicativeMethodParamName:
   AllowedNames:
     - ex
 
-RSpec/AlignLeftLetBrace:
+AlignLeftLetBrace:
   Enabled: true
 
+RSpec/ContextWording:
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - given
+    - for
+    - and
+
+RSpec/EmptyExampleGroup:
+  Enabled: false
+  CustomIncludeMethods:
+    - let!
+    - specfify!
+
 RSpec/FilePath:
-  Enabled: true
   Exclude:
-    - 'spec/stub_requests/webmock_builder_spec.rb'
+    - spec/stub_requests/webmock/builder_spec.rb
+
+RSpec/ImplicitSubject:
+  Enabled: false
+  EnforcedStyle: single_statement_only
+
+RSpec/MultipleDescribes:
+  Exclude:
+    - spec/stub_requests/core_ext/object/blank_spec.rb
+
+RSpec/NamedSubject:
+  Exclude:
+    - spec/stub_requests/core_ext/object/blank_spec.rb
 
 RSpec/NestedGroups:
   Max: 4
-  Enabled: true
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-
-Style/Documentation:
-  Enabled: true
-
-Style/GlobalVars:
-  Enabled: true
 
 Style/ModuleFunction:
-  Enabled: false
+  EnforcedStyle: extend_self
 
 Style/StringLiterals:
-  Enabled: true
   EnforcedStyle: double_quotes
   ConsistentQuotesInMultiline: true
 
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-
 Style/SymbolArray:
-  Enabled: true
   EnforcedStyle: brackets
 
 Style/TernaryParentheses:
-  Enabled: true
   EnforcedStyle: require_parentheses_when_complex
   AllowSafeAssignment: true
 
 Style/TrailingCommaInArguments:
-  Enabled: true
   EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInArrayLiteral:
-  Enabled: true
   EnforcedStyleForMultiline: comma
 
 Style/TrailingCommaInHashLiteral:
-  Enabled: true
   EnforcedStyleForMultiline: comma

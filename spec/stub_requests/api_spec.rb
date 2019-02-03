@@ -48,9 +48,7 @@ RSpec.describe StubRequests::API do
       its(:id)  { is_expected.to eq(service_id) }
       its(:uri) { is_expected.to eq(service_uri) }
 
-      specify do
-        expect { register_service }.to change(service_registry, :count).by(1)
-      end
+      it! { is_expected.to change(service_registry, :count).by(1) }
     end
 
     it_behaves_like "a successful registration"
@@ -75,17 +73,24 @@ RSpec.describe StubRequests::API do
     let(:service)          { nil }
     let(:block)            { nil }
 
+    context "when service is unregistered" do
+      let(:error)   { StubRequests::ServiceNotFound }
+      let(:message) { "Couldn't find a service with id=:api" }
+
+      it! { is_expected.to raise_error(error, message) }
+    end
+
     context "when service is registered" do
       let!(:service) { described_class.register_service(service_id, service_uri) }
 
       context "when endpoint is registered" do
-        let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
 
         it { is_expected.to be_a(WebMock::RequestStub) }
       end
 
       context "when given a block" do
-        let!(:endpoint) { service.register_endpoint(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
 
         it "yields the stub to the block" do
           stub_endpoint do |stub|
@@ -95,21 +100,10 @@ RSpec.describe StubRequests::API do
       end
 
       context "when endpoint is unregistered" do
-        specify do
-          expect { stub_endpoint }.to raise_error(
-            StubRequests::EndpointNotFound,
-            "Couldn't find an endpoint with id=:files",
-          )
-        end
-      end
-    end
+        let(:error)   { StubRequests::EndpointNotFound }
+        let(:message) { "Couldn't find an endpoint with id=:files" }
 
-    context "when service is unregistered" do
-      specify do
-        expect { stub_endpoint }.to raise_error(
-          StubRequests::ServiceNotFound,
-          "Couldn't find a service with id=:api",
-        )
+        it! { is_expected.to raise_error(error, message) }
       end
     end
   end

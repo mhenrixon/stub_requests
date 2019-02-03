@@ -13,10 +13,10 @@ RSpec.describe StubRequests::Endpoint do
   describe "#initialize" do
     subject { endpoint }
 
-    its(:id)              { is_expected.to eq(endpoint_id) }
-    its(:verb)            { is_expected.to eq(verb) }
-    its(:uri_template)    { is_expected.to eq(uri_template) }
-    its(:default_options) { is_expected.to eq(default_options) }
+    its(:id)           { is_expected.to eq(endpoint_id) }
+    its(:verb)         { is_expected.to eq(verb) }
+    its(:uri_template) { is_expected.to eq(uri_template) }
+    its(:options)      { is_expected.to eq(default_options) }
   end
 
   describe "#update" do
@@ -26,10 +26,10 @@ RSpec.describe StubRequests::Endpoint do
     let(:new_uri_template)    { "resource/:resource_id/collection/:collection_id" }
     let(:new_default_options) { { response: { body: "" } } }
 
-    its(:id)              { is_expected.to eq(endpoint_id) }
-    its(:verb)            { is_expected.to eq(new_verb) }
-    its(:uri_template)    { is_expected.to eq(new_uri_template) }
-    its(:default_options) { is_expected.to eq(new_default_options) }
+    its(:id)           { is_expected.to eq(endpoint_id) }
+    its(:verb)         { is_expected.to eq(new_verb) }
+    its(:uri_template) { is_expected.to eq(new_uri_template) }
+    its(:options)      { is_expected.to eq(new_default_options) }
   end
 
   describe "#==" do
@@ -57,10 +57,10 @@ RSpec.describe StubRequests::Endpoint do
   describe "#to_s" do
     subject(:to_s) { endpoint.to_s }
 
-    specify do
-      expect(to_s).to eq(
-        "#<StubRequests::Endpoint id=:resource_collection verb=:get uri_template='resource/:resource_id/collection'>",
-      )
+    let(:expected_output) do
+      "#<StubRequests::Endpoint id=:resource_collection verb=:get uri_template='resource/:resource_id/collection'>"
     end
+
+    it { is_expected.to eq(expected_output) }
   end
 end
