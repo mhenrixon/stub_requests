@@ -8,7 +8,9 @@ rake yard
 git checkout gh-pages
 
 shopt -s extglob
-rm -rf "$(echo ./!(bin|_config.yml|_index.html))"
+command="$(echo ./!(bin|_config.yml|_index.html))"
+echo "Cleaning up current documentation: rm -rf ${command}"
+rm -rf $command
 
 mv doc/* ./
 git add --all
