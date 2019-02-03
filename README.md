@@ -20,6 +20,7 @@ This is achieve by keeping a registry over the service endpoints.
   - [Register service endpoints](#register-service-endpoints)
   - [Stubbing service endpoints](#stubbing-service-endpoints)
   - [Metrics](#metrics)
+  - [Subscriptions](#subscriptions)
 - [Future Improvements](#future-improvements)
   - [API Client Gem](#api-client-gem)
 - [Development](#development)
@@ -116,6 +117,15 @@ Metrics collection are by default turned off. It can be turned on by the followi
 StubRequests.configure do |config|
   config.record_metrics = true
 end
+```
+
+<a id="subscriptions"></a>
+### Subscriptions
+
+```ruby
+StubRequests.subscribe(:document_service, :show)
+
+# TODO: Needs more thinking through this
 ```
 
 <a id="future-improvements"></a>
