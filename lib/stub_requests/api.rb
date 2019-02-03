@@ -70,8 +70,8 @@ module StubRequests
     # @return [void]
     #
     # :reek:UtilityFunction
-    def subscribe(service_id, endpoint_id)
-      SubscriptionRegistry.instance.subscribe(service_id, endpoint_id)
+    def subscribe(service_id, endpoint_id, verb = :any, callback)
+      SubscriptionRegistry.instance.subscribe(service_id, endpoint_id, verb, callback)
     end
 
     #

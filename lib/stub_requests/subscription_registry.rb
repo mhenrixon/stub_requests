@@ -26,11 +26,13 @@ module StubRequests
       property :service_id, type: Symbol
       property :endpoint_id, type: Symbol
       property :verb, type: Symbol, default: :any
+      property :callback, type: Proc
 
-      def initialize(service_id, endpoint_id, verb)
+      def initialize(service_id, endpoint_id, verb, callback)
         self.service_id  = service_id
         self.endpoint_id = endpoint_id
         self.verb        = verb
+        self.callback    = callback
       end
     end
 
@@ -68,11 +70,11 @@ module StubRequests
     #
     # @return [Subscription] the added subscription
     #
-    def subscribe(service_id, endpoint_id, verb = :any)
+    def subscribe(service_id, endpoint_id, verb = :any, callback)
       subscription = find_by(service_id, endpoint_id, verb)
       return subscription if subscription
 
-      subscription = Subscription.new(service_id, endpoint_id, verb)
+      subscription = Subscription.new(service_id, endpoint_id, verb, callback)
       subscriptions.push(subscription)
       subscription
     end
@@ -91,7 +93,7 @@ module StubRequests
       find do |sub|
         sub.service_id == service_id &&
           sub.endpoint_id == endpoint_id &&
-          sub.verb == verb
+          ([sub.verb, verb].include?(:any) || sub.verb == :any || sub.verb == verb)
       end
     end
 
@@ -105,17 +107,19 @@ module StubRequests
     # @return [true, false]
     #
     def subscribed?(service_id, endpoint_id, _verb = :any)
-      !!find_by(service_id, endpoint_id) # rubocop:disable Style/DoubleNegation
+      !!find_by(service_id, endpoint_id, verb) # rubocop:disable Style/DoubleNegation
     end
 
     # @api private
     # :reek:FeatureEnvy
     # :reek:DuplicateMethodCall
     def notify(obj)
-      return unless subscribed?(obj.service_id, obj.endpoint_id, obj.verb)
+      binding.pry
+      return unless (subscription = find_by(obj.service_id, obj.endpoint_id, obj.verb))
 
       p "The service :#{obj.service_id} just received :#{obj.verb} to endpoint :#{obj.endpoint_id}."
       p "The full URI was #{obj.uri}"
+      Docile.dsl_eval(obj, &subscription.callback)
     end
   end
 end
