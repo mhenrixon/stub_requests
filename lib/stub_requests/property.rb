@@ -39,8 +39,8 @@ module StubRequests
       # Define property methods for the name
       #
       # @param [Symbol] name the name of the property
-      # @param [Object] type: the expected type of the property
-      # @param [Hash<Symbol>] **options a hash with options
+      # @param [Object] type the expected type of the property
+      # @param [Hash<Symbol>] options a hash with options
       # @option options [Object] :default a default value for the property
       #
       # @return [Object] the whatever
@@ -55,6 +55,7 @@ module StubRequests
         end
       end
 
+      # @api private
       def normalize_type(type, **options)
         type_array = Array(type)
         return type_array unless (default = options[:default])
@@ -62,6 +63,7 @@ module StubRequests
         type_array.concat([default.class]).flatten.uniq
       end
 
+      # @api private
       def define_property(name, type, default)
         property_reader(name)
         property_predicate(name)
@@ -70,6 +72,7 @@ module StubRequests
         set_property_defined(name, type, default)
       end
 
+      # @api private
       def property_reader(name)
         silence_redefinition_of_method(name.to_s)
         redefine_method(name) do
@@ -77,6 +80,7 @@ module StubRequests
         end
       end
 
+      # @api private
       def property_predicate(name)
         silence_redefinition_of_method("#{name}?")
         redefine_method("#{name}?") do
@@ -84,13 +88,15 @@ module StubRequests
         end
       end
 
+      # @api private
       def property_writer(name, type)
         redefine_method("#{name}=") do |obj|
-          validate! name, obj, is_a: type
+          validate! name: name, value: obj, type: type
           instance_variable_set("@#{name}", obj)
         end
       end
 
+      # @api private
       def set_property_defined(name, type, default)
         properties[name] = { type: type, default: default }
       end

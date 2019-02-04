@@ -8,21 +8,29 @@
 #
 module StubRequests
   #
-  # Module Metrics contains logic for collecting metrics about {EndpointStat} and {StubStat}
+  # Module Metrics contains logic for collecting metrics about requests stubs
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
   #
   module Metrics
     #
-    # Class StubStat tracks the WebMock::RequestStub life cycle
+    # Class Stub tracks the WebMock::RequestStub life cycle
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     # @since 0.1.2
     #
     # :reek:TooManyInstanceVariables
-    class StubStat
+    class Request
       include Property
+      extend Forwardable
+
+      # Delegate service_id, endpoint_id, verb and uri_template to endpoint
+      delegate [:service_id, :endpoint_id, :verb, :uri_template] => :endpoint
+      #
+      # @!attribute [r] endpoint
+      #   @return [StubRequests::Metrics::Endpoint] a stubbed endpoint
+      property :endpoint, type: StubRequests::Metrics::Endpoint
       #
       # @!attribute [r] verb
       #   @return [Symbol] a HTTP verb/method
@@ -52,18 +60,18 @@ module StubRequests
       # Initialize a new Record
       #
       #
-      # @param [EndpointStat] endpoint_stat a stubbed endpoint
+      # @param [Endpoint] endpoint a stubbed endpoint
       # @param [WebMock::RequestStub] request_stub the stubbed webmock request
       #
-      def initialize(endpoint_stat, request_stub)
+      def initialize(endpoint, request_stub)
         request_pattern = request_stub.request_pattern
-        @endpoint_stat  = endpoint_stat
-        @verb           = request_pattern.method_pattern.to_s.to_sym
-        @uri            = request_pattern.uri_pattern.to_s
-        @request_stub   = request_stub
-        @recorded_at    = Time.now
-        @recorded_from  = RSpec.current_example.metadata[:location]
-        @responded_at   = nil
+        self.endpoint       = endpoint
+        self.verb           = request_pattern.method_pattern.to_s.to_sym
+        self.uri            = request_pattern.uri_pattern.to_s
+        self.request_stub   = request_stub
+        self.recorded_at    = Time.now
+        self.recorded_from  = RSpec.current_example.metadata[:location]
+        @responded_at = nil # ByPass the validation for the initializer
       end
 
       #
@@ -73,7 +81,8 @@ module StubRequests
       # @return [Time] the time it was marked responded
       #
       def mark_as_responded
-        @responded_at = Time.now
+        self.responded_at = Time.now
+        Observable.notify_subscribers(self)
       end
     end
   end

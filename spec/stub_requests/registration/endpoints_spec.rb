@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::EndpointRegistry do
+RSpec.describe StubRequests::Registration::Endpoints do
   let(:registry)     { described_class.new }
-  let(:endpoint)     { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
+  let(:endpoint)     { StubRequests::Registration::Endpoint.new(endpoint_id, verb, uri_template) }
   let(:endpoint_id)  { :resource_collection }
   let(:verb)         { :find }
   let(:uri_template) { "resource/:resource_id/collection" }
@@ -53,20 +53,6 @@ RSpec.describe StubRequests::EndpointRegistry do
         each(&block)
         expect(registry.endpoints).to have_received(:each).with(no_args, &block)
       end
-    end
-  end
-
-  describe "#registered?" do
-    subject(:registered) { registry.registered?(endpoint_id) }
-
-    context "when endpoint is unregistered" do
-      it { is_expected.to eq(false) }
-    end
-
-    context "when endpoint is registered" do
-      before { registry.register(endpoint_id, verb, uri_template) }
-
-      it { is_expected.to eq(true) }
     end
   end
 
@@ -143,7 +129,7 @@ RSpec.describe StubRequests::EndpointRegistry do
     subject(:to_s) { registry.to_s }
 
     context "when no endpoints are registered" do
-      it { is_expected.to eq("#<StubRequests::EndpointRegistry endpoints=[]>") }
+      it { is_expected.to eq("#<StubRequests::Registration::Endpoints endpoints=[]>") }
     end
 
     context "when endpoints are registered" do
@@ -152,8 +138,8 @@ RSpec.describe StubRequests::EndpointRegistry do
       end
 
       let(:expected_output) do
-        "#<StubRequests::EndpointRegistry endpoints=["\
-          "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
+        "#<StubRequests::Registration::Endpoints endpoints=["\
+          "#<StubRequests::Registration::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
         "]>"
       end
 

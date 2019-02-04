@@ -8,7 +8,7 @@
 #
 module StubRequests
   #
-  # Module Metrics contains logic for collecting metrics about {EndpointStat} and {StubStat}
+  # Module Metrics contains logic for collecting metrics about requests stubs
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
@@ -16,22 +16,22 @@ module StubRequests
   # :reek:TooManyInstanceVariables
   module Metrics
     #
-    # Class EndpointStat provides metrics for stubbed endpoints
+    # Class Endpoint provides metrics for stubbed endpoints
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     # @since 0.1.2
     #
-    class EndpointStat
+    class Endpoint
       # includes "Enumerable"
       # @!parse include Enumerable
       include Enumerable
-
       # @api private
       include Property
+      # @api private
 
       #
       # @!attribute [r] service_id
-      #   @return [Symbol] the id of a {Service}
+      #   @return [Symbol] the id of a {StubRequests::Registration::Service}
       property :service_id, type: Symbol
       #
       # @!attribute [r] endpoint_id
@@ -44,28 +44,29 @@ module StubRequests
       #
       # @!attribute [r] uri_template
       #   @return [String] the full URI template for the endpoint
-      property :uri_template, type: Symbol
+      property :uri_template, type: String
       #
-      # @!attribute [r] stats
-      #   @return [Array] an array with recorded request_stubs
-      attr_reader :stats
+      # @!attribute [r] stubs
+      #   @return [Array] an array with recorded requests
+      attr_reader :requests
 
       #
-      # Initializes a new EndpointStat
+      # Initializes a new Endpoint
       #
-      # @param [Service] service a service
-      # @param [Endpoint] endpoint an endpoint
+      # @param [Registration::Service] service a service
+      # @param [Registration::Endpoint] endpoint an endpoint
       #
       def initialize(service, endpoint)
-        @service_id   = service.id
-        @endpoint_id  = endpoint.id
-        @verb         = endpoint.verb
-        @uri_template = [service.uri, endpoint.uri_template].join("/")
-        @stats        = Concurrent::Array.new
+        self.service_id   = service.id
+        self.endpoint_id  = endpoint.id
+        self.verb         = endpoint.verb
+        self.uri_template = [service.uri, endpoint.uri_template].join("/")
+
+        @requests = Concurrent::Array.new
       end
 
       def find_by(attribute:, value:)
-        find { |stat| stat.send(attribute) == value }
+        find { |request| request.send(attribute) == value }
       end
 
       #
@@ -77,7 +78,7 @@ module StubRequests
       # @yield used by Enumerable
       #
       def each(&block)
-        stats.each(&block)
+        requests.each(&block)
       end
 
       #
@@ -88,9 +89,9 @@ module StubRequests
       # @return [Record]
       #
       def record(request_stub)
-        stat = StubStat.new(self, request_stub)
-        stats.push(stat)
-        stat
+        request = Request.new(self, request_stub)
+        requests.push(request)
+        request
       end
     end
   end

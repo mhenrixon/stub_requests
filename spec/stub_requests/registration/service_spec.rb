@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Service do
+RSpec.describe StubRequests::Registration::Service do
   let(:service)         { described_class.new(service_id, service_uri) }
   let(:service_id)      { :abstractions }
   let(:service_uri)     { "https://abstractions.com/v1" }
@@ -27,7 +27,7 @@ RSpec.describe StubRequests::Service do
     let(:default_options) { {} }
 
     context "when endpoint is unregistered" do
-      it { is_expected.to be_a(StubRequests::Endpoint) }
+      it { is_expected.to be_a(StubRequests::Registration::Endpoint) }
 
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(verb) }
@@ -119,16 +119,22 @@ RSpec.describe StubRequests::Service do
   describe "#to_s" do
     subject(:to_s) { service.to_s }
 
+    let(:expected_output) do
+      "#<StubRequests::Registration::Service id=abstractions" \
+      " uri=https://abstractions.com/v1 endpoints=[]>"
+    end
+
     context "when no endpoints are registered" do
-      it { is_expected.to eq("#<StubRequests::Service id=abstractions uri=https://abstractions.com/v1 endpoints=[]>") }
+      it { is_expected.to eq(expected_output) }
     end
 
     context "when endpoints are registered" do
       before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
 
       let(:expected_output) do
-        "#<StubRequests::Service id=abstractions uri=https://abstractions.com/v1" \
-        " endpoints=[#<StubRequests::Endpoint id=:concrete verb=:get uri_template='concretes/:concrete_id'>]>"
+        "#<StubRequests::Registration::Service id=abstractions uri=https://abstractions.com/v1 endpoints=[" \
+          "#<StubRequests::Registration::Endpoint id=:concrete verb=:get uri_template='concretes/:concrete_id'>" \
+        "]>"
       end
 
       it { is_expected.to eq(expected_output) }

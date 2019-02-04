@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Metrics::StubStat do
-  let(:stat) { described_class.new(endpoint_stat, request_stub) }
+RSpec.describe StubRequests::Metrics::Request do
+  let(:request) { described_class.new(endpoint, request_stub) }
 
-  let(:endpoint_stat) { StubRequests::Metrics::EndpointStat.new(service, endpoint) }
+  let(:endpoint)      { StubRequests::Metrics::Endpoint.new(service, reg_endpoint) }
   let(:request_stub)  { WebMock::RequestStub.new(:get, "http://google.com") }
-  let(:service)       { StubRequests::Service.new(service_id, service_uri) }
-  let(:endpoint)      { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
-  let(:uri)           { URI.for_service_endpoint(service, endpoint, id: "first") }
+  let(:service)       { StubRequests::Registration::Service.new(service_id, service_uri) }
+  let(:reg_endpoint)  { StubRequests::Registration::Endpoint.new(endpoint_id, verb, uri_template) }
+  let(:uri)           { URI.for_service_endpoint(service, reg_endpoint, id: "first") }
 
   let(:service_id)   { :google_documents }
   let(:service_uri)  { "http://google.com" }
@@ -23,6 +23,7 @@ RSpec.describe StubRequests::Metrics::StubStat do
 
     let(:expected_properties) do
       {
+        endpoint: { default: nil, type: [StubRequests::Metrics::Endpoint] },
         verb: { default: nil, type: [Symbol] },
         uri: { default: nil, type: [String] },
         request_stub: { default: nil, type: [WebMock::RequestStub] },
@@ -36,7 +37,7 @@ RSpec.describe StubRequests::Metrics::StubStat do
   end
 
   describe "#initialize" do
-    subject { stat }
+    subject { request }
 
     let(:request_pattern) { request_stub.request_pattern }
 
@@ -49,8 +50,8 @@ RSpec.describe StubRequests::Metrics::StubStat do
   end
 
   describe "#mark_as_responded" do
-    subject { stat.mark_as_responded }
+    subject { request.mark_as_responded }
 
-    it! { is_expected.to change(stat, :responded_at).from(nil) }
+    it! { is_expected.to change(request, :responded_at).from(nil) }
   end
 end

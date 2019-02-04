@@ -22,29 +22,29 @@ module StubRequests
     # Require the value to be any of the types past in
     #
     #
-    # @param [Object] value the value to validate
-    # @param [Array<Class>, Array<Module>, Class, Module] is_a
+    # @param [Symbol] name the name of the argument
+    # @param [Object] value the actual value of the argument
+    # @param [Array, Class, Module] type nil the expected argument value class
     #
     # @raise [InvalidArgumentType] when the value is disallowed
     #
-    # @return [true] when the value is allowed
+    # @return [void]
     #
     # :reek:UtilityFunction
-    def validate!(name, value, is_a:)
-      validate! :name, name, is_a: [Symbol, String] unless name
+    def validate!(name:, value:, type:)
+      validate_type!(:name, name, [Symbol, String]) unless name
+      validate_type!(name, value, type) if type
+    end
 
-      expected_types = Array(is_a).flatten
-      return true if validate(value, expected_types)
+    # :reek:UtilityFunction
+    def validate_type!(name, value, type)
+      expected_types = Array(type).flatten
+      return if expected_types.any? { |is_a| value.is_a?(is_a) }
 
       raise StubRequests::InvalidArgumentType,
             name: name,
             actual: value.class,
             expected: expected_types
-    end
-
-    # :reek:UtilityFunction
-    def validate(value, expected_types)
-      expected_types.any? { |type| value.is_a?(type) }
     end
   end
 end

@@ -20,6 +20,7 @@ This is achieve by keeping a registry over the service endpoints.
   - [Register service endpoints](#register-service-endpoints)
   - [Stubbing service endpoints](#stubbing-service-endpoints)
   - [Metrics](#metrics)
+  - [Observing endpoint invocations](#observing-endpoint-invocations)
 - [Future Improvements](#future-improvements)
   - [API Client Gem](#api-client-gem)
 - [Development](#development)
@@ -116,6 +117,26 @@ Metrics collection are by default turned off. It can be turned on by the followi
 StubRequests.configure do |config|
   config.record_metrics = true
 end
+```
+
+<a id="observing-endpoint-invocations"></a>
+### Observing endpoint invocations
+
+```ruby
+# To jump into pry when a request is called
+callback = lambda do |request|
+  p request
+  binding.pry
+end
+
+callback = ->(request) { p request; binding.pry }
+
+StubRequests.subscribe_to(:document_service, :show, :get, callback)
+```
+
+```ruby
+# To unsubscribe from notifications
+StubRequests.unsubscribe_from(:document_service, :show, :get)
 ```
 
 <a id="future-improvements"></a>

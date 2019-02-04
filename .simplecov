@@ -24,6 +24,7 @@ SimpleCov.start do
   add_filter "/gemfiles/"
   add_filter "/lib/stub_requests/core_ext/array/extract_options.rb"
   add_filter "/lib/stub_requests/core_ext/class/attribute.rb"
+  add_filter "/lib/stub_requests/core_ext/object/blank.rb"
   add_filter "/lib/stub_requests/core_ext/kernel/singleton_class.rb"
   add_filter "/lib/stub_requests/core_ext/module/redefine_method.rb"
 end
