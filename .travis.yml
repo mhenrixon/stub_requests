@@ -9,6 +9,7 @@ env:
       else git log -1 --skip 1 --pretty=format:%ct; fi)
 
 before_install:
+  - gem update --system
   - gem install bundler -v 2.0.1
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
@@ -22,9 +23,17 @@ script:
 after_script:
   - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
 
+jdk:
+  - oraclejdk7
+  - openjdk7
+  - oraclejdk8
+
 rvm:
   - 2.3.7
   - 2.4.5
+  - truffleruby
+  - jruby
+  - rbx-3
 
 matrix:
   fast_finish: true
