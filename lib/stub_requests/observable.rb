@@ -22,7 +22,7 @@ module StubRequests
     # @param [Symbol] service_id the id of a service
     # @param [Symbol] endpoint_id the id of an endpoint
     # @param [Symbol] verb the HTTP verb to subscribe to
-    # @param [proc] callback the callback to use for when.a request was made
+    # @param [Proc] callback the callback to use for when.a request was made
     #
     # @return [Subscription]
     #
@@ -55,8 +55,8 @@ module StubRequests
     #
     # @return [Request]
     #
-    def self.notify_subscribers(request_stub)
-      Registry.instance.notify_subscribers(request_stub)
+    def self.notify_subscribers(request)
+      Registry.instance.notify_subscribers(request)
     end
   end
 end

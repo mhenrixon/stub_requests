@@ -68,8 +68,8 @@ module StubRequests
       # Records metrics about stubbed endpoints
       #
       #
-      # @param [StubRequests::Registration::Service] service a symbolic id of the service
-      # @param [StubRequests::Registration::Endpoint] endpoint a string with a base_uri to the service
+      # @param [Registration::Service] service a symbolic id of the service
+      # @param [Registration::Endpoint] endpoint a string with a base_uri to the service
       # @param [WebMock::RequestStub] request_stub the stubbed request
       #
       # @return [Service] the service that was just registered

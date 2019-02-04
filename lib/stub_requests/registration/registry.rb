@@ -60,7 +60,7 @@ module StubRequests
       # @param [Symbol] service_id a symbolic id of the service
       # @param [String] service_uri a string with a base_uri to the service
       #
-      # @return [StubRequests::Registration::Service] the service that was just registered
+      # @return [Registration::Service] the service that was just registered
       #
       def register(service_id, service_uri)
         if (service = find(service_id))
@@ -88,7 +88,7 @@ module StubRequests
       #
       # @param [Symbol] service_id id of the service to remove
       #
-      # @return [StubRequests::Registration::Service] the found service
+      # @return [Registration::Service] the found service
       #
       def find(service_id)
         services[service_id]
@@ -102,7 +102,7 @@ module StubRequests
       #
       # @raise [ServiceNotFound] when an endpoint couldn't be found
       #
-      # @return [StubRequests::Registration::Service]
+      # @return [Registration::Service]
       #
       def find!(service_id)
         find(service_id) || raise(ServiceNotFound, service_id)

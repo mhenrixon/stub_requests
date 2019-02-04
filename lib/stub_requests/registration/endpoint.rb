@@ -46,7 +46,7 @@ module StubRequests
       property :options, type: Hash, default: {}
 
       #
-      # An endpoint for a specific {Service}
+      # An endpoint for a specific {StubRequests::Registration::Service}
       #
       # @param [Symbol] endpoint_id a descriptive id for the endpoint
       # @param [Symbol] verb a HTTP verb
@@ -75,7 +75,7 @@ module StubRequests
       # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
       # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
       #
-      # @return [StubRequests::Registration::Endpoint] returns the updated endpoint
+      # @return [Registration::Endpoint] returns the updated endpoint
       #
       def update(verb, uri_template, options)
         self.verb            = verb

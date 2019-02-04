@@ -31,7 +31,7 @@ module StubRequests
 
       #
       # @!attribute [r] service_id
-      #   @return [Symbol] the id of a {Service}
+      #   @return [Symbol] the id of a {StubRequests::Registration::Service}
       property :service_id, type: Symbol
       #
       # @!attribute [r] endpoint_id
@@ -53,8 +53,8 @@ module StubRequests
       #
       # Initializes a new Endpoint
       #
-      # @param [StubRequests::Registration::Service] service a service
-      # @param [StubRequests::Registration::Endpoint] endpoint an endpoint
+      # @param [Registration::Service] service a service
+      # @param [Registration::Endpoint] endpoint an endpoint
       #
       def initialize(service, endpoint)
         @service_id    = service.id

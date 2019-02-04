@@ -22,10 +22,9 @@ module StubRequests
     # Require the value to be any of the types past in
     #
     #
-    # @param [Symbol] name: the name of the argument
-    # @param [Object] value: the actual value of the argument
-    # @param [Array, Class, Module] type: nil the expected argument value class
-    # @param [Integer] arity: nil the number of expected arguments the argument should have
+    # @param [Symbol] name the name of the argument
+    # @param [Object] value the actual value of the argument
+    # @param [Array, Class, Module] type nil the expected argument value class
     #
     # @raise [InvalidArgumentType] when the value is disallowed
     #
