@@ -24,15 +24,15 @@ module StubRequests
       include Property
 
       # @!attribute [rw] id
-      #   @return [EndpointRegistry] the id of the service
+      #   @return [Symbol] the id of the service
       property :id, type: Symbol
 
       # @!attribute [rw] uri
-      #   @return [EndpointRegistry] the base uri to the service
+      #   @return [String] the base uri to the service
       property :uri, type: String
 
       # @!attribute [rw] endpoints
-      #   @return [EndpointRegistry] a list with defined endpoints
+      #   @return [Endpoints] a list with defined endpoints
       attr_reader :endpoints
 
       #
@@ -44,7 +44,7 @@ module StubRequests
       def initialize(service_id, service_uri)
         self.id    = service_id
         self.uri   = service_uri
-        @endpoints = EndpointRegistry.new
+        @endpoints = Endpoints.new
       end
 
       #

@@ -15,11 +15,11 @@ module StubRequests
   #
   module Registration
     #
-    # Class EndpointRegistry provides registration of endpoints
+    # Class Endpoints manages a collection of endpoints
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     #
-    class EndpointRegistry
+    class Endpoints
       include Enumerable
 
       #

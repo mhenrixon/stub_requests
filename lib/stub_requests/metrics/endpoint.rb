@@ -44,7 +44,7 @@ module StubRequests
       #
       # @!attribute [r] uri_template
       #   @return [String] the full URI template for the endpoint
-      property :uri_template, type: Symbol
+      property :uri_template, type: String
       #
       # @!attribute [r] stubs
       #   @return [Array] an array with recorded requests
@@ -57,10 +57,11 @@ module StubRequests
       # @param [Registration::Endpoint] endpoint an endpoint
       #
       def initialize(service, endpoint)
-        @service_id    = service.id
-        @endpoint_id   = endpoint.id
-        @verb          = endpoint.verb
-        @uri_template  = [service.uri, endpoint.uri_template].join("/")
+        self.service_id   = service.id
+        self.endpoint_id  = endpoint.id
+        self.verb         = endpoint.verb
+        self.uri_template = [service.uri, endpoint.uri_template].join("/")
+
         @requests = Concurrent::Array.new
       end
 

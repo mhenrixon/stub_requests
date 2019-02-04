@@ -37,7 +37,7 @@ require "stub_requests/metrics/registry"
 
 require "stub_requests/registration"
 require "stub_requests/registration/endpoint"
-require "stub_requests/registration/endpoint_registry"
+require "stub_requests/registration/endpoints"
 require "stub_requests/registration/service"
 require "stub_requests/registration/registry"
 

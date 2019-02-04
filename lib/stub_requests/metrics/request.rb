@@ -65,13 +65,13 @@ module StubRequests
       #
       def initialize(endpoint, request_stub)
         request_pattern = request_stub.request_pattern
-        @endpoint       = endpoint
-        @verb           = request_pattern.method_pattern.to_s.to_sym
-        @uri            = request_pattern.uri_pattern.to_s
-        @request_stub   = request_stub
-        @recorded_at    = Time.now
-        @recorded_from  = RSpec.current_example.metadata[:location]
-        @responded_at   = nil
+        self.endpoint       = endpoint
+        self.verb           = request_pattern.method_pattern.to_s.to_sym
+        self.uri            = request_pattern.uri_pattern.to_s
+        self.request_stub   = request_stub
+        self.recorded_at    = Time.now
+        self.recorded_from  = RSpec.current_example.metadata[:location]
+        @responded_at = nil # ByPass the validation for the initializer
       end
 
       #
@@ -81,7 +81,7 @@ module StubRequests
       # @return [Time] the time it was marked responded
       #
       def mark_as_responded
-        @responded_at = Time.now
+        self.responded_at = Time.now
         Observable.notify_subscribers(self)
       end
     end

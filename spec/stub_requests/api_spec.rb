@@ -54,7 +54,7 @@ RSpec.describe StubRequests::API do
     it_behaves_like "a successful registration"
 
     context "when given a block" do
-      specify { register_service { expect(self).to be_a(StubRequests::Registration::EndpointRegistry) } }
+      specify { register_service { expect(self).to be_a(StubRequests::Registration::Endpoints) } }
 
       it_behaves_like "a successful registration"
     end

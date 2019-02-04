@@ -50,11 +50,12 @@ module StubRequests
     # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
     # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
-    def initialize(endpoint_id, verb, uri_template, options = {})
-      self.id              = endpoint_id
-      self.verb            = verb
-      self.uri_template    = uri_template
-      self.options         = options
+    def initialize(service, endpoint_id, verb, uri_template, options = {})
+      self.service      = service
+      self.id           = endpoint_id
+      self.verb         = verb
+      self.uri_template = uri_template
+      self.options      = options
     end
 
     #
