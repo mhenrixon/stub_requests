@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    stub_requests (0.1.1)
+    stub_requests (0.1.2)
       concurrent-ruby (~> 1.0, < 2)
       docile (~> 1.0, < 2)
       public_suffix (~> 3.0, < 4)
