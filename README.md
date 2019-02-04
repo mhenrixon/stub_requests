@@ -14,28 +14,26 @@ This is achieve by keeping a registry over the service endpoints.
 
 <!-- MarkdownTOC -->
 
-- [Required ruby version](#required-ruby-version)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Register service endpoints](#register-service-endpoints)
-  - [Stubbing service endpoints](#stubbing-service-endpoints)
-  - [Metrics](#metrics)
-  - [Subscriptions](#subscriptions)
-- [Future Improvements](#future-improvements)
-  - [API Client Gem](#api-client-gem)
-- [Development](#development)
-- [Contributing](#contributing)
-- [License](#license)
-- [Code of Conduct](#code-of-conduct)
+- Required ruby version
+- Installation
+- Usage
+  - Register service endpoints
+  - Stubbing service endpoints
+  - Metrics
+  - Observing endpoint invocations
+- Future Improvements
+  - API Client Gem
+- Development
+- Contributing
+- License
+- Code of Conduct
 
 <!-- /MarkdownTOC -->
 
-<a id="required-ruby-version"></a>
 ## Required ruby version
 
 Ruby version >= 2.3
 
-<a id="installation"></a>
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -56,14 +54,12 @@ Or install it yourself as:
 gem install stub_requests
 ```
 
-<a id="usage"></a>
 ## Usage
 
 To use the gem we need to register some service endpoints. In the following example we are connecting to a rails inspired service.
 
 The naming of the `service_id` and `endpoint_id`'s is irrelevant. This is just how we look things up in the registry.
 
-<a id="register-service-endpoints"></a>
 ### Register service endpoints
 
 ```ruby
@@ -78,7 +74,6 @@ end
 
 Now we have a list of endpoints we can stub.
 
-<a id="stubbing-service-endpoints"></a>
 ### Stubbing service endpoints
 
 ```ruby
@@ -108,7 +103,6 @@ WebMock.stub_request(:patch, "#{Settings.google_ads_base_uri}/ads/#{id}")
 
 This reduces the need to spread out URI's in the test suite without having to resort to shared examples.
 
-<a id="metrics"></a>
 ### Metrics
 
 Metrics collection are by default turned off. It can be turned on by the following code.
@@ -119,19 +113,27 @@ StubRequests.configure do |config|
 end
 ```
 
-<a id="subscriptions"></a>
-### Subscriptions
+### Observing endpoint invocations
 
 ```ruby
-StubRequests.subscribe(:document_service, :show)
+callback = lambda do |data|
+  p data
+  binding.pry
+end
+
+StubRequests.subscribe_to(:document_service, :show, :get, callback)
 
 # TODO: Needs more thinking through this
 ```
 
-<a id="future-improvements"></a>
+```ruby
+StubRequests.unsubscribe_from(:document_service, :show, :get)
+
+# TODO: Needs more thinking through this
+```
+
 ## Future Improvements
 
-<a id="api-client-gem"></a>
 ### API Client Gem
 
 Since we have a service + endpoint registry, I was thinking it might make
@@ -140,7 +142,6 @@ sense to make this into an API client. Not sure yet, maybe this will become mult
 Anyway, the idea was to provide endpoint calls in production and stubbed
 requests in tests using the same registry.
 
-<a id="development"></a>
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies.
@@ -150,7 +151,6 @@ interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-<a id="contributing"></a>
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at:
@@ -159,12 +159,10 @@ Bug reports and pull requests are welcome on GitHub at:
 This project is intended to be a safe, welcoming space for collaboration, and
 contributors are expected to adhere to the [Contributor Covenant](cc) code of conduct.
 
-<a id="license"></a>
 ## License
 
 The gem is available as open source under the terms of the [MIT License](mit).
 
-<a id="code-of-conduct"></a>
 ## Code of Conduct
 
 Everyone interacting in the StubRequests project’s codebases, issue trackers,

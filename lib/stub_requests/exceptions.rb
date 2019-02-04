@@ -17,12 +17,9 @@ module StubRequests
   #
   class EndpointNotFound < Error; end
 
-  #
-  # InvalidType is raised when an argument is invalid
-  #
-  class InvalidType < Error
-    def initialize(actual, expected)
-      super("Expected `#{actual}` to be any of [#{expected}]")
+  class InvalidCallback < Error
+    def initialiaze(name:, expected:, actual:)
+      super("`#{name}.call` expected `#{expected}` argument(s), was `#{actual}`.")
     end
   end
 

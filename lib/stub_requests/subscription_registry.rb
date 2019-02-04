@@ -64,9 +64,11 @@ module StubRequests
     #
     # Subscribe to a service endpoint call
     #
+    #
     # @param [Symbol] service_id the id of a service
     # @param [Symbol] endpoint_id the id of an endpoint
-    # @param [Symbol] verb the HTTP verb to subscribe to
+    # @param [optional, Symbol] verb the HTTP verb to subscribe to
+    # @param [proc] callback the callback to use for when.a request was made
     #
     # @return [Subscription] the added subscription
     #
@@ -80,11 +82,29 @@ module StubRequests
     end
 
     #
+    # Unsubscribe to a service endpoint call
+    #
+    #
+    # @param [Symbol] service_id the id of a service
+    # @param [Symbol] endpoint_id the id of an endpoint
+    # @param [optional, Symbol] verb the HTTP verb to subscribe to
+    #
+    # @return [Subscription] the deleted subscription
+    #
+    def unsubscribe(service_id, endpoint_id, verb = :any)
+      delete do |sub|
+        sub.service_id == service_id &&
+          sub.endpoint_id == endpoint_id &&
+          sub.verb == verb
+      end
+    end
+
+    #
     # Finds a subscription for a service endpoint
     #
     # @param [Symbol] service_id the id of a service
     # @param [Symbol] endpoint_id the id of an endpoint
-    # @param [Symbol] verb the HTTP verb to subscribe to
+    # @param [optional, Symbol] verb the HTTP verb to subscribe to
     #
     # @return [Subscription]
     #
@@ -93,7 +113,7 @@ module StubRequests
       find do |sub|
         sub.service_id == service_id &&
           sub.endpoint_id == endpoint_id &&
-          ([sub.verb, verb].include?(:any) || sub.verb == :any || sub.verb == verb)
+          ([sub.verb, verb].include?(:any) || sub.verb == verb)
       end
     end
 
@@ -106,8 +126,12 @@ module StubRequests
     #
     # @return [true, false]
     #
-    def subscribed?(service_id, endpoint_id, _verb = :any)
-      !!find_by(service_id, endpoint_id, verb) # rubocop:disable Style/DoubleNegation
+    def subscribed?(service_id, endpoint_id, verb = :any)
+      exist? do |sub|
+        sub.service_id == service_id &&
+          sub.endpoint_id == endpoint_id &&
+          ([sub.verb, verb].include?(:any) || sub.verb == verb)
+      end # rubocop:disable Style/DoubleNegation
     end
 
     # @api private
@@ -118,7 +142,8 @@ module StubRequests
 
       p "The service :#{obj.service_id} just received :#{obj.verb} to endpoint :#{obj.endpoint_id}."
       p "The full URI was #{obj.uri}"
-      Docile.dsl_eval(obj, &subscription.callback)
+      subscription.callback.call(obj)
+      obj
     end
   end
 end

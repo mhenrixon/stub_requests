@@ -86,7 +86,7 @@ module StubRequests
 
       def property_writer(name, type)
         redefine_method("#{name}=") do |obj|
-          validate! name, obj, is_a: type
+          validate! name: name, value: obj, type: type
           instance_variable_set("@#{name}", obj)
         end
       end
