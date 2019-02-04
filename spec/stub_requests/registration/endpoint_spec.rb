@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Endpoint do
+RSpec.describe StubRequests::Registration::Endpoint do
   let(:endpoint) { described_class.new(endpoint_id, verb, uri_template, default_options) }
 
   let(:endpoint_id)     { :resource_collection }
@@ -58,7 +58,8 @@ RSpec.describe StubRequests::Endpoint do
     subject(:to_s) { endpoint.to_s }
 
     let(:expected_output) do
-      "#<StubRequests::Endpoint id=:resource_collection verb=:get uri_template='resource/:resource_id/collection'>"
+      "#<StubRequests::Registration::Endpoint id=:resource_collection" \
+      " verb=:get uri_template='resource/:resource_id/collection'>"
     end
 
     it { is_expected.to eq(expected_output) }

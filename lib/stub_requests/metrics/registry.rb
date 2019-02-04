@@ -8,7 +8,7 @@
 #
 module StubRequests
   #
-  # Module Metrics contains logic for collecting metrics about {EndpointStat} and {StubStat}
+  # Module Metrics contains logic for collecting metrics about requests stubs
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
@@ -32,15 +32,15 @@ module StubRequests
 
       #
       # @!attribute [rw] services
-      #   @return [Concurrent::Array<EndpointStat>] a map with stubbed endpoints
-      attr_reader :stats
+      #   @return [Concurrent::Array<Endpoint>] a map with stubbed endpoints
+      attr_reader :endpoints
 
       #
       # Initialize a new registry
       #
       #
       def initialize
-        @stats = Concurrent::Array.new
+        @endpoints = Concurrent::Array.new
       end
 
       #
@@ -49,41 +49,41 @@ module StubRequests
       #
       # @api private
       def reset
-        stats.clear
+        endpoints.clear
       end
 
       #
       # Required by Enumerable
       #
       #
-      # @return [Concurrent::Array<EndpointStat>] an array with stubbed endpoints
+      # @return [Concurrent::Array<Endpoint>] an array with stubbed endpoints
       #
       # @yield used by Enumerable
       #
       def each(&block)
-        stats.each(&block)
+        endpoints.each(&block)
       end
 
       #
       # Records metrics about stubbed endpoints
       #
       #
-      # @param [Service] service a symbolic id of the service
-      # @param [Endpoint] endpoint a string with a base_uri to the service
+      # @param [StubRequests::Registration::Service] service a symbolic id of the service
+      # @param [StubRequests::Registration::Endpoint] endpoint a string with a base_uri to the service
       # @param [WebMock::RequestStub] request_stub the stubbed request
       #
       # @return [Service] the service that was just registered
       #
       def record(service, endpoint, request_stub)
-        stat = find_or_initialize_stat(service, endpoint)
-        stat.record(request_stub)
+        endpoint = find_or_initialize_endpoint(service, endpoint)
+        endpoint.record(request_stub)
 
-        stats.push(stat)
-        stat
+        endpoints.push(endpoint)
+        endpoint
       end
 
       #
-      # Mark a {StubStat} as having responded
+      # Mark a {Request} as having responded
       #
       # @note Called when webmock responds successfully
       #
@@ -92,40 +92,40 @@ module StubRequests
       # @return [void]
       #
       def mark_as_responded(request_stub)
-        return unless (stat = find_stub_stat(request_stub))
+        return unless (request = find_request(request_stub))
 
-        stat.mark_as_responded
+        request.mark_as_responded
       end
 
       #
-      # Finds a {StubStat} amongst the endpoint stubs
+      # Finds a {Request} amongst the endpoint stubs
       #
       #
       # @param [WebMock::RequestStub] request_stub a stubbed webmock response
       #
-      # @return [StubStat] the stub_stat matching the request stub
+      # @return [Request] the request_stubbed matching the request stub
       #
-      def find_stub_stat(request_stub)
-        map do |stat|
-          stat.find_by(attribute: :request_stub, value: request_stub)
+      def find_request(request_stub)
+        map do |endpoint|
+          endpoint.find_by(attribute: :request_stub, value: request_stub)
         end.compact.first
       end
 
       private
 
-      def find_or_initialize_stat(service, endpoint)
-        find_stat(service, endpoint) || initialize_stat(service, endpoint)
+      def find_or_initialize_endpoint(service, endpoint)
+        find_endpoint(service, endpoint) || initialize_endpoint(service, endpoint)
       end
 
       # :reek:UtilityFunction
       # :reek:FeatureEnvy
-      def find_stat(service, endpoint)
-        find { |stat| stat.service_id == service.id && stat.endpoint_id == endpoint.id }
+      def find_endpoint(service, endpoint)
+        find { |ep| ep.service_id == service.id && ep.endpoint_id == endpoint.id }
       end
 
       # :reek:UtilityFunction
-      def initialize_stat(service, endpoint)
-        Metrics::EndpointStat.new(service, endpoint)
+      def initialize_endpoint(service, endpoint)
+        Metrics::Endpoint.new(service, endpoint)
       end
     end
   end

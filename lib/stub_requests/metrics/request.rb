@@ -8,28 +8,29 @@
 #
 module StubRequests
   #
-  # Module Metrics contains logic for collecting metrics about {EndpointStat} and {StubStat}
+  # Module Metrics contains logic for collecting metrics about requests stubs
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
   #
   module Metrics
     #
-    # Class StubStat tracks the WebMock::RequestStub life cycle
+    # Class Stub tracks the WebMock::RequestStub life cycle
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     # @since 0.1.2
     #
     # :reek:TooManyInstanceVariables
-    class StubStat
+    class Request
       include Property
       extend Forwardable
 
-      delegate [:service_id, :endpoint_id, :verb, :uri_template] => :endpoint_stat
+      # Delegate service_id, endpoint_id, verb and uri_template to endpoint
+      delegate [:service_id, :endpoint_id, :verb, :uri_template] => :endpoint
       #
-      # @!attribute [r] endpoint_stat
-      #   @return [StubRequests::Metrics::EndpointStat] an endpoint stat
-      property :endpoint, type: StubRequests::Metrics::EndpointStat
+      # @!attribute [r] endpoint
+      #   @return [StubRequests::Metrics::Endpoint] a stubbed endpoint
+      property :endpoint, type: StubRequests::Metrics::Endpoint
       #
       # @!attribute [r] verb
       #   @return [Symbol] a HTTP verb/method
@@ -59,12 +60,12 @@ module StubRequests
       # Initialize a new Record
       #
       #
-      # @param [EndpointStat] endpoint_stat a stubbed endpoint
+      # @param [Endpoint] endpoint a stubbed endpoint
       # @param [WebMock::RequestStub] request_stub the stubbed webmock request
       #
-      def initialize(endpoint_stat, request_stub)
+      def initialize(endpoint, request_stub)
         request_pattern = request_stub.request_pattern
-        @endpoint_stat  = endpoint_stat
+        @endpoint       = endpoint
         @verb           = request_pattern.method_pattern.to_s.to_sym
         @uri            = request_pattern.uri_pattern.to_s
         @request_stub   = request_stub
@@ -81,7 +82,7 @@ module StubRequests
       #
       def mark_as_responded
         @responded_at = Time.now
-        SubscriptionRegistry.instance.notify(self)
+        Observable.notify_subscribers(self)
       end
     end
   end

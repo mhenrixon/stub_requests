@@ -13,12 +13,13 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Endpoint
+    extend Forwardable
+
     include Comparable
     include Property
-    include Forwardable
 
     # Delegate id, uri and endpoints to service
-    delegate :id, :uri, :endpoints, to: :service
+    delegate [:id, :uri, :endpoints] => :service
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
@@ -67,7 +68,7 @@ module StubRequests
     # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
     # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
-    # @return [Endpoint] returns the updated endpoint
+    # @return [StubRequests::Registration::Endpoint] returns the updated endpoint
     #
     def update(verb, uri_template, options)
       self.verb            = verb

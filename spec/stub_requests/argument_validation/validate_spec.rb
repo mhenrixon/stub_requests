@@ -3,12 +3,16 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::ArgumentValidation, ".validate!" do
-  subject(:validate) { described_class.validate!(name, value, type: type) }
+  subject(:validate) { described_class.validate!(argument) }
 
-  let(:argument) { { name: name, value: obj, type: type } }
-  let(:name)  { :an_argument }
-  let(:value) { "bogus" }
-  let(:type)  { String }
+  let(:name)     { :an_argument }
+  let(:type)     { String }
+  let(:value)    { "bogus" }
+  let(:argument) { { name: name, type: type, value: value } }
+
+  context "when argument is valid" do
+    it! { is_expected.not_to raise_error }
+  end
 
   context "when given nil for :name" do
     let(:name) { nil }
@@ -23,13 +27,13 @@ RSpec.describe StubRequests::ArgumentValidation, ".validate!" do
 
   context "when given a string value" do
     context "when only String is allowed" do
-      it { is_expected.to be(true) }
+      it! { is_expected.not_to raise_error }
     end
 
     context "and an array including String is allowed" do
       let(:type) { [String, NilClass] }
 
-      it { is_expected.to be(true) }
+      it! { is_expected.not_to raise_error }
     end
 
     context "and an array excluding String is allowed" do

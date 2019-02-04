@@ -8,7 +8,7 @@
 #
 module StubRequests
   #
-  # Module Metrics contains logic for collecting metrics about {EndpointStat} and {StubStat}
+  # Module Metrics contains logic for collecting metrics about {Endpoint} and {Request}
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
@@ -17,11 +17,12 @@ module StubRequests
     #
     # Records metrics about stubbed endpoints
     #
-    # @param [Service] service a Service
-    # @param [Endpoint] endpoint an Endpoint
+    #
+    # @param [StubRequests::Registration::Service] service a Service
+    # @param [StubRequests::Registration::Endpoint] endpoint an Endpoint
     # @param [WebMock::RequestStub] endpoint_stub the stubbed webmock request
     #
-    # @return [EndpointStat] the stat that was recorded
+    # @return [Endpoint] the stat that was recorded
     #
     def self.record(service, endpoint, endpoint_stub)
       return unless StubRequests.config.record_metrics?

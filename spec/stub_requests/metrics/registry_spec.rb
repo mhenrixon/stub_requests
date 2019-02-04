@@ -6,7 +6,7 @@ RSpec.describe StubRequests::Metrics::Registry do
   include StubRequests::API
 
   let(:metrics_registry) { described_class.instance }
-  let(:service_registry) { StubRequests::ServiceRegistry.instance }
+  let(:service_registry) { StubRequests::Registration::Registry.instance }
 
   let(:service)  { service_registry.register(service_id, service_uri) }
   let(:endpoint) { service.endpoints.register(endpoint_id, endpoint_verb, endpoint_uri_template) }
@@ -19,7 +19,7 @@ RSpec.describe StubRequests::Metrics::Registry do
   let(:uri_replacements)      { { id: id } }
   let(:id)                    { 10_346 }
 
-  let(:request_stub) { StubRequests::API._stub_endpoint(service.id, endpoint.id, uri_replacements) }
+  let(:request_stub) { StubRequests::Registration.__stub_endpoint(service.id, endpoint.id, uri_replacements) }
 
   before do
     service_registry.reset
@@ -33,18 +33,18 @@ RSpec.describe StubRequests::Metrics::Registry do
       register_service(service_id, service_uri)
     end
 
-    it { is_expected.to be_a(StubRequests::Metrics::EndpointStat) }
+    it { is_expected.to be_a(StubRequests::Metrics::Endpoint) }
 
-    its(:service_id)   { is_expected.to eq(service_id) }
-    its(:endpoint_id)  { is_expected.to eq(endpoint_id) }
-    its(:verb)         { is_expected.to eq(endpoint_verb) }
-    its(:uri_template) { is_expected.to eq("#{service_uri}/#{endpoint_uri_template}") }
-    its(:stats)        { is_expected.not_to be_empty }
-    its("stats.size")  { is_expected.to eq(1) }
+    its(:service_id)     { is_expected.to eq(service_id) }
+    its(:endpoint_id)    { is_expected.to eq(endpoint_id) }
+    its(:verb)           { is_expected.to eq(endpoint_verb) }
+    its(:uri_template)   { is_expected.to eq("#{service_uri}/#{endpoint_uri_template}") }
+    its(:requests)       { is_expected.not_to be_empty }
+    its("requests.size") { is_expected.to eq(1) }
   end
 
-  describe "#find_stub_stat" do
-    subject(:find_stub_stat) { metrics_registry.find_stub_stat(request_stub) }
+  describe "#find_request" do
+    subject(:find_request) { metrics_registry.find_request(request_stub) }
 
     context "when no stats are recorded" do
       it { is_expected.to eq(nil) }
@@ -53,7 +53,7 @@ RSpec.describe StubRequests::Metrics::Registry do
     context "when stats have been recorded" do
       before { metrics_registry.record(service, endpoint, request_stub) }
 
-      it { is_expected.to be_a(StubRequests::Metrics::StubStat) }
+      it { is_expected.to be_a(StubRequests::Metrics::Request) }
 
       its(:verb)          { is_expected.to eq(endpoint_verb) }
       its(:uri)           { is_expected.to eq("https://example.com/api/v6/lists/#{id}") }
@@ -67,7 +67,7 @@ RSpec.describe StubRequests::Metrics::Registry do
   describe "#mark_as_responded" do
     subject(:mark_as_responded) { metrics_registry.mark_as_responded(request_stub) }
 
-    let(:stub_stat) { metrics_registry.find_stub_stat(request_stub) }
+    let(:request) { metrics_registry.find_request(request_stub) }
 
     context "when no stats are recorded" do
       it { is_expected.to eq(nil) }
@@ -76,7 +76,7 @@ RSpec.describe StubRequests::Metrics::Registry do
     context "when stats have been recorded" do
       before { metrics_registry.record(service, endpoint, request_stub) }
 
-      it! { is_expected.to change(stub_stat, :responded_at).from(nil) }
+      it! { is_expected.to change(request, :responded_at).from(nil) }
     end
   end
 end

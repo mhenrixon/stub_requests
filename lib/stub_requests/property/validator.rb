@@ -68,7 +68,7 @@ module StubRequests
       # @param [Hash] properties the list of currently defined properties
       #
       # :reek:LongParameterList
-      def initialize(name, type, default = nil, properties)
+      def initialize(name, type, default = nil, properties = {})
         @type       = Array(type).flatten
         @default    = default
         @name       = name
@@ -114,6 +114,7 @@ module StubRequests
       #
       def validate_default
         return unless default || default.is_a?(FalseClass)
+
         validate! name: :default, value: default, type: type
       end
 

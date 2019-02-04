@@ -32,32 +32,10 @@ module StubRequests
     # @return [void]
     #
     # :reek:UtilityFunction
-    def validate!(name:, value:, type: nil, arity: nil)
-      validate_type!(name, value, type)   if type
-      validate_arity!(name, value, arity) if arity
+    def validate!(name:, value:, type:)
+      validate_type!(:name, name, [Symbol, String]) unless name
+      validate_type!(name, value, type) if type
     end
-
-    #
-    # Validate that the argument arity is of the same size
-    #
-    #
-    # @raise [InvalidCallback] when arity does not match
-    #
-    # @return [void]
-    #
-    def validate_arity!(name, value, arity)
-      return validate_proc!(name, value, arity) if value.is_a?(Proc)
-    end
-
-    def validate_proc!(name, value, arity)
-      return if arity == value.arity
-
-      raise InvalidCallback,
-            name: name,
-            expected: arity,
-            actual: value.arity
-    end
-
 
     # :reek:UtilityFunction
     def validate_type!(name, value, type)
