@@ -123,20 +123,20 @@ end
 ### Observing endpoint invocations
 
 ```ruby
+# To jump into pry when a request is called
 callback = lambda do |request|
   p request
   binding.pry
 end
 
-StubRequests.subscribe_to(:document_service, :show, :get, callback)
+callback = ->(request) { p request; binding.pry }
 
-# TODO: Needs more thinking through this
+StubRequests.subscribe_to(:document_service, :show, :get, callback)
 ```
 
 ```ruby
+# To unsubscribe from notifications
 StubRequests.unsubscribe_from(:document_service, :show, :get)
-
-# TODO: Needs more thinking through this
 ```
 
 <a id="future-improvements"></a>
