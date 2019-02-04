@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/stub_requests/metrics.rb<span class="defines">,<br />
-  lib/stub_requests/metrics/registry.rb,<br /> lib/stub_requests/metrics/stub_stat.rb,<br /> lib/stub_requests/metrics/endpoint_stat.rb</span>
+  lib/stub_requests/metrics/request.rb,<br /> lib/stub_requests/metrics/endpoint.rb,<br /> lib/stub_requests/metrics/registry.rb</span>
 </dd>
   </dl>
   
@@ -87,9 +87,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Module Metrics contains logic for collecting metrics about <span class='object_link'><a href="Metrics/EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span> and <span class='object_link'><a href="Metrics/StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span></p>
+    <p>Module Metrics contains logic for collecting metrics about requests stubs</p>
 
-<p>:reek:TooManyInstanceVariables</p>
+<p>:reek:DataClump</p>
 
 
   </div>
@@ -133,7 +133,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Metrics/EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span>, <span class='object_link'><a href="Metrics/Registry.html" title="StubRequests::Metrics::Registry (class)">Registry</a></span>, <span class='object_link'><a href="Metrics/StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Metrics/Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Endpoint</a></span>, <span class='object_link'><a href="Metrics/Registry.html" title="StubRequests::Metrics::Registry (class)">Registry</a></span>, <span class='object_link'><a href="Metrics/Request.html" title="StubRequests::Metrics::Request (class)">Request</a></span>
     
   
 </p>
@@ -155,7 +155,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#record-class_method" title="record (class method)">.<strong>record</strong>(service, endpoint, endpoint_stub)  &#x21d2; EndpointStat </a>
+      <a href="#record-class_method" title="record (class method)">.<strong>record</strong>(service, endpoint, endpoint_stub)  &#x21d2; Metrics::Endpoint </a>
     
 
     
@@ -187,7 +187,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="record-class_method">
   
-    .<strong>record</strong>(service, endpoint, endpoint_stub)  &#x21d2; <tt><span class='object_link'><a href="Metrics/EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span></tt> 
+    .<strong>record</strong>(service, endpoint, endpoint_stub)  &#x21d2; <tt><span class='object_link'><a href="Metrics/Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Metrics::Endpoint</a></span></tt> 
   
 
   
@@ -209,7 +209,7 @@
         <span class='name'>service</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Registration/Service.html" title="StubRequests::Registration::Service (class)">Registration::Service</a></span></tt>)</span>
       
       
       
@@ -224,7 +224,7 @@
         <span class='name'>endpoint</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Registration/Endpoint.html" title="StubRequests::Registration::Endpoint (class)">Registration::Endpoint</a></span></tt>)</span>
       
       
       
@@ -257,7 +257,7 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Metrics/EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Metrics/Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Metrics::Endpoint</a></span></tt>)</span>
       
       
       
@@ -290,14 +290,14 @@
       <pre class="lines">
 
 
-26
 27
 28
 29
-30</pre>
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_stub'>endpoint_stub</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="../StubRequests.html#config-instance_method" title="StubRequests#config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_record_metrics?'>record_metrics?</span>
@@ -314,7 +314,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Feb  3 22:16:08 2019 by
+  Generated on Mon Feb  4 14:51:26 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

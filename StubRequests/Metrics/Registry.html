@@ -155,33 +155,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#services-instance_method" title="#services (instance method)">#<strong>services</strong>  &#x21d2; Concurrent::Array&lt;EndpointStat&gt; </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>A map with stubbed endpoints.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#stats-instance_method" title="#stats (instance method)">#<strong>stats</strong>  &#x21d2; Object </a>
+      <a href="#endpoints-instance_method" title="#endpoints (instance method)">#<strong>endpoints</strong>  &#x21d2; Object </a>
     
 
     
@@ -205,6 +179,32 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#services-instance_method" title="#services (instance method)">#<strong>services</strong>  &#x21d2; Concurrent::Array&lt;Endpoint&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A map with stubbed endpoints.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -221,7 +221,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong> { ... } &#x21d2; Concurrent::Array&lt;EndpointStat&gt; </a>
+      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong> { ... } &#x21d2; Concurrent::Array&lt;Endpoint&gt; </a>
     
 
     
@@ -244,7 +244,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_stub_stat-instance_method" title="#find_stub_stat (instance method)">#<strong>find_stub_stat</strong>(request_stub)  &#x21d2; StubStat </a>
+      <a href="#find_request-instance_method" title="#find_request (instance method)">#<strong>find_request</strong>(request_stub)  &#x21d2; Request </a>
     
 
     
@@ -258,7 +258,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Finds a <span class='object_link'><a href="StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span> amongst the endpoint stubs.</p>
+    <span class="summary_desc"><div class='inline'><p>Finds a <span class='object_link'><a href="Request.html" title="StubRequests::Metrics::Request (class)">Request</a></span> amongst the endpoint stubs.</p>
 </div></span>
   
 </li>
@@ -306,7 +306,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Mark a <span class='object_link'><a href="StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span> as having responded.</p>
+    <span class="summary_desc"><div class='inline'><p>Mark a <span class='object_link'><a href="Request.html" title="StubRequests::Metrics::Request (class)">Request</a></span> as having responded.</p>
 </div></span>
   
 </li>
@@ -414,7 +414,7 @@
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
-  <span class='ivar'>@stats</span> <span class='op'>=</span> <span class='const'>Concurrent</span><span class='op'>::</span><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@endpoints</span> <span class='op'>=</span> <span class='const'>Concurrent</span><span class='op'>::</span><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -427,66 +427,11 @@
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="services=-instance_method"></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="services-instance_method">
-  
-    #<strong>services</strong>  &#x21d2; <tt>Concurrent::Array&lt;<span class='object_link'><a href="EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span>&gt;</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns a map with stubbed endpoints</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Concurrent::Array&lt;<span class='object_link'><a href="EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span>&gt;</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>a map with stubbed endpoints</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-36</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 36</span>
-
-<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:stats</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
       <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="stats-instance_method">
+      <div class="method_details first">
+  <h3 class="signature first" id="endpoints-instance_method">
   
-    #<strong>stats</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>endpoints</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -529,9 +474,64 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 36</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_stats'>stats</span>
-  <span class='ivar'>@stats</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_endpoints'>endpoints</span>
+  <span class='ivar'>@endpoints</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="services=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="services-instance_method">
+  
+    #<strong>services</strong>  &#x21d2; <tt>Concurrent::Array&lt;<span class='object_link'><a href="Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Endpoint</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a map with stubbed endpoints</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Concurrent::Array&lt;<span class='object_link'><a href="Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Endpoint</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a map with stubbed endpoints</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 36</span>
+
+<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:endpoints</span></pre>
     </td>
   </tr>
 </table>
@@ -547,7 +547,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="each-instance_method">
   
-    #<strong>each</strong> { ... } &#x21d2; <tt>Concurrent::Array&lt;<span class='object_link'><a href="EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span>&gt;</tt> 
+    #<strong>each</strong> { ... } &#x21d2; <tt>Concurrent::Array&lt;<span class='object_link'><a href="Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Endpoint</a></span>&gt;</tt> 
   
 
   
@@ -585,7 +585,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Concurrent::Array&lt;<span class='object_link'><a href="EndpointStat.html" title="StubRequests::Metrics::EndpointStat (class)">EndpointStat</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt>Concurrent::Array&lt;<span class='object_link'><a href="Endpoint.html" title="StubRequests::Metrics::Endpoint (class)">Endpoint</a></span>&gt;</tt>)</span>
       
       
       
@@ -626,7 +626,7 @@
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_stats'>stats</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -634,9 +634,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="find_stub_stat-instance_method">
+  <h3 class="signature " id="find_request-instance_method">
   
-    #<strong>find_stub_stat</strong>(request_stub)  &#x21d2; <tt><span class='object_link'><a href="StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span></tt> 
+    #<strong>find_request</strong>(request_stub)  &#x21d2; <tt><span class='object_link'><a href="Request.html" title="StubRequests::Metrics::Request (class)">Request</a></span></tt> 
   
 
   
@@ -644,7 +644,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Finds a <span class='object_link'><a href="StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span> amongst the endpoint stubs</p>
+    <p>Finds a <span class='object_link'><a href="Request.html" title="StubRequests::Metrics::Request (class)">StubRequests::Metrics::Request</a></span> amongst the endpoint stubs</p>
 
 
   </div>
@@ -676,12 +676,12 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Request.html" title="StubRequests::Metrics::Request (class)">Request</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>the stub_stat matching the request stub</p>
+        <div class='inline'><p>the request_stubbed matching the request stub</p>
 </div>
       
     </li>
@@ -718,7 +718,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 108</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_find_stub_stat'>find_stub_stat</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_find_request'>find_request</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='op'>|</span>
     <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_find_by'>find_by</span><span class='lparen'>(</span><span class='label'>attribute:</span> <span class='symbol'>:request_stub</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -746,7 +746,7 @@
 </div>
   </div>
 
-<p class="note returns_void">This method returns an undefined value.</p><p>Mark a <span class='object_link'><a href="StubStat.html" title="StubRequests::Metrics::StubStat (class)">StubStat</a></span> as having responded</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Mark a <span class='object_link'><a href="Request.html" title="StubRequests::Metrics::Request (class)">StubRequests::Metrics::Request</a></span> as having responded</p>
 
 
   </div>
@@ -804,9 +804,9 @@
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mark_as_responded'>mark_as_responded</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_stat'>stat</span> <span class='op'>=</span> <span class='id identifier rubyid_find_stub_stat'>find_stub_stat</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='id identifier rubyid_find_request'>find_request</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_mark_as_responded'>mark_as_responded</span>
+  <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_mark_as_responded'>mark_as_responded</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -816,7 +816,7 @@
       <div class="method_details ">
   <h3 class="signature " id="record-instance_method">
   
-    #<strong>record</strong>(service, endpoint, request_stub)  &#x21d2; <tt><span class='object_link'><a href="../Service.html" title="StubRequests::Service (class)">Service</a></span></tt> 
+    #<strong>record</strong>(service, endpoint, request_stub)  &#x21d2; <tt>Service</tt> 
   
 
   
@@ -838,7 +838,7 @@
         <span class='name'>service</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Service.html" title="StubRequests::Service (class)">Service</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Registration/Service.html" title="StubRequests::Registration::Service (class)">Registration::Service</a></span></tt>)</span>
       
       
       
@@ -853,7 +853,7 @@
         <span class='name'>endpoint</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Registration/Endpoint.html" title="StubRequests::Registration::Endpoint (class)">Registration::Endpoint</a></span></tt>)</span>
       
       
       
@@ -886,7 +886,7 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Service.html" title="StubRequests::Service (class)">Service</a></span></tt>)</span>
+        <span class='type'>(<tt>Service</tt>)</span>
       
       
       
@@ -931,11 +931,11 @@
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='comma'>,</span> <span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_stat'>stat</span> <span class='op'>=</span> <span class='id identifier rubyid_find_or_initialize_stat'>find_or_initialize_stat</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoint'>endpoint</span> <span class='op'>=</span> <span class='id identifier rubyid_find_or_initialize_endpoint'>find_or_initialize_endpoint</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_stats'>stats</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_stat'>stat</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_stat'>stat</span>
+  <span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoint'>endpoint</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -994,7 +994,7 @@
       <pre class="code"><span class="info file"># File 'lib/stub_requests/metrics/registry.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
-  <span class='id identifier rubyid_stats'>stats</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+  <span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1006,7 +1006,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Feb  3 22:16:09 2019 by
+  Generated on Mon Feb  4 14:51:27 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Exception: StubRequests::InvalidType
+  Exception: StubRequests::InvalidCallback
   
     &mdash; Documentation by YARD 0.9.18
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "StubRequests::InvalidType";
+  pathId = "StubRequests::InvalidCallback";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (I)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span>
      &raquo; 
-    <span class="title">InvalidType</span>
+    <span class="title">InvalidCallback</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Exception: StubRequests::InvalidType
+      <div id="content"><h1>Exception: StubRequests::InvalidCallback
   
   
   
@@ -78,7 +78,7 @@
           
             <li class="next"><span class='object_link'><a href="Error.html" title="StubRequests::Error (class)">Error</a></span></li>
           
-            <li class="next">StubRequests::InvalidType</li>
+            <li class="next">StubRequests::InvalidCallback</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -105,7 +105,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>InvalidType is raised when an argument is invalid</p>
+    <p>Class InvalidCallback is raised when a callback argument doesn&#39;t have the correct number of arguments</p>
 
 
   </div>
@@ -135,42 +135,6 @@
 
 
 
-  
-    <h2>
-      Instance Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(actual, expected)  &#x21d2; InvalidType </a>
-    
-
-    
-  </span>
-  
-  
-    <span class="note title constructor">constructor</span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>A new instance of InvalidType.</p>
-</div></span>
-  
-</li>
-
-      
-    </ul>
-  
-
 
   
   
@@ -178,71 +142,12 @@
   
   
   
-  <div id="constructor_details" class="method_details_list">
-  <h2>Constructor Details</h2>
   
-    <div class="method_details first">
-  <h3 class="signature first" id="initialize-instance_method">
-  
-    #<strong>initialize</strong>(actual, expected)  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::InvalidType (class)">InvalidType</a></span></tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns a new instance of InvalidType</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-24
-25
-26</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/exceptions.rb', line 24</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_actual'>actual</span><span class='comma'>,</span> <span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_actual'>actual</span><span class='embexpr_end'>}</span><span class='tstring_content'>` to be any of [</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_expected'>expected</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-  
-</div>
-
 
 </div>
 
       <div id="footer">
-  Generated on Sun Feb  3 22:16:08 2019 by
+  Generated on Mon Feb  4 14:51:26 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>
