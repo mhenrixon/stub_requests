@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- Add rough initial implementation of subscriptions [\#12](https://github.com/mhenrixon/stub_requests/pull/12) ([mhenrixon](https://github.com/mhenrixon))
 - Script updating documentation [\#9](https://github.com/mhenrixon/stub_requests/pull/9) ([mhenrixon](https://github.com/mhenrixon))
 - Add a simple script to update documentation [\#8](https://github.com/mhenrixon/stub_requests/pull/8) ([mhenrixon](https://github.com/mhenrixon))
 - Improve documentation [\#7](https://github.com/mhenrixon/stub_requests/pull/7) ([mhenrixon](https://github.com/mhenrixon))
@@ -14,6 +15,7 @@
 
 **Merged pull requests:**
 
+- Update Changelog [\#11](https://github.com/mhenrixon/stub_requests/pull/11) ([mhenrixon](https://github.com/mhenrixon))
 - Allow older webmock versions [\#4](https://github.com/mhenrixon/stub_requests/pull/4) ([mhenrixon](https://github.com/mhenrixon))
 - Add docs folder [\#3](https://github.com/mhenrixon/stub_requests/pull/3) ([mhenrixon](https://github.com/mhenrixon))
 - Add docs folder and CHANGELOG.md [\#2](https://github.com/mhenrixon/stub_requests/pull/2) ([mhenrixon](https://github.com/mhenrixon))
