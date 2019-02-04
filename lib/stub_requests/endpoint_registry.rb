@@ -60,17 +60,6 @@ module StubRequests
     end
 
     #
-    # Check if an endpoint is registered
-    #
-    # @param [Symbol] endpoint_id the id of the endpoint
-    #
-    # @return [true, false]
-    #
-    def registered?(endpoint_id)
-      endpoints[endpoint_id].present?
-    end
-
-    #
     # Updates an endpoint
     #
     # @param [Symbol] endpoint_id the id of the endpoint

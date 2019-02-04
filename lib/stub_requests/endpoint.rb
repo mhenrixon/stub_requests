@@ -15,22 +15,22 @@ module StubRequests
   class Endpoint
     include Comparable
     include Property
+    include Forwardable
 
+    # Delegate id, uri and endpoints to service
+    delegate :id, :uri, :endpoints, to: :service
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
     property :id, type: Symbol
-
     #
     # @!attribute [rw] verb
     #   @return [Symbol] a HTTP verb
     property :verb, type: Symbol
-
     #
     # @!attribute [rw] uri_template
     #   @return [String] a string template for the endpoint
     property :uri_template, type: String
-
     #
     # @!attribute [rw] options
     #   @see

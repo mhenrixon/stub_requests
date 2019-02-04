@@ -20,22 +20,6 @@ module StubRequests
     include Singleton
     include Enumerable
 
-    # @api private
-    class Subscription
-      include Property
-      property :service_id, type: Symbol
-      property :endpoint_id, type: Symbol
-      property :verb, type: Symbol, default: :any
-      property :callback, type: Proc
-
-      def initialize(service_id, endpoint_id, verb, callback)
-        self.service_id  = service_id
-        self.endpoint_id = endpoint_id
-        self.verb        = verb
-        self.callback    = callback
-      end
-    end
-
     #
     # @!attribute [r] subscriptions
     #   @return [Concurrent::Array<Subscription>] a list of subscriptions
@@ -72,7 +56,7 @@ module StubRequests
     #
     # @return [Subscription] the added subscription
     #
-    def subscribe(service_id, endpoint_id, verb = :any, callback)
+    def subscribe(service_id, endpoint_id, verb, callback)
       subscription = find_by(service_id, endpoint_id, verb)
       return subscription if subscription
 
@@ -109,29 +93,12 @@ module StubRequests
     # @return [Subscription]
     #
     # :reek:ControlParameter
-    def find_by(service_id, endpoint_id, verb = :any)
+    def find_by(service_id, endpoint_id, verb)
       find do |sub|
         sub.service_id == service_id &&
           sub.endpoint_id == endpoint_id &&
           ([sub.verb, verb].include?(:any) || sub.verb == verb)
       end
-    end
-
-    #
-    # Checks if a subscription exists to the service endpoint
-    #
-    # @param [Symbol] service_id the id of a service
-    # @param [Symbol] endpoint_id the id of an endpoint
-    # @param [Symbol] verb the HTTP verb to unsubscribe from
-    #
-    # @return [true, false]
-    #
-    def subscribed?(service_id, endpoint_id, verb = :any)
-      exist? do |sub|
-        sub.service_id == service_id &&
-          sub.endpoint_id == endpoint_id &&
-          ([sub.verb, verb].include?(:any) || sub.verb == verb)
-      end # rubocop:disable Style/DoubleNegation
     end
 
     # @api private
@@ -143,7 +110,6 @@ module StubRequests
       p "The service :#{obj.service_id} just received :#{obj.verb} to endpoint :#{obj.endpoint_id}."
       p "The full URI was #{obj.uri}"
       subscription.callback.call(obj)
-      obj
     end
   end
 end

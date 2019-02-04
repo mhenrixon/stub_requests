@@ -29,7 +29,7 @@ module StubRequests
       #
       # @!attribute [r] endpoint_stat
       #   @return [StubRequests::Metrics::EndpointStat] an endpoint stat
-      property :endpoint_stat, type: StubRequests::Metrics::EndpointStat
+      property :endpoint, type: StubRequests::Metrics::EndpointStat
       #
       # @!attribute [r] verb
       #   @return [Symbol] a HTTP verb/method

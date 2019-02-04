@@ -70,7 +70,8 @@ module StubRequests
     # @return [void]
     #
     # :reek:UtilityFunction
-    def subscribe(service_id, endpoint_id, verb = :any, callback)
+    def subscribe_to(service_id, endpoint_id, verb = :any, callback)
+      ArgumentValidation::validate!(name: :callback, value: callback, arity: 1)
       SubscriptionRegistry.instance.subscribe(service_id, endpoint_id, verb, callback)
     end
 
@@ -83,7 +84,7 @@ module StubRequests
     # @return [void]
     #
     # :reek:UtilityFunction
-    def unsubscribe(service_id, endpoint_id)
+    def unsubscribe_from(service_id, endpoint_id, verb = :any)
       SubscriptionRegistry.instance.unsubscribe(service_id, endpoint_id)
     end
 
