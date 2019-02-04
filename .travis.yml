@@ -24,10 +24,10 @@ after_script:
   - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
 
 rvm:
-  - 2.3.7
-  - 2.4.5
   - truffleruby
   - rbx-3
+  - 2.3.7
+  - 2.4.5
 
 matrix:
   allow_failures:
