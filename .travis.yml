@@ -36,6 +36,10 @@ rvm:
   - rbx-3
 
 matrix:
+  allow_failures:
+    - truffleruby
+    - jruby
+    - rbx-3
   fast_finish: true
   include:
     - rvm: 2.5.3
