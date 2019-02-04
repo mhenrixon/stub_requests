@@ -23,16 +23,10 @@ script:
 after_script:
   - if [[ "${COV}" = "true" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi;
 
-jdk:
-  - oraclejdk7
-  - openjdk7
-  - oraclejdk8
-
 rvm:
   - 2.3.7
   - 2.4.5
   - truffleruby
-  - jruby
   - rbx-3
 
 matrix:
