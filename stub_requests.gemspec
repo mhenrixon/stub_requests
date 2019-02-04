@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "public_suffix",   ">= 3.0", "< 4.0"
 
   # ===== Basics =====
-  spec.add_development_dependency "bundler", ">= 2.0",  "< 3.0"
+  spec.add_development_dependency "bundler", ">= 1.7",  "< 3.0"
   spec.add_development_dependency "rake",    ">= 10.0", "< 15.0"
 
   # ===== Testing =====
