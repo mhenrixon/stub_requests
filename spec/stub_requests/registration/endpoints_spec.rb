@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Registration::Endpoints do
+RSpec.describe StubRequests::Endpoints do
   let(:registry)     { described_class.new }
-  let(:endpoint)     { StubRequests::Registration::Endpoint.new(endpoint_id, verb, uri_template) }
+  let(:endpoint)     { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
   let(:endpoint_id)  { :resource_collection }
   let(:verb)         { :find }
   let(:uri_template) { "resource/:resource_id/collection" }
@@ -129,7 +129,7 @@ RSpec.describe StubRequests::Registration::Endpoints do
     subject(:to_s) { registry.to_s }
 
     context "when no endpoints are registered" do
-      it { is_expected.to eq("#<StubRequests::Registration::Endpoints endpoints=[]>") }
+      it { is_expected.to eq("#<StubRequests::Endpoints endpoints=[]>") }
     end
 
     context "when endpoints are registered" do
@@ -138,8 +138,8 @@ RSpec.describe StubRequests::Registration::Endpoints do
       end
 
       let(:expected_output) do
-        "#<StubRequests::Registration::Endpoints endpoints=["\
-          "#<StubRequests::Registration::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
+        "#<StubRequests::Endpoints endpoints=["\
+          "#<StubRequests::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
         "]>"
       end
 

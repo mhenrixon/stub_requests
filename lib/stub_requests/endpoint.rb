@@ -39,7 +39,7 @@ module StubRequests
     property :options, type: Hash, default: {}
 
     #
-    # An endpoint for a specific {StubRequests::Registration::Service}
+    # An endpoint for a specific {StubRequests::Service}
     #
     # @param [Symbol] endpoint_id a descriptive id for the endpoint
     # @param [Symbol] verb a HTTP verb
@@ -50,12 +50,11 @@ module StubRequests
     # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
     # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
-    def initialize(service, endpoint_id, verb, uri_template, options = {})
-      self.service      = service
-      self.id           = endpoint_id
-      self.verb         = verb
-      self.uri_template = uri_template
-      self.options      = options
+    def initialize(endpoint_id, verb, uri_template, options = {})
+      self.id              = endpoint_id
+      self.verb            = verb
+      self.uri_template    = uri_template
+      self.options         = options
     end
 
     #

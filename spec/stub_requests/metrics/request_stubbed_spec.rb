@@ -7,8 +7,8 @@ RSpec.describe StubRequests::Metrics::Request do
 
   let(:endpoint)      { StubRequests::Metrics::Endpoint.new(service, reg_endpoint) }
   let(:request_stub)  { WebMock::RequestStub.new(:get, "http://google.com") }
-  let(:service)       { StubRequests::Registration::Service.new(service_id, service_uri) }
-  let(:reg_endpoint)  { StubRequests::Registration::Endpoint.new(endpoint_id, verb, uri_template) }
+  let(:service)       { StubRequests::Service.new(service_id, service_uri) }
+  let(:reg_endpoint)  { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
   let(:uri)           { URI.for_service_endpoint(service, reg_endpoint, id: "first") }
 
   let(:service_id)   { :google_documents }

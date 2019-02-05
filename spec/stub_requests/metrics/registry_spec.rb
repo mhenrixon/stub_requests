@@ -6,7 +6,7 @@ RSpec.describe StubRequests::Metrics::Registry do
   include StubRequests::API
 
   let(:metrics_registry) { described_class.instance }
-  let(:service_registry) { StubRequests::Registration::Registry.instance }
+  let(:service_registry) { StubRequests::ServiceRegistry.instance }
 
   let(:service)  { service_registry.register(service_id, service_uri) }
   let(:endpoint) { service.endpoints.register(endpoint_id, endpoint_verb, endpoint_uri_template) }
@@ -19,7 +19,7 @@ RSpec.describe StubRequests::Metrics::Registry do
   let(:uri_replacements)      { { id: id } }
   let(:id)                    { 10_346 }
 
-  let(:request_stub) { StubRequests::Registration.__stub_endpoint(service.id, endpoint.id, uri_replacements) }
+  let(:request_stub) { StubRequests::ServiceRegistry.__stub_endpoint(service.id, endpoint.id, uri_replacements) }
 
   before do
     service_registry.reset

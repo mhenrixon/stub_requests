@@ -24,7 +24,7 @@ module StubRequests
     # @return [Array<Service, Endpoint, String] the service, endpoint and full URI
     #
     def self.for_service_endpoint(service_id, endpoint_id, replacements)
-      service  = Registration::Registry.instance.find!(service_id)
+      service  = ServiceRegistry.instance.find!(service_id)
       endpoint = service.endpoints.find!(endpoint_id)
       uri      = URI::Builder.build(service.uri, endpoint.uri_template, replacements)
 

@@ -6,8 +6,8 @@ RSpec.describe StubRequests::Metrics do
   describe ".record" do
     subject(:record) { described_class.record(service, endpoint, request_stub) }
 
-    let(:service)      { instance_spy(StubRequests::Registration::Service) }
-    let(:endpoint)     { instance_spy(StubRequests::Registration::Endpoint) }
+    let(:service)      { instance_spy(StubRequests::Service) }
+    let(:endpoint)     { instance_spy(StubRequests::Endpoint) }
     let(:request_stub) { instance_spy(WebMock::RequestStub) }
     let(:registry)     { StubRequests::Metrics::Registry.instance }
 

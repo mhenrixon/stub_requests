@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::API do
-  let(:service_registry) { StubRequests::Registration::Registry.instance }
+  let(:service_registry) { StubRequests::ServiceRegistry.instance }
   let(:service_id)       { :api }
   let(:service_uri)      { "https://api.com/v1" }
   let(:verb)             { :get }
@@ -43,7 +43,7 @@ RSpec.describe StubRequests::API do
     end
 
     shared_examples "a successful registration" do
-      it { is_expected.to be_a(StubRequests::Registration::Service) }
+      it { is_expected.to be_a(StubRequests::Service) }
 
       its(:id)  { is_expected.to eq(service_id) }
       its(:uri) { is_expected.to eq(service_uri) }
@@ -54,7 +54,7 @@ RSpec.describe StubRequests::API do
     it_behaves_like "a successful registration"
 
     context "when given a block" do
-      specify { register_service { expect(self).to be_a(StubRequests::Registration::Endpoints) } }
+      specify { register_service { expect(self).to be_a(StubRequests::Endpoints) } }
 
       it_behaves_like "a successful registration"
     end

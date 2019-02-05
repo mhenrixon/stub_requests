@@ -31,7 +31,7 @@ module StubRequests
 
       #
       # @!attribute [r] service_id
-      #   @return [Symbol] the id of a {StubRequests::Registration::Service}
+      #   @return [Symbol] the id of a {StubRequests::Service}
       property :service_id, type: Symbol
       #
       # @!attribute [r] endpoint_id
