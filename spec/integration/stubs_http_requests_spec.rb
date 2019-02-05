@@ -21,6 +21,7 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
       task_id: task_id,
     }
   end
+  let(:callback) { -> { p inspect } }
 
   let(:example_api_list_task_status) { 200 }
   let(:example_api_list_task_response) do
@@ -32,19 +33,29 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
     }
   end
 
-  before do
+  def register_endpoints
     register_service(service_id, service_uri) do
       register(endpoint_id, verb, path)
     end
+  end
 
-    register_callback(service_id, endpoint_id, :any, -> { p inspect })
+  def register_callbacks
+    register_callback(service_id, endpoint_id, :any, callback)
+  end
 
+  def register_stubs
     stub_endpoint(service_id, endpoint_id, route_params) do
       to_return(
         body: example_api_list_task_response.to_json,
         status: example_api_list_task_status,
       )
     end
+  end
+
+  before do
+    register_endpoints
+    register_callbacks
+    register_stubs
   end
 
   it "stubs the request nicely" do

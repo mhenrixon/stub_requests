@@ -14,6 +14,7 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
   #
+  # :reek:DataClump
   class StubRegistry
     # includes "Singleton"
     # @!parse include Singleton

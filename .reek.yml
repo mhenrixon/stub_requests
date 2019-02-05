@@ -12,3 +12,4 @@ exclude_paths:
   - vendor/bundle
   - gemfiles
   - lib/stub_requests/core_ext/
+  - spec/

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# @see Hash
-# @api private
+# :nodoc:
 class Hash
   # @api private
   def extractable_options?
@@ -9,10 +8,9 @@ class Hash
   end
 end
 
-# @see Array
-# @api private
+# :nodoc:
 class Array
-  # @api private
+  # :nodoc:
   def extract_options!
     if last.is_a?(Hash) && last.extractable_options?
       pop
@@ -21,7 +19,7 @@ class Array
     end
   end
 
-  # @api private
+  # :nodoc:
   def extract_options
     if last.is_a?(Hash) && last.extractable_options?
       last

@@ -77,11 +77,6 @@ module StubRequests
     #
     # @param [Symbol] verb a HTTP verb
     # @param [String] path how to reach the endpoint
-    # @param [optional, Hash<Symbol>] options
-    # @option options [optional, Hash<Symbol>] :request for request_stub.with
-    # @option options [optional, Hash<Symbol>] :response for request_stub.to_return
-    # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
-    # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
     # @return [Endpoint] returns the updated endpoint
     #

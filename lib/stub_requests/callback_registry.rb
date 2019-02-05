@@ -111,13 +111,13 @@ module StubRequests
     # @return [Callback] the added callback
     #
     # :reek:LongParameterList
-    def register(service_id, endpoint_id, verb, block)
-      callback = find_by(service_id, endpoint_id, verb)
-      return callback if callback
+    def register(service_id, endpoint_id, verb, callback)
+      registered_callback = find_by(service_id, endpoint_id, verb)
+      return registered_callback if registered_callback
 
-      callback = Callback.new(service_id, endpoint_id, verb, block)
-      callbacks.push(callback)
-      callback
+      registered_callback = Callback.new(service_id, endpoint_id, verb, callback)
+      callbacks.push(registered_callback)
+      registered_callback
     end
 
     #

@@ -21,7 +21,7 @@ module StubRequests
     #
     # Extracts route parameters from a string
     #
-    # @param [String] uri a regular string
+    # @param [String] string a regular string to scan for route parameters
     #
     # @return [Array<Symbol>] an array with all route parameter keys
     #
@@ -35,7 +35,7 @@ module StubRequests
     # @param [String] host the host of the URI
     # @param [String] path the path of the URI
     #
-    # @return [<type>] <description>
+    # @return [String] the full URI
     #
     def self.safe_join(host, path)
       [host.chomp("/"), path.sub(%r{\A/}, "")].join("/")

@@ -68,12 +68,7 @@ module StubRequests
     #
     # @param [Symbol] endpoint_id the id of the endpoint
     # @param [Symbol] verb a HTTP verb
-    # @param [String] path how to reach the endpoint
-    # @param [optional, Hash<Symbol>] options
-    # @option options [optional, Hash<Symbol>] :request request options
-    # @option options [optional, Hash<Symbol>] :response options
-    # @option options [optional, Array, Exception, StandardError, String] :error to raise
-    # @option options [optional, TrueClass] :timeout raise a timeout error?
+    # @param [String] path the path to the endpoint
     #
     # @raise [EndpointNotFound] when the endpoint couldn't be found
     #

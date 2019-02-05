@@ -11,6 +11,7 @@ module API
   end
 end
 
+# rubocop:disable RSpec/MultipleExpectations
 RSpec.describe StubRequests::DSL do
   describe ".define_endpoint_methods" do
     class Testing; end
@@ -33,12 +34,9 @@ RSpec.describe StubRequests::DSL do
         register :person_documents_patch,  :patch,  "persons/:person_id/documents/:id"
         register :person_documents_delete, :delete, "persons/:person_id/documents/:id"
       end
-    end
 
-    before do
-      ::StubRequests::DSL.define_endpoint_methods(service_id, in_module: stub_module)
-
-      subject
+      ::StubRequests::DSL.define_endpoint_methods(service_id, receiver: stub_module)
+      document_api
     end
 
     it { expect(Testing.included_modules).to include(stub_module) }
@@ -89,3 +87,4 @@ RSpec.describe StubRequests::DSL do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

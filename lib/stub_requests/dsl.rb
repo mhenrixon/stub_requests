@@ -1,29 +1,61 @@
 # frozen_string_literal: true
 
 module StubRequests
-  class DSL
-    class HelperRegistry
-      extend Forwardable
-
-      include Singleton
-      include Enumerable
-
-      delegate [:each, :[], :[]=] => :helpers
-
-      attr_reader :helpers
-
-      def initialize
-        @helpers = Concurrent::Map.new
-      end
-    end
-
+  #
+  # Module DSL takes the id of a registered service
+  #
+  # @author Mikael Henriksson <mikael@zoolutions.se>
+  #
+  module DSL
     BLOCK_ARG = "&block"
 
-    def self.define_endpoint_methods(service_id, in_module:)
+    #
+    # Build convenience methods for all registered service endpoints
+    #
+    # @param [Symbol] service_id the id of the service
+    # @param [Module, Class] receiver of the helper methods
+    #
+    # @example Define helper methods for stubbing endpoints
+    #
+    #   StubRequests.register_service(:documents, "https://company.com/api/v1") do
+    #     register_endpoints do
+    #       register(:show, :get, "documents/:id")
+    #       register(:index, :get, "documents")
+    #       register(:create, :post, "documents")
+    #     end
+    #   end
+    #
+    #   module Stubs
+    #   end
+    #
+    #   Stubs.instance_methods
+    #     => []
+    #
+    #   StubRequests::DSL.define_endpoint_methods(:documents, receiver: Stubs)
+    #     => module Stubs
+    #          def stub_documents_show(id:, &block)
+    #             stub_endpoint(:documents, :show, id: id, &block)
+    #          end
+    #
+    #          def stub_documents_index(&block)
+    #             stub_endpoint(:documents, :index, &block)
+    #          end
+    #
+    #          def stub_documents_create(&block)
+    #             stub_endpoint(:documents, :create, &block)
+    #          end
+    #        end
+    #
+    #
+    # @return [Module] the same module as passed in but with methods
+    #
+    # :reek:DuplicateMethodCall
+    # :reek:TooManyStatements
+    def self.define_endpoint_methods(service_id, receiver:) # rubocop:disable Metrics/MethodLength
       service   = StubRequests::ServiceRegistry.instance.find(service_id)
       endpoints = service.endpoints
 
-      Docile.dsl_eval_with_block_return(in_module) do
+      Docile.dsl_eval_with_block_return(receiver) do
         include StubRequests::API
 
         endpoints.endpoints.values.each do |endpoint|
@@ -39,9 +71,9 @@ module StubRequests
             end
           METHOD
         end
-        in_module
+        receiver
       end
-      in_module
+      receiver
     end
 
     # def self.classify(string)
