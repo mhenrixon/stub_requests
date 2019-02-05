@@ -3,10 +3,10 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::URI::Builder do
-  let(:builder) { described_class.new(service_uri, uri_template, route_params) }
+  let(:builder) { described_class.new(service_uri, path, route_params) }
 
   let(:service_uri)      { "http://service-name:9292/internal" }
-  let(:uri_template)     { "another/:bogus/endpoint" }
+  let(:path)     { "another/:bogus/endpoint" }
   let(:route_params) { { bogus: :random } }
 
   describe "#build" do
@@ -24,7 +24,7 @@ RSpec.describe StubRequests::URI::Builder do
     end
 
     context "when endpoint has not replaced URI segments" do
-      let(:uri_template) { "another/:bogus/endpoint/:without_any/value" }
+      let(:path) { "another/:bogus/endpoint/:without_any/value" }
       let(:error_message) do
         "The URI segment(s) [:without_any] were not replaced" \
         " in template (another/random/endpoint/:without_any/value)." \
@@ -35,7 +35,7 @@ RSpec.describe StubRequests::URI::Builder do
     end
 
     context "when constructed URI is invalid" do
-      let(:uri_template) { "another/:bogus/end point\ /thjat doesn't work" }
+      let(:path) { "another/:bogus/end point\ /thjat doesn't work" }
 
       before do
         allow(StubRequests.logger).to receive(:warn)

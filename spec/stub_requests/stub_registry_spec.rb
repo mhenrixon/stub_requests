@@ -7,13 +7,13 @@ RSpec.describe StubRequests::StubRegistry do
   let(:service_registry) { StubRequests::ServiceRegistry.instance }
 
   let(:service)  { service_registry.register(service_id, service_uri) }
-  let(:endpoint) { service.endpoints.register(endpoint_id, endpoint_verb, endpoint_uri_template) }
+  let(:endpoint) { service.endpoints.register(endpoint_id, endpoint_verb, endpoint_path) }
 
   let(:service_id)            { :lists }
   let(:service_uri)           { "https://example.com/api/v6" }
   let(:endpoint_id)           { :show }
   let(:endpoint_verb)         { :get }
-  let(:endpoint_uri_template) { "lists/:id" }
+  let(:endpoint_path) { "lists/:id" }
   let(:route_params)      { { id: id } }
   let(:id)                    { 10_346 }
 
@@ -62,7 +62,7 @@ RSpec.describe StubRequests::StubRegistry do
     its(:service_id)   { is_expected.to eq(service_id) }
     its(:endpoint_id)  { is_expected.to eq(endpoint_id) }
     its(:verb)         { is_expected.to eq(endpoint_verb) }
-    its(:uri_template) { is_expected.to eq("#{service_uri}/#{endpoint_uri_template}") }
+    its(:path) { is_expected.to eq("#{service_uri}/#{endpoint_path}") }
     its(:stubs)        { is_expected.not_to be_empty }
     its("stubs.size")  { is_expected.to eq(1) }
   end

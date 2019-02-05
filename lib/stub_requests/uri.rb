@@ -53,7 +53,7 @@ module StubRequests
     def self.for_service_endpoint(service_id, endpoint_id, replacements)
       service  = ServiceRegistry.instance.find!(service_id)
       endpoint = service.endpoints.find!(endpoint_id)
-      uri      = URI::Builder.build(service.uri, endpoint.uri_template, replacements)
+      uri      = URI::Builder.build(service.uri, endpoint.path, replacements)
 
       [service, endpoint, uri]
     end

@@ -18,8 +18,8 @@ module StubRequests
     include Property
     extend Forwardable
 
-    # Delegate service_id, endpoint_id, verb and uri_template to endpoint
-    delegate [:service_id, :endpoint_id, :verb, :uri_template] => :endpoint
+    # Delegate service_id, endpoint_id, verb and path to endpoint
+    delegate [:service_id, :endpoint_id, :verb, :path] => :endpoint
     #
     # @!attribute [r] endpoint
     #   @return [StubRequests::EndpointStub] a stubbed endpoint

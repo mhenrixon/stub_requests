@@ -34,9 +34,9 @@ module StubRequests
     #   @return [String] the HTTP verb/method for this endpoint
     property :verb, type: Symbol
     #
-    # @!attribute [r] uri_template
+    # @!attribute [r] path
     #   @return [String] the full URI template for the endpoint
-    property :uri_template, type: String
+    property :path, type: String
     #
     # @!attribute [r] stubs
     #   @return [Array] an array with recorded stubs
@@ -52,7 +52,7 @@ module StubRequests
       self.service_id   = service.id
       self.endpoint_id  = endpoint.id
       self.verb         = endpoint.verb
-      self.uri_template = [service.uri, endpoint.uri_template].join("/")
+      self.path = [service.uri, endpoint.path].join("/")
 
       @stubs = Concurrent::Array.new
     end

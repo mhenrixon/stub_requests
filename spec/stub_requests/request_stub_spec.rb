@@ -8,7 +8,7 @@ RSpec.describe StubRequests::RequestStub do
   let(:endpoint)      { StubRequests::EndpointStub.new(service, reg_endpoint) }
   let(:request_stub)  { WebMock::RequestStub.new(:get, "http://google.com") }
   let(:service)       { StubRequests::Service.new(service_id, service_uri) }
-  let(:reg_endpoint)  { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
+  let(:reg_endpoint)  { StubRequests::Endpoint.new(service, endpoint_id, verb, path) }
   let(:uri)           { URI.for_service_endpoint(service, reg_endpoint, id: "first") }
 
   let(:service_id)   { :google_documents }
@@ -16,7 +16,7 @@ RSpec.describe StubRequests::RequestStub do
 
   let(:endpoint_id)  { :show }
   let(:verb)         { :get }
-  let(:uri_template) { "documents/:id" }
+  let(:path) { "documents/:id" }
 
   describe ".properties" do
     subject(:properties) { described_class.properties }

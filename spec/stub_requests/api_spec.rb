@@ -67,7 +67,7 @@ RSpec.describe StubRequests::API do
 
     let(:endpoint_id)      { :files }
     let(:verb)             { :get }
-    let(:uri_template)     { "files/:file_id" }
+    let(:path)     { "files/:file_id" }
     let(:route_params) { { file_id: 100 } }
     let(:service)          { nil }
     let(:block)            { nil }
@@ -83,13 +83,13 @@ RSpec.describe StubRequests::API do
       let!(:service) { described_class.register_service(service_id, service_uri) }
 
       context "when endpoint is registered" do
-        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, path) } # rubocop:disable RSpec/LetSetup
 
         it { is_expected.to be_a(WebMock::RequestStub) }
       end
 
       context "when given a block" do
-        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, path) } # rubocop:disable RSpec/LetSetup
 
         it "yields the stub to the block" do
           stub_endpoint do |stub|

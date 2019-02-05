@@ -37,7 +37,7 @@ module StubRequests
     def initialize(service_id, service_uri)
       self.id    = service_id
       self.uri   = service_uri
-      @endpoints = Endpoints.new
+      @endpoints = Endpoints.new(self)
     end
 
     #

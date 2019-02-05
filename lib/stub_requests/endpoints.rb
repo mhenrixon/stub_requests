@@ -16,11 +16,16 @@ module StubRequests
     include Enumerable
 
     #
+    # @!attribute [rw] service
+    #   @return [Service] the service the collection belongs to
+    attr_reader :service
+    #
     # @!attribute [rw] endpoints
     #   @return [Concurrent::Map<Symbol, Endpoint>] a map with endpoints
     attr_reader :endpoints
 
-    def initialize
+    def initialize(service)
+      @service   = service
       @endpoints = Concurrent::Map.new
     end
 
@@ -40,18 +45,18 @@ module StubRequests
     #
     # @param [Symbol] endpoint_id the id of this Endpoint
     # @param [Symbol] verb a HTTP verb
-    # @param [String] uri_template the URI to reach the endpoint
+    # @param [String] path the URI to reach the endpoint
     #
     # @return [Endpoint]
     #
     # :reek:LongParameterList { max_params: 4 }
-    def register(endpoint_id, verb, uri_template)
+    def register(endpoint_id, verb, path)
       endpoint =
         if (endpoint = find(endpoint_id))
           StubRequests.logger.warn("Endpoint already registered: #{endpoint}")
-          endpoint.update(verb, uri_template)
+          endpoint.update(verb, path)
         else
-          Endpoint.new(endpoint_id, verb, uri_template)
+          Endpoint.new(service, endpoint_id, verb, path)
         end
 
       endpoints[endpoint.id] = endpoint
@@ -63,7 +68,7 @@ module StubRequests
     #
     # @param [Symbol] endpoint_id the id of the endpoint
     # @param [Symbol] verb a HTTP verb
-    # @param [String] uri_template how to reach the endpoint
+    # @param [String] path how to reach the endpoint
     # @param [optional, Hash<Symbol>] options
     # @option options [optional, Hash<Symbol>] :request request options
     # @option options [optional, Hash<Symbol>] :response options
@@ -75,9 +80,9 @@ module StubRequests
     # @return [Endpoint] returns the updated endpoint
     #
     # :reek:LongParameterList { max_params: 4 }
-    def update(endpoint_id, verb, uri_template)
+    def update(endpoint_id, verb, path)
       endpoint = find!(endpoint_id)
-      endpoint.update(verb, uri_template)
+      endpoint.update(verb, path)
     end
 
     #
