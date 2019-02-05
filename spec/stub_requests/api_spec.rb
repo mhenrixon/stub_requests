@@ -67,8 +67,8 @@ RSpec.describe StubRequests::API do
 
     let(:endpoint_id)      { :files }
     let(:verb)             { :get }
-    let(:path)     { "files/:file_id" }
-    let(:route_params) { { file_id: 100 } }
+    let(:path)             { "files/:file_id" }
+    let(:route_params)     { { file_id: 100 } }
     let(:service)          { nil }
     let(:block)            { nil }
 
@@ -107,9 +107,9 @@ RSpec.describe StubRequests::API do
     end
   end
 
-  describe "#subscribe_to" do
-    subject(:subscribe_to) do
-      described_class.subscribe_to(service_id, endpoint_id, verb, callback)
+  describe "#register_callback" do
+    subject(:register_callback) do
+      described_class.register_callback(service_id, endpoint_id, verb, callback)
     end
 
     let(:service_id)  { :random_api }
@@ -118,19 +118,19 @@ RSpec.describe StubRequests::API do
     let(:callback)    { -> {} }
 
     before do
-      allow(StubRequests::CallbackRegistry).to receive(:subscribe_to)
-      subscribe_to
+      allow(StubRequests::CallbackRegistry).to receive(:register)
+      register_callback
     end
 
-    it "delegates to StubRequests::CallbackRegistry.subscribe_to" do
-      expect(StubRequests::CallbackRegistry).to have_received(:subscribe_to)
+    it "delegates to StubRequests::CallbackRegistry.register" do
+      expect(StubRequests::CallbackRegistry).to have_received(:register)
         .with(service_id, endpoint_id, verb, callback)
     end
   end
 
-  describe "#unsubscribe_from" do
-    subject(:unsubscribe_from) do
-      described_class.unsubscribe_from(service_id, endpoint_id, verb)
+  describe "#unregister_callback" do
+    subject(:unregister_callback) do
+      described_class.unregister_callback(service_id, endpoint_id, verb)
     end
 
     let(:service_id)  { :random_api }
@@ -138,12 +138,12 @@ RSpec.describe StubRequests::API do
     let(:verb)        { :get }
 
     before do
-      allow(StubRequests::CallbackRegistry).to receive(:unsubscribe_from)
-      unsubscribe_from
+      allow(StubRequests::CallbackRegistry).to receive(:unregister)
+      unregister_callback
     end
 
-    it "delegates to StubRequests::CallbackRegistry.unsubscribe_from" do
-      expect(StubRequests::CallbackRegistry).to have_received(:unsubscribe_from)
+    it "delegates to StubRequests::CallbackRegistry.unregister" do
+      expect(StubRequests::CallbackRegistry).to have_received(:unregister)
         .with(service_id, endpoint_id, verb)
     end
   end

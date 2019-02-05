@@ -13,11 +13,16 @@ RSpec.describe StubRequests::StubRegistry do
   let(:service_uri)           { "https://example.com/api/v6" }
   let(:endpoint_id)           { :show }
   let(:endpoint_verb)         { :get }
-  let(:endpoint_path) { "lists/:id" }
-  let(:route_params)      { { id: id } }
+  let(:endpoint_path)         { "lists/:id" }
+  let(:route_params)          { { id: id } }
   let(:id)                    { 10_346 }
 
   let(:request_stub) { StubRequests::ServiceRegistry.__stub_endpoint(service.id, endpoint.id, route_params) }
+
+  before do
+    service_registry.reset
+    stub_registry.reset
+  end
 
   describe ".record" do
     subject(:record) { described_class.record(service, endpoint, request_stub) }
@@ -25,7 +30,7 @@ RSpec.describe StubRequests::StubRegistry do
     let(:service)      { instance_spy(StubRequests::Service) }
     let(:endpoint)     { instance_spy(StubRequests::Endpoint) }
     let(:request_stub) { instance_spy(WebMock::RequestStub) }
-    let(:registry)     { StubRequests::StubRegistry.instance }
+    let(:registry)     { described_class.instance }
 
     before do
       allow(registry).to receive(:record)
@@ -43,11 +48,6 @@ RSpec.describe StubRequests::StubRegistry do
         expect(registry).not_to have_received(:record)
       end
     end
-  end
-
-  before do
-    service_registry.reset
-    stub_registry.reset
   end
 
   describe "#record" do

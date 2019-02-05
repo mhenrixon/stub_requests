@@ -16,7 +16,7 @@ RSpec.describe StubRequests::RequestStub do
 
   let(:endpoint_id)  { :show }
   let(:verb)         { :get }
-  let(:path) { "documents/:id" }
+  let(:path)         { "documents/:id" }
 
   describe ".properties" do
     subject(:properties) { described_class.properties }

@@ -5,8 +5,8 @@ require "spec_helper"
 RSpec.describe StubRequests::URI::Builder do
   let(:builder) { described_class.new(service_uri, path, route_params) }
 
-  let(:service_uri)      { "http://service-name:9292/internal" }
-  let(:path)     { "another/:bogus/endpoint" }
+  let(:service_uri) { "http://service-name:9292/internal" }
+  let(:path)         { "another/:bogus/endpoint" }
   let(:route_params) { { bogus: :random } }
 
   describe "#build" do

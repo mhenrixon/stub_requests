@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe StubRequests::Endpoint do
   let(:endpoint) { described_class.new(service, endpoint_id, verb, path) }
 
-  let(:service)         { instance_spy(StubRequests::Service)}
+  let(:service)         { instance_spy(StubRequests::Service) }
   let(:endpoint_id)     { :resource_collection }
   let(:verb)            { :get }
-  let(:path)    { "resource/:resource_id/collection" }
+  let(:path)            { "resource/:resource_id/collection" }
 
   describe "#initialize" do
     subject { endpoint }
@@ -21,8 +21,8 @@ RSpec.describe StubRequests::Endpoint do
   describe "#update" do
     subject(:update) { endpoint.update(new_verb, new_path) }
 
-    let(:new_verb)            { :patch }
-    let(:new_path)    { "resource/:resource_id/collection/:collection_id" }
+    let(:new_verb) { :patch }
+    let(:new_path) { "resource/:resource_id/collection/:collection_id" }
 
     its(:id)           { is_expected.to eq(endpoint_id) }
     its(:verb)         { is_expected.to eq(new_verb) }

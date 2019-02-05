@@ -56,23 +56,9 @@ module StubRequests
     #
     # @param [Symbol] service_id the id of a registered service
     # @param [Symbol] endpoint_id the id of a registered endpoint
-    # @param [Hash<Symbol>] route_params a list of URI replacements
-    # @param [Hash<Symbol>] options
-    # @option options [optional, Hash<Symbol>] :request webmock request options
-    # @option options [optional, Hash<Symbol>] :response webmock response options
-    # @option options [optional, Array, Exception, StandardError, String] :error webmock error to raise
-    # @option options [optional, TrueClass] :timeout set to true to raise some kind of timeout error
+    # @param [Hash<Symbol>] route_params a map with route parameters
     #
     # @note the kind of timeout error raised by webmock is depending on the HTTP client used
-    #
-    # @example Stub a request to a registered service endpoint
-    #   register_stub(
-    #     :google_api,
-    #     :get_map_location,
-    #     {}, # No URI replacements needed for this endpoint
-    #     { request: { headers: { "Accept" => "application/json" }}},
-    #     { response: { body: { id: "abyasdjasd", status: "successful" }}}
-    #   )
     #
     # @example Stub a request to a registered service endpoint using block version
     #   register_stub(:documents, :index) do
@@ -101,8 +87,8 @@ module StubRequests
     #
     # :reek:UtilityFunction
     # :reek:LongParameterList
-    def subscribe_to(service_id, endpoint_id, verb, callback)
-      StubRequests::CallbackRegistry.subscribe_to(service_id, endpoint_id, verb, callback)
+    def register_callback(service_id, endpoint_id, verb, callback)
+      StubRequests::CallbackRegistry.register(service_id, endpoint_id, verb, callback)
     end
 
     #
@@ -114,8 +100,8 @@ module StubRequests
     # @return [void]
     #
     # :reek:UtilityFunction
-    def unsubscribe_from(service_id, endpoint_id, verb)
-      StubRequests::CallbackRegistry.unsubscribe_from(service_id, endpoint_id, verb)
+    def unregister_callback(service_id, endpoint_id, verb)
+      StubRequests::CallbackRegistry.unregister(service_id, endpoint_id, verb)
     end
   end
 end

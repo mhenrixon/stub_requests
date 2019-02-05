@@ -8,7 +8,7 @@ RSpec.describe StubRequests::Service do
   let(:service_uri)     { "https://abstractions.com/v1" }
   let(:endpoint_id)     { :concrete }
   let(:verb)            { :get }
-  let(:path)    { "concretes/:concrete_id" }
+  let(:path)            { "concretes/:concrete_id" }
   let(:default_options) { {} }
 
   describe "#initialize" do
@@ -23,7 +23,7 @@ RSpec.describe StubRequests::Service do
 
     let(:endpoint_id)     { :concrete }
     let(:verb)            { :get }
-    let(:path)    { "concretes/:concrete_id" }
+    let(:path)            { "concretes/:concrete_id" }
     let(:default_options) { {} }
 
     context "when endpoint is unregistered" do
@@ -37,8 +37,8 @@ RSpec.describe StubRequests::Service do
     context "when endpoint is registered" do
       before { service.endpoints.register(endpoint_id, old_verb, old_path) }
 
-      let(:old_verb)            { :post }
-      let(:old_path)    { "concrete" }
+      let(:old_verb) { :post }
+      let(:old_path)            { "concrete" }
       let(:old_default_options) { { request: { body: "" } } }
 
       its(:id)           { is_expected.to eq(endpoint_id) }

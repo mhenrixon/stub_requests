@@ -8,7 +8,7 @@
 #
 module StubRequests
   #
-  # Class Registry handles subscriptions to webmock requests
+  # Class Registry handles callbacks to webmock requests
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.3
@@ -21,8 +21,8 @@ module StubRequests
     include Enumerable
 
     #
-    # Subscribe to a service endpoint call
-    # @see CallbackRegistry#subscribe
+    # Register to a service endpoint call
+    # @see CallbackRegistry#register
     #
     #
     # @param [Symbol] service_id the id of a service
@@ -33,13 +33,13 @@ module StubRequests
     # @return [Callback]
     #
     # :reek:LongParameterList
-    def self.subscribe_to(service_id, endpoint_id, verb, callback)
-      instance.subscribe(service_id, endpoint_id, verb, callback)
+    def self.register(service_id, endpoint_id, verb, callback)
+      instance.register(service_id, endpoint_id, verb, callback)
     end
 
     #
-    # Unsubscribe from a service endpoint call
-    # @see CallbackRegistry#unsubscribe
+    # Unregister from a service endpoint call
+    # @see CallbackRegistry#unregister
     #
     #
     # @param [Symbol] service_id the id of a service
@@ -48,35 +48,34 @@ module StubRequests
     #
     # @return [Callback]
     #
-    def self.unsubscribe_from(service_id, endpoint_id, verb)
-      instance.unsubscribe(service_id, endpoint_id, verb)
+    def self.unregister(service_id, endpoint_id, verb)
+      instance.unregister(service_id, endpoint_id, verb)
     end
 
     #
     # Notifies subscribers that a request was made
-    # @see CallbackRegistry#notify_subscribers
+    # @see CallbackRegistry#invoke_callbacks
     #
     #
     # @param [RequestStub] request the stubbed request
     #
-    # @return [Request]
+    # @return [RequestStub]
     #
-    def self.notify_subscribers(request)
-      instance.notify_subscribers(request)
+    def self.invoke_callbacks(request)
+      instance.invoke_callbacks(request)
     end
 
-
     #
-    # @!attribute [r] subscriptions
-    #   @return [Concurrent::Array<Callback>] a list of subscriptions
-    attr_reader :subscriptions
+    # @!attribute [r] callbacks
+    #   @return [Concurrent::Array<Callback>] a list of callbacks
+    attr_reader :callbacks
 
     #
     # Used by Singleton
     #
     #
     def initialize
-      @subscriptions = Concurrent::Array.new
+      @callbacks = Concurrent::Array.new
     end
 
     #
@@ -85,23 +84,23 @@ module StubRequests
     #
     # @api private
     def reset
-      subscriptions.clear
+      callbacks.clear
     end
 
     #
     # Required by Enumerable
     #
     #
-    # @return [Concurrent::Array<Callback>] a list with subscriptions
+    # @return [Concurrent::Array<Callback>] a list with callbacks
     #
     # @yield used by Enumerable
     #
     def each(&block)
-      subscriptions.each(&block)
+      callbacks.each(&block)
     end
 
     #
-    # Subscribe to a service endpoint call
+    # Register to a service endpoint call
     #
     #
     # @param [Symbol] service_id the id of a service
@@ -109,33 +108,33 @@ module StubRequests
     # @param [optional, Symbol] verb the HTTP verb to subscribe to
     # @param [proc] callback the callback to use for when.a request was made
     #
-    # @return [Callback] the added subscription
+    # @return [Callback] the added callback
     #
     # :reek:LongParameterList
-    def subscribe(service_id, endpoint_id, verb, callback)
-      subscription = find_by(service_id, endpoint_id, verb)
-      return subscription if subscription
+    def register(service_id, endpoint_id, verb, callback)
+      callback = find_by(service_id, endpoint_id, verb)
+      return callback if callback
 
-      subscription = Callback.new(service_id, endpoint_id, verb, callback)
-      subscriptions.push(subscription)
-      subscription
+      callback = Callback.new(service_id, endpoint_id, verb, callback)
+      callbacks.push(callback)
+      callback
     end
 
     #
-    # Unsubscribe to a service endpoint call
+    # Unregister to a service endpoint call
     #
     #
     # @param [Symbol] service_id the id of a service
     # @param [Symbol] endpoint_id the id of an endpoint
     # @param [optional, Symbol] verb the HTTP verb to subscribe to
     #
-    # @return [Callback] the deleted subscription
+    # @return [Callback] the deleted callback
     #
     # :reek:ControlParameter
-    def unsubscribe(service_id, endpoint_id, verb)
-      return unless (subscription = find_by(service_id, endpoint_id, verb))
+    def unregister(service_id, endpoint_id, verb)
+      return unless (callback = find_by(service_id, endpoint_id, verb))
 
-      subscriptions.delete(subscription)
+      callbacks.delete(callback)
     end
 
     #
@@ -145,16 +144,16 @@ module StubRequests
     #
     # @return [void]
     #
-    def notify_subscribers(request)
-      return unless (subscription = find_by(request.service_id, request.endpoint_id, request.verb))
+    def invoke_callbacks(request)
+      return unless (callback = find_by(request.service_id, request.endpoint_id, request.verb))
 
-      send_notification(request, subscription)
+      dispatch_callback(request, callback)
     end
 
     private
 
     #
-    # Finds a subscription for a service endpoint
+    # Finds a callback for a service endpoint
     #
     #
     # @param [Symbol] service_id the id of a service
@@ -173,8 +172,8 @@ module StubRequests
       end
     end
 
-    def send_notification(request, subscription)
-      callback = subscription.callback
+    def dispatch_callback(request, callback)
+      callback = callback.callback
       arity    = callback.arity
 
       case arity
@@ -183,7 +182,7 @@ module StubRequests
       when 1
         callback.call(request)
       else
-        raise InvalidCallback, "The callback for a subscription can either take 0 or 1 arguments (was #{arity})"
+        raise InvalidCallback, "The callback for a callback can either take 0 or 1 arguments (was #{arity})"
       end
     end
   end

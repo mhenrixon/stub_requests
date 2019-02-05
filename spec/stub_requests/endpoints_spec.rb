@@ -8,10 +8,11 @@ RSpec.describe StubRequests::Endpoints do
   let(:endpoint)     { StubRequests::Endpoint.new(service, endpoint_id, verb, path) }
   let(:endpoint_id)  { :resource_collection }
   let(:verb)         { :find }
-  let(:path) { "resource/:resource_id/collection" }
+  let(:path)         { "resource/:resource_id/collection" }
 
   describe "#initialize" do
     subject { endpoints }
+
     its(:endpoints) { is_expected.to be_a(Concurrent::Map) }
   end
 
@@ -92,8 +93,8 @@ RSpec.describe StubRequests::Endpoints do
   describe "#update" do
     subject(:update) { endpoints.update(endpoint_id, new_verb, new_path) }
 
-    let(:new_verb)            { :post }
-    let(:new_path)    { "resource/:resource_id" }
+    let(:new_verb) { :post }
+    let(:new_path) { "resource/:resource_id" }
 
     let(:error)   { StubRequests::EndpointNotFound }
     let(:message) { "Couldn't find an endpoint with id=:resource_collection" }

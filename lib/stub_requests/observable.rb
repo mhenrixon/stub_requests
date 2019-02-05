@@ -14,6 +14,5 @@ module StubRequests
   # @since 0.1.3
   #
   module Observable
-
   end
 end

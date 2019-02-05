@@ -21,8 +21,8 @@ RSpec.describe StubRequests::CallbackRegistry do
     end
   end
 
-  describe ".subscribe_to" do
-    subject { described_class.subscribe_to(service_id, endpoint_id, verb, callback) }
+  describe ".register" do
+    subject { described_class.register(service_id, endpoint_id, verb, callback) }
 
     let(:registry_method) { :subscribe }
     let(:callback)        { ->(request) { p request } }
@@ -31,8 +31,8 @@ RSpec.describe StubRequests::CallbackRegistry do
     it_behaves_like "delegates to instance method"
   end
 
-  describe ".unsubscribe_from" do
-    subject { described_class.unsubscribe_from(service_id, endpoint_id, verb) }
+  describe ".unregister" do
+    subject { described_class.unregister(service_id, endpoint_id, verb) }
 
     let(:registry_method) { :unsubscribe }
     let(:expected_args)   { [service_id, endpoint_id, verb] }
@@ -40,35 +40,21 @@ RSpec.describe StubRequests::CallbackRegistry do
     it_behaves_like "delegates to instance method"
   end
 
-  describe ".notify_subscribers" do
-    subject { described_class.notify_subscribers(request) }
+  describe ".invoke_callbacks" do
+    subject { described_class.invoke_callbacks(request) }
 
-    let(:registry_method) { :notify_subscribers }
+    let(:registry_method) { :invoke_callbacks }
     let(:request)         { instance_spy(StubRequests::RequestStub) }
     let(:expected_args)   { [request] }
 
     it_behaves_like "delegates to instance method"
   end
 
-  describe "#subscribe" do
-    subject(:subscribe) { registry.subscribe(service_id, endpoint_id, verb, callback) }
+  describe "#register" do
+    subject(:register) { registry.register(service_id, endpoint_id, verb, callback) }
 
-    context "without existing subscriptions" do
-      it! { is_expected.to change(registry.subscriptions, :size).by(1) }
-
-      it { is_expected.to be_a(StubRequests::Callback) }
-      its(:service_id)  { is_expected.to eq(service_id) }
-      its(:endpoint_id) { is_expected.to eq(endpoint_id) }
-      its(:verb)        { is_expected.to eq(verb) }
-      its(:callback)    { is_expected.to be_a(Proc) }
-    end
-
-    context "with existing subscriptions" do
-      before do
-        registry.subscribe(service_id, endpoint_id, verb, callback)
-      end
-
-      it! { is_expected.not_to change(registry.subscriptions, :size) }
+    context "without existing callbacks" do
+      it! { is_expected.to change(registry.callbacks, :size).by(1) }
 
       it { is_expected.to be_a(StubRequests::Callback) }
       its(:service_id)  { is_expected.to eq(service_id) }
@@ -77,12 +63,26 @@ RSpec.describe StubRequests::CallbackRegistry do
       its(:callback)    { is_expected.to be_a(Proc) }
     end
 
-    context "with existing difference subscriptions" do
+    context "with existing callbacks" do
       before do
-        registry.subscribe(:another, :endpoint, :any, callback)
+        registry.register(service_id, endpoint_id, verb, callback)
       end
 
-      it! { is_expected.to change(registry.subscriptions, :size) }
+      it! { is_expected.not_to change(registry.callbacks, :size) }
+
+      it { is_expected.to be_a(StubRequests::Callback) }
+      its(:service_id)  { is_expected.to eq(service_id) }
+      its(:endpoint_id) { is_expected.to eq(endpoint_id) }
+      its(:verb)        { is_expected.to eq(verb) }
+      its(:callback)    { is_expected.to be_a(Proc) }
+    end
+
+    context "with existing difference callbacks" do
+      before do
+        registry.register(:another, :endpoint, :any, callback)
+      end
+
+      it! { is_expected.to change(registry.callbacks, :size) }
 
       it { is_expected.to be_a(StubRequests::Callback) }
       its(:service_id)  { is_expected.to eq(service_id) }
@@ -92,25 +92,25 @@ RSpec.describe StubRequests::CallbackRegistry do
     end
   end
 
-  describe "#unsubscribe" do
-    subject(:subscribe) { registry.unsubscribe(service_id, endpoint_id, verb) }
+  describe "#unregister" do
+    subject(:unregister) { registry.unregister(service_id, endpoint_id, verb) }
 
-    context "without existing subscriptions" do
-      it! { is_expected.not_to change(registry.subscriptions, :size) }
+    context "without existing callbacks" do
+      it! { is_expected.not_to change(registry.callbacks, :size) }
 
       it { is_expected.to eq(nil) }
     end
 
-    context "with existing subscriptions" do
-      let!(:subscription) { registry.subscribe(service_id, endpoint_id, verb, callback) } # rubocop:disable Metrics/LineLength
+    context "with existing callbacks" do
+      let!(:callback) { registry.register(service_id, endpoint_id, verb, callback) } # rubocop:disable Metrics/LineLength
 
-      it! { is_expected.to change(registry.subscriptions, :size).by(-1) }
-      it { is_expected.to eq(subscription) }
+      it! { is_expected.to change(registry.callbacks, :size).by(-1) }
+      it { is_expected.to eq(callback) }
     end
   end
 
-  describe "#notify_subscribers" do
-    subject(:notify_subscribers) { registry.notify_subscribers(request) }
+  describe "#invoke_callbacks" do
+    subject(:invoke_callbacks) { registry.invoke_callbacks(request) }
 
     let(:request) do
       instance_spy(
@@ -121,16 +121,16 @@ RSpec.describe StubRequests::CallbackRegistry do
       )
     end
 
-    context "without existing subscriptions" do
+    context "without existing callbacks" do
       before { allow(registry).to receive(:send_notification) }
 
       it "does not call back" do
-        notify_subscribers
+        invoke_callbacks
         expect(registry).not_to have_received(:send_notification)
       end
     end
 
-    context "with existing subscriptions" do
+    context "with existing callbacks" do
       before do
         registry.subscribe(service_id, endpoint_id, verb, callback)
         allow(callback).to receive(:call)
@@ -138,7 +138,7 @@ RSpec.describe StubRequests::CallbackRegistry do
 
       context "when callback has 0 argument(s)" do
         it "calls back" do
-          notify_subscribers
+          invoke_callbacks
           expect(callback).to have_received(:call)
         end
       end
@@ -147,7 +147,7 @@ RSpec.describe StubRequests::CallbackRegistry do
         let(:callback) { ->(_request) { "N/A" } }
 
         it "calls back" do
-          notify_subscribers
+          invoke_callbacks
           expect(callback).to have_received(:call).with(request)
         end
       end
@@ -156,7 +156,7 @@ RSpec.describe StubRequests::CallbackRegistry do
         let(:callback)    { ->(_one, _two) { "N/A" } }
         let(:error_class) { StubRequests::InvalidCallback }
         let(:error_message) do
-          "The callback for a subscription can either take 0 or 1 arguments (was 2)"
+          "The callback for a callback can either take 0 or 1 arguments (was 2)"
         end
 
         it! { is_expected.to raise_error(error_class, error_message) }

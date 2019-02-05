@@ -38,11 +38,12 @@ module StubRequests
     def self.record(service, endpoint, webmock_stub)
       # Note: The class method v
       return unless StubRequests.config.record_metrics?
+
       instance.record(service, endpoint, webmock_stub)
     end
 
     #
-    # Mark a {Request} as having responded
+    # Mark a {RequestStub} as having responded
     #
     # @note Called when webmock responds successfully
     #
@@ -107,7 +108,7 @@ module StubRequests
     end
 
     #
-    # Mark a {Request} as having responded
+    # Mark a {RequestStub} as having responded
     #
     # @note Called when webmock responds successfully
     #
@@ -119,17 +120,17 @@ module StubRequests
       return unless (request_stub = find_request_stub(webmock_stub))
 
       request_stub.mark_as_responded
-      CallbackRegistry.notify_subscribers(request_stub)
+      CallbackRegistry.invoke_callbacks(request_stub)
       request_stub
     end
 
     #
-    # Finds a {Request} amongst the endpoint stubs
+    # Finds a {RequestStub} amongst the endpoint stubs
     #
     #
     # @param [WebMock::RequestStub] webmock_stub a stubbed webmock response
     #
-    # @return [Request] the request_stubbed matching the request stub
+    # @return [RequestStub] the request_stubbed matching the request stub
     #
     def find_request_stub(webmock_stub)
       map do |endpoint|

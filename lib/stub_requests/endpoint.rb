@@ -86,8 +86,8 @@ module StubRequests
     # @return [Endpoint] returns the updated endpoint
     #
     def update(verb, path)
-      self.verb            = verb
-      self.path    = path
+      self.verb = verb
+      self.path = path
       self
     end
 
