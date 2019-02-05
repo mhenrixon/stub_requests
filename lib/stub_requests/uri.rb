@@ -15,6 +15,33 @@ module StubRequests
   #
   module URI
     #
+    # @return [Regexp] A pattern for matching route parameters
+    ROUTE_PARAM = %r{/:(\w+)/?}.freeze
+
+    #
+    # Extracts route parameters from a string
+    #
+    # @param [String] uri a regular string
+    #
+    # @return [Array<Symbol>] an array with all route parameter keys
+    #
+    def self.route_params(string)
+      string.scan(ROUTE_PARAM).flatten.map(&:to_sym)
+    end
+
+    #
+    # Safely joins two string without any extra ///
+    #
+    # @param [String] host the host of the URI
+    # @param [String] path the path of the URI
+    #
+    # @return [<type>] <description>
+    #
+    def self.safe_join(host, path)
+      [host.chomp("/"), path.sub(%r{\A/}, "")].join("/")
+    end
+
+    #
     # UtilityFunction to construct the full URI for a service endpoint
     #
     # @param [Symbol] service_id the id of a service
