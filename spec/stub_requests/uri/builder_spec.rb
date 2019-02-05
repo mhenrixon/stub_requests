@@ -3,11 +3,11 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::URI::Builder do
-  let(:builder) { described_class.new(service_uri, uri_template, uri_replacements) }
+  let(:builder) { described_class.new(service_uri, uri_template, route_params) }
 
   let(:service_uri)      { "http://service-name:9292/internal" }
   let(:uri_template)     { "another/:bogus/endpoint" }
-  let(:uri_replacements) { { bogus: :random } }
+  let(:route_params) { { bogus: :random } }
 
   describe "#build" do
     subject(:build) { builder.build }
@@ -15,7 +15,7 @@ RSpec.describe StubRequests::URI::Builder do
     it { is_expected.to eq("http://service-name:9292/internal/another/random/endpoint") }
 
     context "when endpoint has unused uri segments" do
-      let(:uri_replacements) { { rocks: :my_world, my_boat: :floats } }
+      let(:route_params) { { rocks: :my_world, my_boat: :floats } }
       let(:error_message) do
         "The URI segment(s) [:rocks,:my_boat] are missing in template (another/:bogus/endpoint)"
       end

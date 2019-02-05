@@ -56,7 +56,7 @@ module StubRequests
     #
     # @param [Symbol] service_id the id of a registered service
     # @param [Symbol] endpoint_id the id of a registered endpoint
-    # @param [Hash<Symbol>] uri_replacements a list of URI replacements
+    # @param [Hash<Symbol>] route_params a list of URI replacements
     # @param [Hash<Symbol>] options
     # @option options [optional, Hash<Symbol>] :request webmock request options
     # @option options [optional, Hash<Symbol>] :response webmock response options
@@ -85,8 +85,8 @@ module StubRequests
     #
     # :reek:UtilityFunction
     # :reek:LongParameterList { max_params: 5 }
-    def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, &callback)
-      StubRequests::ServiceRegistry.stub_endpoint(service_id, endpoint_id, uri_replacements, &callback)
+    def stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
+      StubRequests::ServiceRegistry.stub_endpoint(service_id, endpoint_id, route_params, &callback)
     end
 
     #

@@ -14,10 +14,10 @@ RSpec.describe StubRequests::StubRegistry do
   let(:endpoint_id)           { :show }
   let(:endpoint_verb)         { :get }
   let(:endpoint_uri_template) { "lists/:id" }
-  let(:uri_replacements)      { { id: id } }
+  let(:route_params)      { { id: id } }
   let(:id)                    { 10_346 }
 
-  let(:request_stub) { StubRequests::ServiceRegistry.__stub_endpoint(service.id, endpoint.id, uri_replacements) }
+  let(:request_stub) { StubRequests::ServiceRegistry.__stub_endpoint(service.id, endpoint.id, route_params) }
 
   describe ".record" do
     subject(:record) { described_class.record(service, endpoint, request_stub) }

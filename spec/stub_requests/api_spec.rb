@@ -62,13 +62,13 @@ RSpec.describe StubRequests::API do
 
   describe "#stub_endpoint" do
     subject(:stub_endpoint) do
-      described_class.stub_endpoint(service_id, endpoint_id, uri_replacements)
+      described_class.stub_endpoint(service_id, endpoint_id, route_params)
     end
 
     let(:endpoint_id)      { :files }
     let(:verb)             { :get }
     let(:uri_template)     { "files/:file_id" }
-    let(:uri_replacements) { { file_id: 100 } }
+    let(:route_params) { { file_id: 100 } }
     let(:service)          { nil }
     let(:block)            { nil }
 
