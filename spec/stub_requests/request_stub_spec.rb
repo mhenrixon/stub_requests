@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Metrics::Request do
+RSpec.describe StubRequests::RequestStub do
   let(:request) { described_class.new(endpoint, request_stub) }
 
-  let(:endpoint)      { StubRequests::Metrics::Endpoint.new(service, reg_endpoint) }
+  let(:endpoint)      { StubRequests::EndpointStub.new(service, reg_endpoint) }
   let(:request_stub)  { WebMock::RequestStub.new(:get, "http://google.com") }
   let(:service)       { StubRequests::Service.new(service_id, service_uri) }
   let(:reg_endpoint)  { StubRequests::Endpoint.new(endpoint_id, verb, uri_template) }
@@ -23,7 +23,7 @@ RSpec.describe StubRequests::Metrics::Request do
 
     let(:expected_properties) do
       {
-        endpoint: { default: nil, type: [StubRequests::Metrics::Endpoint] },
+        endpoint: { default: nil, type: [StubRequests::EndpointStub] },
         verb: { default: nil, type: [Symbol] },
         uri: { default: nil, type: [String] },
         request_stub: { default: nil, type: [WebMock::RequestStub] },

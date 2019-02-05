@@ -68,7 +68,7 @@ module StubRequests
     # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
     # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
-    # @return [Registration::Endpoint] returns the updated endpoint
+    # @return [Endpoint] returns the updated endpoint
     #
     def update(verb, uri_template, options)
       self.verb            = verb

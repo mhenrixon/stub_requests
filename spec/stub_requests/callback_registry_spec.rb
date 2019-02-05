@@ -44,7 +44,7 @@ RSpec.describe StubRequests::CallbackRegistry do
     subject { described_class.notify_subscribers(request) }
 
     let(:registry_method) { :notify_subscribers }
-    let(:request)         { instance_spy(StubRequests::Metrics::Request) }
+    let(:request)         { instance_spy(StubRequests::RequestStub) }
     let(:expected_args)   { [request] }
 
     it_behaves_like "delegates to instance method"
@@ -114,7 +114,7 @@ RSpec.describe StubRequests::CallbackRegistry do
 
     let(:request) do
       instance_spy(
-        StubRequests::Metrics::Request,
+        StubRequests::RequestStub,
         service_id: service_id,
         endpoint_id: endpoint_id,
         verb: verb,

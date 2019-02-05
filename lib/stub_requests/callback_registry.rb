@@ -57,7 +57,7 @@ module StubRequests
     # @see CallbackRegistry#notify_subscribers
     #
     #
-    # @param [Metrics::Request] request the stubbed request
+    # @param [RequestStub] request the stubbed request
     #
     # @return [Request]
     #
@@ -141,7 +141,7 @@ module StubRequests
     #
     # Notifies subscribers that a request was made
     #
-    # @param [Metrics::Request] request the stubbed request
+    # @param [RequestStub] request the stubbed request
     #
     # @return [void]
     #

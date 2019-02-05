@@ -29,10 +29,9 @@ require "stub_requests/configuration"
 require "stub_requests/callback"
 require "stub_requests/callback_registry"
 
-require "stub_requests/metrics"
-require "stub_requests/metrics/endpoint"
-require "stub_requests/metrics/request"
-require "stub_requests/metrics/registry"
+require "stub_requests/endpoint_stub"
+require "stub_requests/request_stub"
+require "stub_requests/stub_registry"
 
 require "stub_requests/endpoints"
 require "stub_requests/endpoint"

@@ -78,7 +78,7 @@ module StubRequests
       service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, uri_replacements)
       endpoint_stub          = WebMock::Builder.build(endpoint.verb, uri, options, &callback)
 
-      Metrics.record(service, endpoint, endpoint_stub)
+      StubRegistry.record(service, endpoint, endpoint_stub)
       ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
     end
 
@@ -129,7 +129,7 @@ module StubRequests
     # @param [Symbol] service_id a symbolic id of the service
     # @param [String] service_uri a string with a base_uri to the service
     #
-    # @return [Registration::Service] the service that was just registered
+    # @return [Service] the service that was just registered
     #
     def register(service_id, service_uri)
       if (service = find(service_id))
@@ -157,7 +157,7 @@ module StubRequests
     #
     # @param [Symbol] service_id id of the service to remove
     #
-    # @return [Registration::Service] the found service
+    # @return [Service] the found service
     #
     def find(service_id)
       services[service_id]
@@ -171,7 +171,7 @@ module StubRequests
     #
     # @raise [ServiceNotFound] when an endpoint couldn't be found
     #
-    # @return [Registration::Service]
+    # @return [Service]
     #
     def find!(service_id)
       find(service_id) || raise(ServiceNotFound, service_id)
