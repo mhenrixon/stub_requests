@@ -38,7 +38,7 @@ RSpec.describe StubRequests::Property::Validator do
     context "when name is not a Symbol" do
       let(:name)    { nil }
       let(:error)   { StubRequests::InvalidArgumentType }
-      let(:message) { "The argument `:name` was `NilClass`, expected any of [Symbol]" }
+      let(:message) { "Got `nil` for argument `:name`. Expected it to be a `(Symbol)`" }
 
       it! { is_expected.to raise_error(error, message) }
     end
@@ -47,7 +47,7 @@ RSpec.describe StubRequests::Property::Validator do
       let(:default) { true }
       let(:error)   { StubRequests::InvalidArgumentType }
       let(:message) do
-        "The argument `:default` was `TrueClass`, expected any of [String]"
+        "Got `true` for argument `:default`. Expected it to be a `(String)`"
       end
 
       it! { is_expected.to raise_error(error, message) }

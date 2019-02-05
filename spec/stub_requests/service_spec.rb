@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Registration::Service do
+RSpec.describe StubRequests::Service do
   let(:service)         { described_class.new(service_id, service_uri) }
   let(:service_id)      { :abstractions }
   let(:service_uri)     { "https://abstractions.com/v1" }
   let(:endpoint_id)     { :concrete }
   let(:verb)            { :get }
-  let(:uri_template)    { "concretes/:concrete_id" }
+  let(:path)            { "concretes/:concrete_id" }
   let(:default_options) { {} }
 
   describe "#initialize" do
@@ -18,46 +18,46 @@ RSpec.describe StubRequests::Registration::Service do
     its(:uri) { is_expected.to eq(service_uri) }
   end
 
-  describe "#register" do
-    subject(:register) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+  describe "#register_endpoint" do
+    subject(:register_endpoint) { service.register_endpoint(endpoint_id, verb, path, default_options) }
 
     let(:endpoint_id)     { :concrete }
     let(:verb)            { :get }
-    let(:uri_template)    { "concretes/:concrete_id" }
+    let(:path)            { "concretes/:concrete_id" }
     let(:default_options) { {} }
 
     context "when endpoint is unregistered" do
-      it { is_expected.to be_a(StubRequests::Registration::Endpoint) }
+      it { is_expected.to be_a(StubRequests::Endpoint) }
 
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(verb) }
-      its(:uri_template) { is_expected.to eq(uri_template) }
-      its(:options)      { is_expected.to eq(default_options) }
+      its(:path) { is_expected.to eq(path) }
+      its(:options) { is_expected.to eq(default_options) }
     end
 
     context "when endpoint is registered" do
-      before { service.endpoints.register(endpoint_id, old_verb, old_uri_template, old_default_options) }
+      before { service.register_endpoint(endpoint_id, old_verb, old_path, old_default_options) }
 
-      let(:old_verb)            { :post }
-      let(:old_uri_template)    { "concrete" }
+      let(:old_verb) { :post }
+      let(:old_path)            { "concrete" }
       let(:old_default_options) { { request: { body: "" } } }
 
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(verb) }
-      its(:uri_template) { is_expected.to eq(uri_template) }
-      its(:options)      { is_expected.to eq(default_options) }
+      its(:path) { is_expected.to eq(path) }
+      its(:options) { is_expected.to eq(default_options) }
     end
   end
 
   describe "#find_endpoint" do
-    subject(:find_endpoint) { service.endpoints.find(endpoint_id) }
+    subject(:find_endpoint) { service.find_endpoint(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
     end
 
     context "when endpoint is registered" do
-      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      let!(:endpoint) { service.register(endpoint_id, verb, path, default_options) }
 
       it { is_expected.to eq(endpoint) }
     end
@@ -71,7 +71,7 @@ RSpec.describe StubRequests::Registration::Service do
     end
 
     context "when endpoint is registered" do
-      before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      before { service.register(endpoint_id, verb, path, default_options) }
 
       it { is_expected.to eq(true) }
     end
@@ -94,7 +94,7 @@ RSpec.describe StubRequests::Registration::Service do
   end
 
   describe "#find_endpoint!" do
-    subject(:find_endpoint) { service.endpoints.find!(endpoint_id) }
+    subject(:find_endpoint) { service.find_endpoint!(endpoint_id) }
 
     context "when endpoint is unregistered" do
       let(:error)   { StubRequests::EndpointNotFound }
@@ -104,7 +104,7 @@ RSpec.describe StubRequests::Registration::Service do
     end
 
     context "when endpoint is registered" do
-      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      let!(:endpoint) { service.register(endpoint_id, verb, path, default_options) }
 
       it { is_expected.to eq(endpoint) }
     end
@@ -120,7 +120,7 @@ RSpec.describe StubRequests::Registration::Service do
     subject(:to_s) { service.to_s }
 
     let(:expected_output) do
-      "#<StubRequests::Registration::Service id=abstractions" \
+      "#<StubRequests::Service id=abstractions" \
       " uri=https://abstractions.com/v1 endpoints=[]>"
     end
 
@@ -129,11 +129,11 @@ RSpec.describe StubRequests::Registration::Service do
     end
 
     context "when endpoints are registered" do
-      before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      before { service.register(endpoint_id, verb, path, default_options) }
 
       let(:expected_output) do
-        "#<StubRequests::Registration::Service id=abstractions uri=https://abstractions.com/v1 endpoints=[" \
-          "#<StubRequests::Registration::Endpoint id=:concrete verb=:get uri_template='concretes/:concrete_id'>" \
+        "#<StubRequests::Service id=abstractions uri=https://abstractions.com/v1 endpoints=[" \
+          "#<StubRequests::Endpoint id=:concrete verb=:get path='concretes/:concrete_id'>" \
         "]>"
       end
 

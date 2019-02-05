@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::API do
-  let(:service_registry) { StubRequests::Registration::Registry.instance }
+  let(:service_registry) { StubRequests::ServiceRegistry.instance }
   let(:service_id)       { :api }
   let(:service_uri)      { "https://api.com/v1" }
   let(:verb)             { :get }
@@ -43,7 +43,7 @@ RSpec.describe StubRequests::API do
     end
 
     shared_examples "a successful registration" do
-      it { is_expected.to be_a(StubRequests::Registration::Service) }
+      it { is_expected.to be_a(StubRequests::Service) }
 
       its(:id)  { is_expected.to eq(service_id) }
       its(:uri) { is_expected.to eq(service_uri) }
@@ -54,7 +54,7 @@ RSpec.describe StubRequests::API do
     it_behaves_like "a successful registration"
 
     context "when given a block" do
-      specify { register_service { expect(self).to be_a(StubRequests::Registration::Endpoints) } }
+      specify { register_service { expect(self).to be_a(StubRequests::Endpoints) } }
 
       it_behaves_like "a successful registration"
     end
@@ -62,13 +62,13 @@ RSpec.describe StubRequests::API do
 
   describe "#stub_endpoint" do
     subject(:stub_endpoint) do
-      described_class.stub_endpoint(service_id, endpoint_id, uri_replacements, options)
+      described_class.stub_endpoint(service_id, endpoint_id, route_params, options)
     end
 
     let(:endpoint_id)      { :files }
     let(:verb)             { :get }
-    let(:uri_template)     { "files/:file_id" }
-    let(:uri_replacements) { { file_id: 100 } }
+    let(:path)             { "files/:file_id" }
+    let(:route_params)     { { file_id: 100 } }
     let(:options)          { {} }
     let(:service)          { nil }
     let(:block)            { nil }
@@ -84,13 +84,13 @@ RSpec.describe StubRequests::API do
       let!(:service) { described_class.register_service(service_id, service_uri) }
 
       context "when endpoint is registered" do
-        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.register(endpoint_id, verb, path) } # rubocop:disable RSpec/LetSetup
 
         it { is_expected.to be_a(WebMock::RequestStub) }
       end
 
       context "when given a block" do
-        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.register(endpoint_id, verb, path) } # rubocop:disable RSpec/LetSetup
 
         it "yields the stub to the block" do
           stub_endpoint do |stub|

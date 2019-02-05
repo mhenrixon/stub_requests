@@ -19,7 +19,7 @@ RSpec.describe StubRequests::ArgumentValidation, ".validate!" do
 
     let(:error_class) { StubRequests::InvalidArgumentType }
     let(:error_message) do
-      "The argument `:name` was `NilClass`, expected any of [Symbol, String]"
+      "Got `nil` for argument `:name`. Expected it to be a `(Symbol, String)`"
     end
 
     it! { is_expected.to raise_error(error_class, error_message) }
@@ -40,7 +40,7 @@ RSpec.describe StubRequests::ArgumentValidation, ".validate!" do
       let(:type) { [TrueClass, FalseClass, NilClass] }
 
       let(:error)   { StubRequests::InvalidArgumentType }
-      let(:message) { "The argument `:an_argument` was `String`, expected any of [TrueClass, FalseClass, NilClass]" }
+      let(:message) { "Got `bogus` for argument `:an_argument`. Expected it to be a `(TrueClass, FalseClass, NilClass)`" }
 
       it! { is_expected.to raise_error(error, message) }
     end

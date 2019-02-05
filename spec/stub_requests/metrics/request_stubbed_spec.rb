@@ -2,28 +2,28 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Metrics::Request do
-  let(:request) { described_class.new(endpoint, request_stub) }
+RSpec.describe StubRequests::RequestStub do
+  let(:request) { described_class.new(endpoint_stub, request_stub) }
 
-  let(:endpoint)      { StubRequests::Metrics::Endpoint.new(service, reg_endpoint) }
+  let(:endpoint_stub) { StubRequests::EndpointStub.new(service, endpoint) }
   let(:request_stub)  { WebMock::RequestStub.new(:get, "http://google.com") }
-  let(:service)       { StubRequests::Registration::Service.new(service_id, service_uri) }
-  let(:reg_endpoint)  { StubRequests::Registration::Endpoint.new(endpoint_id, verb, uri_template) }
-  let(:uri)           { URI.for_service_endpoint(service, reg_endpoint, id: "first") }
+  let(:service)       { StubRequests::Service.new(service_id, service_uri) }
+  let(:endpoint)      { StubRequests::Endpoint.new(service, endpoint_id, verb, path) }
+  let(:uri)           { URI.for_service_endpoint(service, endpoint, id: "first") }
 
   let(:service_id)   { :google_documents }
   let(:service_uri)  { "http://google.com" }
 
   let(:endpoint_id)  { :show }
   let(:verb)         { :get }
-  let(:uri_template) { "documents/:id" }
+  let(:path)         { "documents/:id" }
 
   describe ".properties" do
     subject(:properties) { described_class.properties }
 
     let(:expected_properties) do
       {
-        endpoint: { default: nil, type: [StubRequests::Metrics::Endpoint] },
+        endpoint: { default: nil, type: [StubRequests::EndpointStub] },
         verb: { default: nil, type: [Symbol] },
         uri: { default: nil, type: [String] },
         request_stub: { default: nil, type: [WebMock::RequestStub] },

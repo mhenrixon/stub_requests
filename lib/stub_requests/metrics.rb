@@ -18,11 +18,11 @@ module StubRequests
     # Records metrics about stubbed endpoints
     #
     #
-    # @param [Registration::Service] service a Service
-    # @param [Registration::Endpoint] endpoint an Endpoint
+    # @param [Service] service a Service
+    # @param [Endpoint] endpoint an Endpoint
     # @param [WebMock::RequestStub] endpoint_stub the stubbed webmock request
     #
-    # @return [Metrics::Endpoint] the stat that was recorded
+    # @return [EndpointStub]
     #
     def self.record(service, endpoint, endpoint_stub)
       return unless StubRequests.config.record_metrics?

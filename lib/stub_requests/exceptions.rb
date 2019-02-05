@@ -32,7 +32,8 @@ module StubRequests
     # @param [Array<Class>, Array<Module>] expected the types the argument is expected to be
     #
     def initialize(name:, actual:, expected:)
-      super("The argument `:#{name}` was `#{actual}`, expected any of [#{expected.join(', ')}]")
+      actual = actual.is_a?(NilClass) ? 'nil' : actual
+      super("Got `#{actual}` for argument `:#{name}`. Expected it to be a `(#{expected.join(', ')})`")
     end
   end
 

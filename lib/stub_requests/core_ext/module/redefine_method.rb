@@ -7,8 +7,8 @@ unless defined?(Rails) || defined?(ActiveSupport)
     # @api private
     def silence_redefinition_of_method(method)
       if method_defined?(method) || private_method_defined?(method)
-        alias_method :__rails_redefine, method
-        remove_method :__rails_redefine
+        alias_method :__stub_requests_redefine, method
+        remove_method :__stub_requests_redefine
       end
     end
 

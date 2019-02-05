@@ -33,7 +33,7 @@ RSpec.describe StubRequests::Configuration do
 
       let(:error) { StubRequests::InvalidArgumentType }
       let(:message) do
-        "The argument `:record_metrics` was `String`, expected any of [TrueClass, FalseClass]"
+        "Got `I can't type` for argument `:record_metrics`. Expected it to be a `(TrueClass, FalseClass)`"
       end
 
       it! { is_expected.to raise_error(error, message) }

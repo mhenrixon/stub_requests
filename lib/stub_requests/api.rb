@@ -47,7 +47,7 @@ module StubRequests
     #
     # :reek:UtilityFunction
     def register_service(service_id, service_uri, &block)
-      StubRequests::Registration.register_service(service_id, service_uri, &block)
+      StubRequests::ServiceRegistry.instance.register(service_id, service_uri, &block)
     end
 
     #
@@ -56,7 +56,7 @@ module StubRequests
     #
     # @param [Symbol] service_id the id of a registered service
     # @param [Symbol] endpoint_id the id of a registered endpoint
-    # @param [Hash<Symbol>] uri_replacements a list of URI replacements
+    # @param [Hash<Symbol>] route_params a list of URI route_params
     # @param [Hash<Symbol>] options
     # @option options [optional, Hash<Symbol>] :request webmock request options
     # @option options [optional, Hash<Symbol>] :response webmock response options
@@ -69,7 +69,7 @@ module StubRequests
     #   register_stub(
     #     :google_api,
     #     :get_map_location,
-    #     {}, # No URI replacements needed for this endpoint
+    #     {}, # No URI route_params needed for this endpoint
     #     { request: { headers: { "Accept" => "application/json" }}},
     #     { response: { body: { id: "abyasdjasd", status: "successful" }}}
     #   )
@@ -85,8 +85,8 @@ module StubRequests
     #
     # :reek:UtilityFunction
     # :reek:LongParameterList { max_params: 5 }
-    def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, options = {}, &callback)
-      StubRequests::Registration.stub_endpoint(service_id, endpoint_id, uri_replacements, options, &callback)
+    def stub_endpoint(service_id, endpoint_id, route_params = {}, options = {}, &callback)
+      StubRequests::ServiceRegistry.instance.stub_endpoint(service_id, endpoint_id, route_params, options, &callback)
     end
 
     #

@@ -3,39 +3,41 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::URI::Builder do
-  let(:builder) { described_class.new(service_uri, uri_template, uri_replacements) }
+  let(:builder) { described_class.new(service_uri, path, route_params) }
 
-  let(:service_uri)      { "http://service-name:9292/internal" }
-  let(:uri_template)     { "another/:bogus/endpoint" }
-  let(:uri_replacements) { { bogus: :random } }
+  let(:service_uri) { "http://service-name:9292/internal" }
+  let(:path)         { "another/:bogus/endpoint" }
+  let(:route_params) { { bogus: :random } }
 
   describe "#build" do
     subject(:build) { builder.build }
 
     it { is_expected.to eq("http://service-name:9292/internal/another/random/endpoint") }
 
-    context "when endpoint has unused uri segments" do
-      let(:uri_replacements) { { rocks: :my_world, my_boat: :floats } }
+    context "when endpoint has unused route params" do
+      let(:route_params) { { rocks: :my_world, my_boat: :floats } }
+      let(:error_class)  { StubRequests::UriSegmentMismatch }
       let(:error_message) do
-        "The URI segment(s) [:rocks,:my_boat] are missing in template (another/:bogus/endpoint)"
+        "The route param(s) [:rocks,:my_boat] are missing in template (another/:bogus/endpoint)"
       end
 
-      specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }
+      it! { is_expected.to raise_error(error_class, error_message) }
     end
 
     context "when endpoint has not replaced URI segments" do
-      let(:uri_template) { "another/:bogus/endpoint/:without_any/value" }
+      let(:path) { "another/:bogus/endpoint/:without_any/value" }
+      let(:error_class) { StubRequests::UriSegmentMismatch }
       let(:error_message) do
-        "The URI segment(s) [:without_any] were not replaced" \
-        " in template (another/random/endpoint/:without_any/value)." \
-        " Given replacements=[:bogus]"
+        "The route param(s) [:without_any] were not replaced in" \
+        " template (another/random/endpoint/:without_any/value)." \
+        " Given route_params=[:bogus]"
       end
 
-      specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }
+      it! { is_expected.to raise_error(error_class, error_message) }
     end
 
     context "when constructed URI is invalid" do
-      let(:uri_template) { "another/:bogus/end point\ /thjat doesn't work" }
+      let(:path) { "another/:bogus/end point\ /thjat doesn't work" }
 
       before do
         allow(StubRequests.logger).to receive(:warn)

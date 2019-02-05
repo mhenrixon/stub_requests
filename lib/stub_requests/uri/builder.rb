@@ -21,10 +21,6 @@ module StubRequests
     # :reek:TooManyInstanceVariables { max_instance_variables: 6 }
     class Builder
       #
-      # @return [Regexp] A pattern for matching url segment keys
-      URL_SEGMENT_REGEX = /(:\w+)/.freeze
-
-      #
       # Convenience method to avoid .new.build
       #
       #
@@ -33,12 +29,12 @@ module StubRequests
       #
       # @param [String] host the URI used to reach the service
       # @param [String] template the endpoint template
-      # @param [Hash<Symbol>] replacements a list of uri_replacement keys
+      # @param [Hash<Symbol>] route_params a list of route params
       #
       # @return [String] a validated URI string
       #
-      def self.build(host, template, replacements = {})
-        new(host, template, replacements).build
+      def self.build(host, template, route_params = {})
+        new(host, template, route_params).build
       end
 
       #
@@ -54,17 +50,17 @@ module StubRequests
       #   @return [String] a valid URI path
       attr_reader :path
       #
-      # @!attribute [r] replacements
+      # @!attribute [r] route_params
       #   @return [Hash<Symbol] a hash with keys matching the {#template}
-      attr_reader :replacements
+      attr_reader :route_params
       #
       # @!attribute [r] unused
-      #   @return [Array<String>] a list with unused {#replacements}
+      #   @return [Array<String>] a list with unused {#route_params}
       attr_reader :unused
       #
-      # @!attribute [r] unreplaced
-      #   @return [Array<String>] a list of uri_segments that should have been replaced
-      attr_reader :unreplaced
+      # @!attribute [r] leftovers
+      #   @return [Array<String>] a list of uri segments that should have been replaced
+      attr_reader :leftovers
 
       #
       # Initializes a new Builder
@@ -72,13 +68,13 @@ module StubRequests
       #
       # @param [String] host the URI used to reach the service
       # @param [String] template the endpoint template
-      # @param [Hash<Symbol>] replacements a list of uri_replacement keys
+      # @param [Hash<Symbol>] route_params a list of route params
       #
-      def initialize(host, template, replacements = {})
+      def initialize(host, template, route_params = {})
         @host         = +host
         @template     = +template
         @path         = +@template.dup
-        @replacements = replacements
+        @route_params = route_params.to_route_param
       end
 
       #
@@ -100,55 +96,54 @@ module StubRequests
       private
 
       def build_uri
-        replace_segments
-        parse_unreplaced_segments
+        replace_route_params
+        parse_leftovers_route_params
       end
 
       def uri
-        @uri ||= [host, path].join("/")
+        @uri ||= URI.safe_join(host, path)
       end
 
       def run_validations
-        validate_replacements_used
+        validate_route_params_used
         validate_segments_replaced
         validate_uri
       end
 
       #
-      # Replaces the URI segments with the arguments in replacements
+      # Replaces the URI segments with the arguments in route_params
       #
       #
-      # @return [Array] an list with unused replacements
+      # @return [Array] an list with unused route_params
       #
-      def replace_segments
-        @unused = replacements.map do |key, value|
-          uri_segment = ":#{key}"
-          if path.include?(uri_segment)
-            path.gsub!(uri_segment.to_s, value.to_s)
+      def replace_route_params
+        @unused = route_params.map do |key, value|
+          if path.include?(key)
+            path.gsub!(key, value.to_s)
             next
           else
-            uri_segment
+            key
           end
         end.compact
       end
 
       #
-      # Validates that all replacements have been used
+      # Validates that all route_params have been used
       #
       #
-      # @raise [UriSegmentMismatch] when there are unused replacements
+      # @raise [UriSegmentMismatch] when there are unused route_params
       #
       # @return [void]
       #
-      def validate_replacements_used
+      def validate_route_params_used
         return if replacents_used?
-
         raise UriSegmentMismatch,
-              "The URI segment(s) [#{unused.join(',')}] are missing in template (#{path})"
+              "The route param(s) [#{unused.map(&:to_route_param).join(',')}]" \
+              " are missing in template (#{path})"
       end
 
       #
-      # Checks that no replacements are left
+      # Checks that no route_params are left
       #
       #
       # @return [true,false]
@@ -168,14 +163,11 @@ module StubRequests
       def validate_segments_replaced
         return if segments_replaced?
 
-        raise UriSegmentMismatch,
-              "The URI segment(s) [#{unreplaced.join(',')}]" \
-              " were not replaced in template (#{path})." \
-              " Given replacements=[#{segment_keys.join(',')}]"
-      end
 
-      def segment_keys
-        @segment_keys ||= replacements.keys.map { |segment_key| ":#{segment_key}" }
+        raise UriSegmentMismatch,
+              "The route param(s) [#{leftovers.map(&:to_route_param).join(',')}]" \
+              " were not replaced in template (#{path})." \
+              " Given route_params=[#{route_params.to_route_param.keys.join(',')}]"
       end
 
       #
@@ -185,7 +177,7 @@ module StubRequests
       # @return [true,false]
       #
       def segments_replaced?
-        unreplaced.none?
+        leftovers.none?
       end
 
       #
@@ -194,8 +186,8 @@ module StubRequests
       #
       # @return [Array<String>] a list of not replaced uri_segments
       #
-      def parse_unreplaced_segments
-        @unreplaced = URL_SEGMENT_REGEX.match(path).to_a.uniq
+      def parse_leftovers_route_params
+        @leftovers = URI.route_params(path)
       end
 
       #

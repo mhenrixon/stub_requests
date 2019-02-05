@@ -9,13 +9,13 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
 
   let(:service_id)   { :example_api }
   let(:service_uri)  { "https://example.com/api/v1" }
-  let(:endpoint)     { service.endpoints.register(endpoint_id, verb, uri_template) }
+  let(:endpoint)     { service.register(endpoint_id, verb, path) }
   let(:endpoint_id)  { :list_task }
   let(:verb)         { :get }
-  let(:uri_template) { "lists/:list_id/tasks/:task_id" }
+  let(:path)         { "lists/:list_id/tasks/:task_id" }
   let(:list_id)      { SecureRandom.hex }
   let(:task_id)      { SecureRandom.hex }
-  let(:uri_replacements) do
+  let(:route_params) do
     {
       list_id: list_id,
       task_id: task_id,
@@ -34,12 +34,12 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
 
   before do
     register_service(service_id, service_uri) do
-      register(endpoint_id, verb, uri_template)
+      register(endpoint_id, verb, path)
     end
 
     subscribe_to(service_id, endpoint_id, :any, -> { p inspect })
 
-    stub_endpoint(service_id, endpoint_id, uri_replacements) do
+    stub_endpoint(service_id, endpoint_id, route_params) do
       to_return(
         body: example_api_list_task_response.to_json,
         status: example_api_list_task_status,

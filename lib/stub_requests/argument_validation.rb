@@ -43,7 +43,7 @@ module StubRequests
 
       raise StubRequests::InvalidArgumentType,
             name: name,
-            actual: value.class,
+            actual: value,
             expected: expected_types
     end
   end
