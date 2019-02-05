@@ -131,12 +131,12 @@ end
 
 callback = ->(request) { p request; binding.pry }
 
-StubRequests.subscribe_to(:document_service, :show, :get, callback)
+StubRequests.register(:document_service, :show, :get, callback)
 ```
 
 ```ruby
 # To unsubscribe from notifications
-StubRequests.unsubscribe_from(:document_service, :show, :get)
+StubRequests.unregister(:document_service, :show, :get)
 ```
 
 <a id="future-improvements"></a>

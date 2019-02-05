@@ -102,7 +102,9 @@ RSpec.describe StubRequests::CallbackRegistry do
     end
 
     context "with existing callbacks" do
-      let!(:callback) { registry.register(service_id, endpoint_id, verb, callback) } # rubocop:disable Metrics/LineLength
+      before do
+        registry.register(service_id, endpoint_id, verb, callback)
+      end
 
       it! { is_expected.to change(registry.callbacks, :size).by(-1) }
       it { is_expected.to eq(callback) }
