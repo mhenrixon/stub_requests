@@ -24,7 +24,7 @@ RSpec.describe StubRequests::CallbackRegistry do
   describe ".register" do
     subject { described_class.register(service_id, endpoint_id, verb, callback) }
 
-    let(:registry_method) { :subscribe }
+    let(:registry_method) { :register }
     let(:callback)        { ->(request) { p request } }
     let(:expected_args)   { [service_id, endpoint_id, verb, callback] }
 
@@ -34,7 +34,7 @@ RSpec.describe StubRequests::CallbackRegistry do
   describe ".unregister" do
     subject { described_class.unregister(service_id, endpoint_id, verb) }
 
-    let(:registry_method) { :unsubscribe }
+    let(:registry_method) { :unregister }
     let(:expected_args)   { [service_id, endpoint_id, verb] }
 
     it_behaves_like "delegates to instance method"
@@ -107,7 +107,8 @@ RSpec.describe StubRequests::CallbackRegistry do
       end
 
       it! { is_expected.to change(registry.callbacks, :size).by(-1) }
-      it { is_expected.to eq(callback) }
+
+      its(:callback) { is_expected.to eq(callback) }
     end
   end
 
@@ -124,17 +125,17 @@ RSpec.describe StubRequests::CallbackRegistry do
     end
 
     context "without existing callbacks" do
-      before { allow(registry).to receive(:send_notification) }
+      before { allow(registry).to receive(:dispatch_callback) }
 
       it "does not call back" do
         invoke_callbacks
-        expect(registry).not_to have_received(:send_notification)
+        expect(registry).not_to have_received(:dispatch_callback)
       end
     end
 
     context "with existing callbacks" do
       before do
-        registry.subscribe(service_id, endpoint_id, verb, callback)
+        registry.register(service_id, endpoint_id, verb, callback)
         allow(callback).to receive(:call)
       end
 

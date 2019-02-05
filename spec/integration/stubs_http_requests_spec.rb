@@ -37,7 +37,7 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
       register(endpoint_id, verb, path)
     end
 
-    register(service_id, endpoint_id, :any, -> { p inspect })
+    register_callback(service_id, endpoint_id, :any, -> { p inspect })
 
     stub_endpoint(service_id, endpoint_id, route_params) do
       to_return(
