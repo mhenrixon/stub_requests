@@ -26,9 +26,8 @@ require "stub_requests/uri/validator"
 require "stub_requests/uri/builder"
 require "stub_requests/configuration"
 
-require "stub_requests/observable"
-require "stub_requests/observable/subscription"
-require "stub_requests/observable/registry"
+require "stub_requests/callback"
+require "stub_requests/callback_registry"
 
 require "stub_requests/metrics"
 require "stub_requests/metrics/endpoint"

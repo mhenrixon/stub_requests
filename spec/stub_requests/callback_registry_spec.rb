@@ -2,12 +2,53 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Observable::Registry do
+RSpec.describe StubRequests::CallbackRegistry do
   let(:registry)    { described_class.instance }
   let(:service_id)  { :documents }
   let(:endpoint_id) { :show }
   let(:verb)        { :any }
   let(:callback)    { -> {} }
+
+  shared_examples "delegates to instance method" do
+    before do
+      allow(registry).to receive(registry_method)
+      subject
+    end
+
+    it "delegates to CallbackRegistry.instance" do
+      expect(registry).to have_received(registry_method)
+        .with(*expected_args)
+    end
+  end
+
+  describe ".subscribe_to" do
+    subject { described_class.subscribe_to(service_id, endpoint_id, verb, callback) }
+
+    let(:registry_method) { :subscribe }
+    let(:callback)        { ->(request) { p request } }
+    let(:expected_args)   { [service_id, endpoint_id, verb, callback] }
+
+    it_behaves_like "delegates to instance method"
+  end
+
+  describe ".unsubscribe_from" do
+    subject { described_class.unsubscribe_from(service_id, endpoint_id, verb) }
+
+    let(:registry_method) { :unsubscribe }
+    let(:expected_args)   { [service_id, endpoint_id, verb] }
+
+    it_behaves_like "delegates to instance method"
+  end
+
+  describe ".notify_subscribers" do
+    subject { described_class.notify_subscribers(request) }
+
+    let(:registry_method) { :notify_subscribers }
+    let(:request)         { instance_spy(StubRequests::Metrics::Request) }
+    let(:expected_args)   { [request] }
+
+    it_behaves_like "delegates to instance method"
+  end
 
   describe "#subscribe" do
     subject(:subscribe) { registry.subscribe(service_id, endpoint_id, verb, callback) }
@@ -15,7 +56,7 @@ RSpec.describe StubRequests::Observable::Registry do
     context "without existing subscriptions" do
       it! { is_expected.to change(registry.subscriptions, :size).by(1) }
 
-      it { is_expected.to be_a(StubRequests::Observable::Subscription) }
+      it { is_expected.to be_a(StubRequests::Callback) }
       its(:service_id)  { is_expected.to eq(service_id) }
       its(:endpoint_id) { is_expected.to eq(endpoint_id) }
       its(:verb)        { is_expected.to eq(verb) }
@@ -29,7 +70,7 @@ RSpec.describe StubRequests::Observable::Registry do
 
       it! { is_expected.not_to change(registry.subscriptions, :size) }
 
-      it { is_expected.to be_a(StubRequests::Observable::Subscription) }
+      it { is_expected.to be_a(StubRequests::Callback) }
       its(:service_id)  { is_expected.to eq(service_id) }
       its(:endpoint_id) { is_expected.to eq(endpoint_id) }
       its(:verb)        { is_expected.to eq(verb) }
@@ -43,7 +84,7 @@ RSpec.describe StubRequests::Observable::Registry do
 
       it! { is_expected.to change(registry.subscriptions, :size) }
 
-      it { is_expected.to be_a(StubRequests::Observable::Subscription) }
+      it { is_expected.to be_a(StubRequests::Callback) }
       its(:service_id)  { is_expected.to eq(service_id) }
       its(:endpoint_id) { is_expected.to eq(endpoint_id) }
       its(:verb)        { is_expected.to eq(verb) }

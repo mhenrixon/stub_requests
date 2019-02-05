@@ -119,12 +119,12 @@ RSpec.describe StubRequests::API do
     let(:callback)    { -> {} }
 
     before do
-      allow(StubRequests::Observable).to receive(:subscribe_to)
+      allow(StubRequests::CallbackRegistry).to receive(:subscribe_to)
       subscribe_to
     end
 
-    it "delegates to StubRequests::Observable.subscribe_to" do
-      expect(StubRequests::Observable).to have_received(:subscribe_to)
+    it "delegates to StubRequests::CallbackRegistry.subscribe_to" do
+      expect(StubRequests::CallbackRegistry).to have_received(:subscribe_to)
         .with(service_id, endpoint_id, verb, callback)
     end
   end
@@ -139,12 +139,12 @@ RSpec.describe StubRequests::API do
     let(:verb)        { :get }
 
     before do
-      allow(StubRequests::Observable).to receive(:unsubscribe_from)
+      allow(StubRequests::CallbackRegistry).to receive(:unsubscribe_from)
       unsubscribe_from
     end
 
-    it "delegates to StubRequests::Observable.unsubscribe_from" do
-      expect(StubRequests::Observable).to have_received(:unsubscribe_from)
+    it "delegates to StubRequests::CallbackRegistry.unsubscribe_from" do
+      expect(StubRequests::CallbackRegistry).to have_received(:unsubscribe_from)
         .with(service_id, endpoint_id, verb)
     end
   end

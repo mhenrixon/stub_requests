@@ -82,7 +82,7 @@ module StubRequests
       #
       def mark_as_responded
         self.responded_at = Time.now
-        Observable.notify_subscribers(self)
+        CallbackRegistry.notify_subscribers(self)
       end
     end
   end

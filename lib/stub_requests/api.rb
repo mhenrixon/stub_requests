@@ -102,7 +102,7 @@ module StubRequests
     # :reek:UtilityFunction
     # :reek:LongParameterList
     def subscribe_to(service_id, endpoint_id, verb, callback)
-      StubRequests::Observable.subscribe_to(service_id, endpoint_id, verb, callback)
+      StubRequests::CallbackRegistry.subscribe_to(service_id, endpoint_id, verb, callback)
     end
 
     #
@@ -115,7 +115,7 @@ module StubRequests
     #
     # :reek:UtilityFunction
     def unsubscribe_from(service_id, endpoint_id, verb)
-      StubRequests::Observable.unsubscribe_from(service_id, endpoint_id, verb)
+      StubRequests::CallbackRegistry.unsubscribe_from(service_id, endpoint_id, verb)
     end
   end
 end
