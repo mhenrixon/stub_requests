@@ -59,12 +59,12 @@ RSpec.describe StubRequests::StubRegistry do
 
     it { is_expected.to be_a(StubRequests::EndpointStub) }
 
-    its(:service_id)     { is_expected.to eq(service_id) }
-    its(:endpoint_id)    { is_expected.to eq(endpoint_id) }
-    its(:verb)           { is_expected.to eq(endpoint_verb) }
-    its(:uri_template)   { is_expected.to eq("#{service_uri}/#{endpoint_uri_template}") }
-    its(:requests)       { is_expected.not_to be_empty }
-    its("requests.size") { is_expected.to eq(1) }
+    its(:service_id)   { is_expected.to eq(service_id) }
+    its(:endpoint_id)  { is_expected.to eq(endpoint_id) }
+    its(:verb)         { is_expected.to eq(endpoint_verb) }
+    its(:uri_template) { is_expected.to eq("#{service_uri}/#{endpoint_uri_template}") }
+    its(:stubs)        { is_expected.not_to be_empty }
+    its("stubs.size")  { is_expected.to eq(1) }
   end
 
   describe "#find_request_stub" do

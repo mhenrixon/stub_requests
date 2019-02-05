@@ -19,7 +19,7 @@ RSpec.describe StubRequests::Service do
   end
 
   describe "#register" do
-    subject(:register) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+    subject(:register) { service.endpoints.register(endpoint_id, verb, uri_template) }
 
     let(:endpoint_id)     { :concrete }
     let(:verb)            { :get }
@@ -32,11 +32,10 @@ RSpec.describe StubRequests::Service do
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(verb) }
       its(:uri_template) { is_expected.to eq(uri_template) }
-      its(:options)      { is_expected.to eq(default_options) }
     end
 
     context "when endpoint is registered" do
-      before { service.endpoints.register(endpoint_id, old_verb, old_uri_template, old_default_options) }
+      before { service.endpoints.register(endpoint_id, old_verb, old_uri_template) }
 
       let(:old_verb)            { :post }
       let(:old_uri_template)    { "concrete" }
@@ -45,7 +44,6 @@ RSpec.describe StubRequests::Service do
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(verb) }
       its(:uri_template) { is_expected.to eq(uri_template) }
-      its(:options)      { is_expected.to eq(default_options) }
     end
   end
 
@@ -57,7 +55,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoint is registered" do
-      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(endpoint) }
     end
@@ -71,7 +69,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoint is registered" do
-      before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      before { service.endpoints.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(true) }
     end
@@ -104,7 +102,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoint is registered" do
-      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) }
 
       it { is_expected.to eq(endpoint) }
     end
@@ -129,7 +127,7 @@ RSpec.describe StubRequests::Service do
     end
 
     context "when endpoints are registered" do
-      before { service.endpoints.register(endpoint_id, verb, uri_template, default_options) }
+      before { service.endpoints.register(endpoint_id, verb, uri_template) }
 
       let(:expected_output) do
         "#<StubRequests::Service id=abstractions uri=https://abstractions.com/v1 endpoints=[" \

@@ -88,11 +88,10 @@ RSpec.describe StubRequests::Endpoints do
   end
 
   describe "#update" do
-    subject(:update) { registry.update(endpoint_id, new_verb, new_uri_template, new_default_options) }
+    subject(:update) { registry.update(endpoint_id, new_verb, new_uri_template) }
 
     let(:new_verb)            { :post }
     let(:new_uri_template)    { "resource/:resource_id" }
-    let(:new_default_options) { { response: { body: "" } } }
 
     let(:error)   { StubRequests::EndpointNotFound }
     let(:message) { "Couldn't find an endpoint with id=:resource_collection" }
@@ -107,7 +106,6 @@ RSpec.describe StubRequests::Endpoints do
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(new_verb) }
       its(:uri_template) { is_expected.to eq(new_uri_template) }
-      its(:options)      { is_expected.to eq(new_default_options) }
     end
   end
 

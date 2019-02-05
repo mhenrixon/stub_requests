@@ -41,18 +41,17 @@ module StubRequests
     # @param [Symbol] endpoint_id the id of this Endpoint
     # @param [Symbol] verb a HTTP verb
     # @param [String] uri_template the URI to reach the endpoint
-    # @param [optional, Hash<Symbol>] options default options
     #
     # @return [Endpoint]
     #
     # :reek:LongParameterList { max_params: 4 }
-    def register(endpoint_id, verb, uri_template, options = {})
+    def register(endpoint_id, verb, uri_template)
       endpoint =
         if (endpoint = find(endpoint_id))
           StubRequests.logger.warn("Endpoint already registered: #{endpoint}")
-          endpoint.update(verb, uri_template, options)
+          endpoint.update(verb, uri_template)
         else
-          Endpoint.new(endpoint_id, verb, uri_template, options)
+          Endpoint.new(endpoint_id, verb, uri_template)
         end
 
       endpoints[endpoint.id] = endpoint
@@ -76,9 +75,9 @@ module StubRequests
     # @return [Endpoint] returns the updated endpoint
     #
     # :reek:LongParameterList { max_params: 4 }
-    def update(endpoint_id, verb, uri_template, options)
+    def update(endpoint_id, verb, uri_template)
       endpoint = find!(endpoint_id)
-      endpoint.update(verb, uri_template, options)
+      endpoint.update(verb, uri_template)
     end
 
     #

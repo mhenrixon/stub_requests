@@ -50,11 +50,10 @@ module StubRequests
     # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
     # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
     #
-    def initialize(endpoint_id, verb, uri_template, options = {})
+    def initialize(endpoint_id, verb, uri_template)
       self.id              = endpoint_id
       self.verb            = verb
       self.uri_template    = uri_template
-      self.options         = options
     end
 
     #
@@ -70,10 +69,9 @@ module StubRequests
     #
     # @return [Endpoint] returns the updated endpoint
     #
-    def update(verb, uri_template, options)
+    def update(verb, uri_template)
       self.verb            = verb
       self.uri_template    = uri_template
-      self.options = options
       self
     end
 

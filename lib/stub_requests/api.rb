@@ -85,8 +85,8 @@ module StubRequests
     #
     # :reek:UtilityFunction
     # :reek:LongParameterList { max_params: 5 }
-    def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, options = {}, &callback)
-      StubRequests::ServiceRegistry.stub_endpoint(service_id, endpoint_id, uri_replacements, options, &callback)
+    def stub_endpoint(service_id, endpoint_id, uri_replacements = {}, &callback)
+      StubRequests::ServiceRegistry.stub_endpoint(service_id, endpoint_id, uri_replacements, &callback)
     end
 
     #

@@ -39,8 +39,8 @@ module StubRequests
     property :uri_template, type: String
     #
     # @!attribute [r] stubs
-    #   @return [Array] an array with recorded requests
-    attr_reader :requests
+    #   @return [Array] an array with recorded stubs
+    attr_reader :stubs
 
     #
     # Initializes a new Endpoint
@@ -54,7 +54,7 @@ module StubRequests
       self.verb         = endpoint.verb
       self.uri_template = [service.uri, endpoint.uri_template].join("/")
 
-      @requests = Concurrent::Array.new
+      @stubs = Concurrent::Array.new
     end
 
     def find_by(attribute:, value:)
@@ -70,20 +70,20 @@ module StubRequests
     # @yield used by Enumerable
     #
     def each(&block)
-      requests.each(&block)
+      stubs.each(&block)
     end
 
     #
     # Records a WebMock::RequestStub as stubbed
     #
-    # @param [WebMock::RequestStub] request_stub <description>
+    # @param [WebMock::RequestStub] webmock_stub <description>
     #
-    # @return [Record]
+    # @return [RequestStub]
     #
-    def record(request_stub)
-      request = RequestStub.new(self, request_stub)
-      requests.push(request)
-      request
+    def record(webmock_stub)
+      request_stub = RequestStub.new(self, webmock_stub)
+      stubs.push(request_stub)
+      request_stub
     end
   end
 end
