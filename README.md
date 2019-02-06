@@ -20,7 +20,8 @@ This is achieve by keeping a registry over the service endpoints.
   - [Register service endpoints](#register-service-endpoints)
   - [Stubbing service endpoints](#stubbing-service-endpoints)
   - [Metrics](#metrics)
-  - [Observing endpoint invocations](#observing-endpoint-invocations)
+  - [Endpoint invocation callbacks](#endpoint-invocation-callbacks)
+  - [Generating stub methods for](#generating-stub-methods-for)
 - [Future Improvements](#future-improvements)
   - [API Client Gem](#api-client-gem)
 - [Development](#development)
@@ -119,8 +120,8 @@ StubRequests.configure do |config|
 end
 ```
 
-<a id="observing-endpoint-invocations"></a>
-### Observing endpoint invocations
+<a id="endpoint-invocation-callbacks"></a>
+### Endpoint invocation callbacks
 
 ```ruby
 # To jump into pry when a request is called
@@ -131,13 +132,17 @@ end
 
 callback = ->(request) { p request; binding.pry }
 
-StubRequests.register(:document_service, :show, :get, callback)
+StubRequests.register_callback(:document_service, :show, :get, callback)
 ```
 
 ```ruby
 # To unsubscribe from notifications
-StubRequests.unregister(:document_service, :show, :get)
+StubRequests.unregister_callback(:document_service, :show, :get)
 ```
+
+<a id="generating-stub-methods-for"></a>
+### Generating stub methods for
+
 
 <a id="future-improvements"></a>
 ## Future Improvements
