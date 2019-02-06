@@ -10,6 +10,9 @@ detectors:
     exclude:
     - RSpec::SubjectAsLambda#it!
     - StubRequests::CallbackRegistry#find_by
+  TooManyMethods:
+    exclude:
+    - StubRequests::Endpoints
   TooManyStatements:
     exclude:
     - initialize
