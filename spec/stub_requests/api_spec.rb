@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::API do
-  let(:service_registry) { StubRequests::Registration::Registry.instance }
+  let(:service_registry) { StubRequests::ServiceRegistry.instance }
   let(:service_id)       { :api }
   let(:service_uri)      { "https://api.com/v1" }
   let(:verb)             { :get }
@@ -43,7 +43,7 @@ RSpec.describe StubRequests::API do
     end
 
     shared_examples "a successful registration" do
-      it { is_expected.to be_a(StubRequests::Registration::Service) }
+      it { is_expected.to be_a(StubRequests::Service) }
 
       its(:id)  { is_expected.to eq(service_id) }
       its(:uri) { is_expected.to eq(service_uri) }
@@ -54,7 +54,7 @@ RSpec.describe StubRequests::API do
     it_behaves_like "a successful registration"
 
     context "when given a block" do
-      specify { register_service { expect(self).to be_a(StubRequests::Registration::Endpoints) } }
+      specify { register_service { expect(self).to be_a(StubRequests::Endpoints) } }
 
       it_behaves_like "a successful registration"
     end
@@ -62,14 +62,13 @@ RSpec.describe StubRequests::API do
 
   describe "#stub_endpoint" do
     subject(:stub_endpoint) do
-      described_class.stub_endpoint(service_id, endpoint_id, uri_replacements, options)
+      described_class.stub_endpoint(service_id, endpoint_id, route_params)
     end
 
     let(:endpoint_id)      { :files }
     let(:verb)             { :get }
-    let(:uri_template)     { "files/:file_id" }
-    let(:uri_replacements) { { file_id: 100 } }
-    let(:options)          { {} }
+    let(:path)             { "files/:file_id" }
+    let(:route_params)     { { file_id: 100 } }
     let(:service)          { nil }
     let(:block)            { nil }
 
@@ -84,13 +83,13 @@ RSpec.describe StubRequests::API do
       let!(:service) { described_class.register_service(service_id, service_uri) }
 
       context "when endpoint is registered" do
-        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, path) } # rubocop:disable RSpec/LetSetup
 
         it { is_expected.to be_a(WebMock::RequestStub) }
       end
 
       context "when given a block" do
-        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, uri_template) } # rubocop:disable RSpec/LetSetup
+        let!(:endpoint) { service.endpoints.register(endpoint_id, verb, path) } # rubocop:disable RSpec/LetSetup
 
         it "yields the stub to the block" do
           stub_endpoint do |stub|
@@ -108,9 +107,9 @@ RSpec.describe StubRequests::API do
     end
   end
 
-  describe "#subscribe_to" do
-    subject(:subscribe_to) do
-      described_class.subscribe_to(service_id, endpoint_id, verb, callback)
+  describe "#register_callback" do
+    subject(:register_callback) do
+      described_class.register_callback(service_id, endpoint_id, verb, callback)
     end
 
     let(:service_id)  { :random_api }
@@ -119,19 +118,19 @@ RSpec.describe StubRequests::API do
     let(:callback)    { -> {} }
 
     before do
-      allow(StubRequests::Observable).to receive(:subscribe_to)
-      subscribe_to
+      allow(StubRequests::CallbackRegistry).to receive(:register)
+      register_callback
     end
 
-    it "delegates to StubRequests::Observable.subscribe_to" do
-      expect(StubRequests::Observable).to have_received(:subscribe_to)
+    it "delegates to StubRequests::CallbackRegistry.register" do
+      expect(StubRequests::CallbackRegistry).to have_received(:register)
         .with(service_id, endpoint_id, verb, callback)
     end
   end
 
-  describe "#unsubscribe_from" do
-    subject(:unsubscribe_from) do
-      described_class.unsubscribe_from(service_id, endpoint_id, verb)
+  describe "#unregister_callback" do
+    subject(:unregister_callback) do
+      described_class.unregister_callback(service_id, endpoint_id, verb)
     end
 
     let(:service_id)  { :random_api }
@@ -139,12 +138,12 @@ RSpec.describe StubRequests::API do
     let(:verb)        { :get }
 
     before do
-      allow(StubRequests::Observable).to receive(:unsubscribe_from)
-      unsubscribe_from
+      allow(StubRequests::CallbackRegistry).to receive(:unregister)
+      unregister_callback
     end
 
-    it "delegates to StubRequests::Observable.unsubscribe_from" do
-      expect(StubRequests::Observable).to have_received(:unsubscribe_from)
+    it "delegates to StubRequests::CallbackRegistry.unregister" do
+      expect(StubRequests::CallbackRegistry).to have_received(:unregister)
         .with(service_id, endpoint_id, verb)
     end
   end

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 unless defined?(Rails) || defined?(ActiveSupport)
-  # See {Class}
-  # @api private
+  # :nodoc:
   class Class
-    # @api private
+    # :nodoc:
     def class_attribute(*attrs)
       options       = attrs.extract_options!
       default_value = options.fetch(:default, nil)

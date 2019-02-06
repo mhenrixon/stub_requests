@@ -4,76 +4,75 @@
 
 unless defined?(Rails) || defined?(ActiveSupport)
 
-  # @see Object
-  # @api private
+  # :nodoc:
   class Object
-    # @api private
+    # :nodoc:
     def blank?
       respond_to?(:empty?) ? !!empty? : !self # rubocop:disable Style/DoubleNegation
     end
-    # @api private
+    # :nodoc:
     def present?
       !blank?
     end
-    # @api private
+    # :nodoc:
     def presence
       self if present?
     end
   end
 
   # @see NilClass
-  # @api private
+  # :nodoc:
   class NilClass
-    # @api private
+    # :nodoc:
     def blank?
       true
     end
   end
 
   # @see FalseClass
-  # @api private
+  # :nodoc:
   class FalseClass
-    # @api private
+    # :nodoc:
     def blank?
       true
     end
   end
 
   # @see TrueClass
-  # @api private
+  # :nodoc:
   class TrueClass
-    # @api private
+    # :nodoc:
     def blank?
       false
     end
   end
 
   # @see Array
-  # @api private
+  # :nodoc:
   class Array
-    # @api private
+    # :nodoc:
     alias blank? empty?
   end
 
   # @see Hash
-  # @api private
+  # :nodoc:
   class Hash
-    # @api private
+    # :nodoc:
     alias blank? empty?
   end
 
   # @see String
   class String
     # :nodoc:
-    # @api private
+    # :nodoc:
     BLANK_RE = /\A[[:space:]]*\z/.freeze
     # :nodoc:
-    # @api private
+    # :nodoc:
     ENCODED_BLANKS = Concurrent::Map.new do |map, enc|
       map[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
     end
 
-    # @api private
+    # :nodoc:
     def blank?
       # The regexp that matches blank strings is expensive. For the case of empty
       # strings we can speed up this method (~3.5x) with an empty? call. The
@@ -96,18 +95,18 @@ unless defined?(Rails) || defined?(ActiveSupport)
   end
 
   # @see Numeric
-  # @api private
+  # :nodoc:
   class Numeric
-    # @api private
+    # :nodoc:
     def blank?
       false
     end
   end
 
   # @see Time
-  # @api private
+  # :nodoc:
   class Time
-    # @api private
+    # :nodoc:
     def blank?
       false
     end

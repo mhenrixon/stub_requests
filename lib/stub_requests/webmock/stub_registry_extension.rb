@@ -36,7 +36,7 @@ module StubRequests
         request_stub = request_stub_for_orig(request_signature)
         return request_stub unless request_stub
 
-        Metrics::Registry.instance.mark_as_responded(request_stub)
+        StubRequests::StubRegistry.mark_as_responded(request_stub)
         request_stub
       end
     end

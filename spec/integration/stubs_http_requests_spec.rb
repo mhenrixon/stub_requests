@@ -9,18 +9,19 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
 
   let(:service_id)   { :example_api }
   let(:service_uri)  { "https://example.com/api/v1" }
-  let(:endpoint)     { service.endpoints.register(endpoint_id, verb, uri_template) }
+  let(:endpoint)     { service.endpoints.register(endpoint_id, verb, path) }
   let(:endpoint_id)  { :list_task }
   let(:verb)         { :get }
-  let(:uri_template) { "lists/:list_id/tasks/:task_id" }
+  let(:path)         { "lists/:list_id/tasks/:task_id" }
   let(:list_id)      { SecureRandom.hex }
   let(:task_id)      { SecureRandom.hex }
-  let(:uri_replacements) do
+  let(:route_params) do
     {
       list_id: list_id,
       task_id: task_id,
     }
   end
+  let(:callback) { -> { p inspect } }
 
   let(:example_api_list_task_status) { 200 }
   let(:example_api_list_task_response) do
@@ -32,19 +33,29 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
     }
   end
 
-  before do
+  def register_endpoints
     register_service(service_id, service_uri) do
-      register(endpoint_id, verb, uri_template)
+      register(endpoint_id, verb, path)
     end
+  end
 
-    subscribe_to(service_id, endpoint_id, :any, -> { p inspect })
+  def register_callbacks
+    register_callback(service_id, endpoint_id, :any, callback)
+  end
 
-    stub_endpoint(service_id, endpoint_id, uri_replacements) do
+  def register_stubs
+    stub_endpoint(service_id, endpoint_id, route_params) do
       to_return(
         body: example_api_list_task_response.to_json,
         status: example_api_list_task_status,
       )
     end
+  end
+
+  before do
+    register_endpoints
+    register_callbacks
+    register_stubs
   end
 
   it "stubs the request nicely" do

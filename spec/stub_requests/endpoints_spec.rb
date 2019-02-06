@@ -2,29 +2,32 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Registration::Endpoints do
-  let(:registry)     { described_class.new }
-  let(:endpoint)     { StubRequests::Registration::Endpoint.new(endpoint_id, verb, uri_template) }
+RSpec.describe StubRequests::Endpoints do
+  let(:endpoints)    { described_class.new(service) }
+  let(:service)      { instance_spy(StubRequests::Service) }
+  let(:endpoint)     { StubRequests::Endpoint.new(service, endpoint_id, verb, path) }
   let(:endpoint_id)  { :resource_collection }
   let(:verb)         { :find }
-  let(:uri_template) { "resource/:resource_id/collection" }
+  let(:path)         { "resource/:resource_id/collection" }
 
   describe "#initialize" do
+    subject { endpoints }
+
     its(:endpoints) { is_expected.to be_a(Concurrent::Map) }
   end
 
   describe "#register" do
-    subject(:register) { registry.register(endpoint_id, verb, uri_template) }
+    subject(:register) { endpoints.register(endpoint_id, verb, path) }
 
     it "registers the endpoint in the collection" do
-      expect { register }.to change { registry.endpoints.size }.by(1)
+      expect { register }.to change { endpoints.endpoints.size }.by(1)
     end
 
     it { is_expected.to eq(endpoint) }
   end
 
   describe "#each" do
-    subject(:each) { registry.each }
+    subject(:each) { endpoints.each }
 
     context "when given no block" do
       it { is_expected.to be_a(::Enumerator) }
@@ -40,7 +43,7 @@ RSpec.describe StubRequests::Registration::Endpoints do
       end
 
       context "when endpoint is registered" do
-        before { registry.register(endpoint_id, verb, uri_template) }
+        before { endpoints.register(endpoint_id, verb, path) }
 
         specify do
           each { |ep| expect(ep.id).to eq(endpoint.id) }
@@ -49,29 +52,29 @@ RSpec.describe StubRequests::Registration::Endpoints do
 
       it "delegates to @endpoints" do
         block = ->(endpoint) { endpoint }
-        allow(registry.endpoints).to receive(:each).and_call_original
+        allow(endpoints.endpoints).to receive(:each).and_call_original
         each(&block)
-        expect(registry.endpoints).to have_received(:each).with(no_args, &block)
+        expect(endpoints.endpoints).to have_received(:each).with(no_args, &block)
       end
     end
   end
 
   describe "#find" do
-    subject(:find) { registry.find(endpoint_id) }
+    subject(:find) { endpoints.find(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
     end
 
     context "when endpoint is registered" do
-      before { registry.register(endpoint_id, verb, uri_template) }
+      before { endpoints.register(endpoint_id, verb, path) }
 
       it { is_expected.to eq(endpoint) }
     end
   end
 
   describe "#find!" do
-    subject(:find) { registry.find!(endpoint_id) }
+    subject(:find) { endpoints.find!(endpoint_id) }
 
     let(:error)   { StubRequests::EndpointNotFound }
     let(:message) { "Couldn't find an endpoint with id=:resource_collection" }
@@ -81,18 +84,17 @@ RSpec.describe StubRequests::Registration::Endpoints do
     end
 
     context "when endpoint is registered" do
-      before { registry.register(endpoint_id, verb, uri_template) }
+      before { endpoints.register(endpoint_id, verb, path) }
 
       it { is_expected.to eq(endpoint) }
     end
   end
 
   describe "#update" do
-    subject(:update) { registry.update(endpoint_id, new_verb, new_uri_template, new_default_options) }
+    subject(:update) { endpoints.update(endpoint_id, new_verb, new_path) }
 
-    let(:new_verb)            { :post }
-    let(:new_uri_template)    { "resource/:resource_id" }
-    let(:new_default_options) { { response: { body: "" } } }
+    let(:new_verb) { :post }
+    let(:new_path) { "resource/:resource_id" }
 
     let(:error)   { StubRequests::EndpointNotFound }
     let(:message) { "Couldn't find an endpoint with id=:resource_collection" }
@@ -102,44 +104,43 @@ RSpec.describe StubRequests::Registration::Endpoints do
     end
 
     context "when endpoint is registered" do
-      before { registry.register(endpoint_id, verb, uri_template) }
+      before { endpoints.register(endpoint_id, verb, path) }
 
       its(:id)           { is_expected.to eq(endpoint_id) }
       its(:verb)         { is_expected.to eq(new_verb) }
-      its(:uri_template) { is_expected.to eq(new_uri_template) }
-      its(:options)      { is_expected.to eq(new_default_options) }
+      its(:path) { is_expected.to eq(new_path) }
     end
   end
 
   describe "#remove" do
-    subject(:remove) { registry.remove(endpoint_id) }
+    subject(:remove) { endpoints.remove(endpoint_id) }
 
     context "when endpoint is unregistered" do
       it { is_expected.to eq(nil) }
     end
 
     context "when endpoint is registered" do
-      before { registry.register(endpoint_id, verb, uri_template) }
+      before { endpoints.register(endpoint_id, verb, path) }
 
       it { is_expected.to eq(endpoint) }
     end
   end
 
   describe "#to_s" do
-    subject(:to_s) { registry.to_s }
+    subject(:to_s) { endpoints.to_s }
 
     context "when no endpoints are registered" do
-      it { is_expected.to eq("#<StubRequests::Registration::Endpoints endpoints=[]>") }
+      it { is_expected.to eq("#<StubRequests::Endpoints endpoints=[]>") }
     end
 
     context "when endpoints are registered" do
       before do
-        registry.register(:bogus_id, :any, "documents/:document_id")
+        endpoints.register(:bogus_id, :any, "documents/:document_id")
       end
 
       let(:expected_output) do
-        "#<StubRequests::Registration::Endpoints endpoints=["\
-          "#<StubRequests::Registration::Endpoint id=:bogus_id verb=:any uri_template='documents/:document_id'>"\
+        "#<StubRequests::Endpoints endpoints=["\
+          "#<StubRequests::Endpoint id=:bogus_id verb=:any path='documents/:document_id'>"\
         "]>"
       end
 

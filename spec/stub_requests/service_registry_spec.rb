@@ -2,16 +2,16 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Registration::Registry do
+RSpec.describe StubRequests::ServiceRegistry do
   let(:registry)    { described_class.instance }
-  let(:service)     { StubRequests::Registration::Service.new(service_id, service_uri) }
+  let(:service)     { StubRequests::Service.new(service_id, service_uri) }
   let(:service_id)  { :basecamp }
   let(:service_uri) { "http://basecamp.com/v3" }
 
   describe "#register" do
     subject(:register) { registry.register(service_id, service_uri) }
 
-    it { is_expected.to be_a(StubRequests::Registration::Service) }
+    it { is_expected.to be_a(StubRequests::Service) }
 
     its(:id) { is_expected.to eq(service_id) }
     its(:uri) { is_expected.to eq(service_uri) }

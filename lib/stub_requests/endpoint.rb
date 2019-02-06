@@ -17,9 +17,6 @@ module StubRequests
 
     include Comparable
     include Property
-
-    # Delegate id, uri and endpoints to service
-    delegate [:id, :uri, :endpoints] => :service
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
@@ -29,57 +26,72 @@ module StubRequests
     #   @return [Symbol] a HTTP verb
     property :verb, type: Symbol
     #
-    # @!attribute [rw] uri_template
+    # @!attribute [rw] path
     #   @return [String] a string template for the endpoint
-    property :uri_template, type: String
+    property :path, type: String
+
+    #
+    # @!attribute [rw] service
+    #   @see
+    #   @return [Service] a service
+    attr_reader :service
+
+    #
+    # @!attribute [rw] service_id
+    #   @see
+    #   @return [Symbol] the id of the service
+    attr_reader :service_id
+
+    #
+    # @!attribute [rw] service_uri
+    #   @see
+    #   @return [String] a service's base URI
+    attr_reader :service_uri
+
     #
     # @!attribute [rw] options
     #   @see
-    #   @return [Hash<Symbol>] a Hash with default request/response options
-    property :options, type: Hash, default: {}
+    #   @return [Array<Symbol>] an array with required route params
+    attr_reader :route_params
 
     #
-    # An endpoint for a specific {StubRequests::Registration::Service}
+    # An endpoint for a specific {StubRequests::Service}
     #
+    #
+    # @param [Service] service a registered service
     # @param [Symbol] endpoint_id a descriptive id for the endpoint
     # @param [Symbol] verb a HTTP verb
-    # @param [String] uri_template how to reach the endpoint
-    # @param [optional, Hash<Symbol>] options
-    # @option options [optional, Hash<Symbol>] :request for request_stub.with
-    # @option options [optional, Hash<Symbol>] :response for request_stub.to_return
-    # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
-    # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
+    # @param [String] path how to reach the endpoint
     #
-    def initialize(service, endpoint_id, verb, uri_template, options = {})
-      self.service      = service
-      self.id           = endpoint_id
-      self.verb         = verb
-      self.uri_template = uri_template
-      self.options      = options
+    def initialize(service, endpoint_id, verb, path)
+      self.id   = endpoint_id
+      self.verb = verb
+      self.path = path
+
+      @service      = service
+      @service_id   = service.id
+      @service_uri  = service.uri
+      @route_params = URI.route_params(path)
     end
 
     #
     # Updates this endpoint
     #
+    #
     # @param [Symbol] verb a HTTP verb
-    # @param [String] uri_template how to reach the endpoint
-    # @param [optional, Hash<Symbol>] options
-    # @option options [optional, Hash<Symbol>] :request for request_stub.with
-    # @option options [optional, Hash<Symbol>] :response for request_stub.to_return
-    # @option options [optional, Array, Exception, StandardError, String] :error for request_stub.to_raise
-    # @option options [optional, TrueClass] :timeout for request_stub.to_timeout
+    # @param [String] path how to reach the endpoint
     #
-    # @return [Registration::Endpoint] returns the updated endpoint
+    # @return [Endpoint] returns the updated endpoint
     #
-    def update(verb, uri_template, options)
-      self.verb            = verb
-      self.uri_template    = uri_template
-      self.options = options
+    def update(verb, path)
+      self.verb = verb
+      self.path = path
       self
     end
 
     def <=>(other)
-      id <=> other.id
+      service_id <=> other.service_id &&
+        id <=> other.id
     end
 
     def hash
@@ -94,7 +106,7 @@ module StubRequests
     # @return [String]
     #
     def to_s
-      "#<#{self.class} id=:#{id} verb=:#{verb} uri_template='#{uri_template}'>"
+      "#<#{self.class} id=:#{id} verb=:#{verb} path='#{path}'>"
     end
   end
 end
