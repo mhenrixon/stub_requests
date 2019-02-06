@@ -70,7 +70,7 @@ module StubRequests
         @type       = Array(type).flatten
         @default    = default
         @name       = name
-        @properties = properties
+        @properties = properties || {}
       end
 
       #
@@ -125,6 +125,7 @@ module StubRequests
       # @return [void]
       #
       def validate_undefined
+        return unless properties
         return unless (prop = properties[name])
 
         raise PropertyDefined, name: name, type: prop[:type], default: prop[:default]
