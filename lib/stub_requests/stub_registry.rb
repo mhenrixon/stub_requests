@@ -14,7 +14,6 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
   #
-  # :reek:DataClump
   class StubRegistry
     # includes "Singleton"
     # @!parse include Singleton
@@ -145,13 +144,10 @@ module StubRequests
       find_endpoint_stub(service, endpoint) || initialize_endpoint_stub(service, endpoint)
     end
 
-    # :reek:UtilityFunction
-    # :reek:FeatureEnvy
     def find_endpoint_stub(service, endpoint)
       find { |ep| ep.service_id == service.id && ep.endpoint_id == endpoint.id }
     end
 
-    # :reek:UtilityFunction
     def initialize_endpoint_stub(service, endpoint)
       EndpointStub.new(service, endpoint)
     end

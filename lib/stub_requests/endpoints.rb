@@ -49,7 +49,6 @@ module StubRequests
     #
     # @return [Endpoint]
     #
-    # :reek:LongParameterList { max_params: 4 }
     def register(endpoint_id, verb, path)
       endpoint =
         if (endpoint = find(endpoint_id))
@@ -64,7 +63,104 @@ module StubRequests
     end
 
     #
+    # Convenience wrapper for register
+    #
+    #
+    # @example **Register a get endpoint**
+    # .  get("documents/:id", as: :documents_show)
+    #
+    # @param [String] path the path to the endpoint
+    # @param [Symbol] as the id of the endpoint
+    #
+    # @return [Endpoint] the registered endpoint
+    #
+    def any(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      register(as, __method__, path)
+    end
+
+    #
+    # Convenience wrapper for register
+    #
+    #
+    # @example **Register a get endpoint**
+    # .  get("documents/:id", as: :documents_show)
+    #
+    # @param [String] path the path to the endpoint
+    # @param [Symbol] as the id of the endpoint
+    #
+    # @return [Endpoint] the registered endpoint
+    #
+    def get(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      register(as, __method__, path)
+    end
+
+    #
+    # Register a :post endpoint
+    #
+    #
+    # @example **Register a post endpoint**
+    # .  post("documents", as: :documents_create)
+    #
+    # @param [String] path the path to the endpoint
+    # @param [Symbol] as the id of the endpoint
+    #
+    # @return [Endpoint] the registered endpoint
+    #
+    def post(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      register(as, __method__, path)
+    end
+
+    #
+    # Register a :patch endpoint
+    #
+    #
+    # @example **Register a patch endpoint**
+    # .  patch("documents/:id", as: :documents_update)
+    #
+    # @param [String] path the path to the endpoint
+    # @param [Symbol] as the id of the endpoint
+    #
+    # @return [Endpoint] the registered endpoint
+    #
+    def patch(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      register(as, __method__, path)
+    end
+
+    #
+    # Register a :put endpoint
+    #
+    #
+    # @example **Register a put endpoint**
+    # .  put("documents/:id", as: :documents_update)
+    #
+    # @param [String] path the path to the endpoint
+    # @param [Symbol] as the id of the endpoint
+    #
+    # @return [Endpoint] the registered endpoint
+    #
+    def put(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      register(as, __method__, path)
+    end
+
+    #
+    # Register a :delete endpoint
+    #
+    #
+    # @example **Register a delete endpoint**
+    # .  delete("documents/:id", as: :documents_destroy)
+    #
+    # @param [String] path the path to the endpoint
+    # @param [Symbol] as the id of the endpoint
+    #
+    # @return [Endpoint] the registered endpoint
+    #
+    def delete(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      register(as, __method__, path)
+    end
+
+    #
     # Updates an endpoint
+    #
     #
     # @param [Symbol] endpoint_id the id of the endpoint
     # @param [Symbol] verb a HTTP verb
@@ -74,7 +170,6 @@ module StubRequests
     #
     # @return [Endpoint] returns the updated endpoint
     #
-    # :reek:LongParameterList { max_params: 4 }
     def update(endpoint_id, verb, path)
       endpoint = find!(endpoint_id)
       endpoint.update(verb, path)
@@ -82,6 +177,7 @@ module StubRequests
 
     #
     # Removes an endpoint from the collection
+    #
     #
     # @param [Symbol] endpoint_id the id of the endpoint, `:file_service`
     #
@@ -94,6 +190,7 @@ module StubRequests
     #
     # Fetches an endpoint from the collection
     #
+    #
     # @param [<type>] endpoint_id <description>
     #
     # @return [Endpoint]
@@ -104,6 +201,7 @@ module StubRequests
 
     #
     # Fetches an endpoint from the collection or raises an error
+    #
     #
     # @param [Symbol] endpoint_id the id of the endpoint
     #
@@ -117,6 +215,7 @@ module StubRequests
 
     #
     # Returns a descriptive string with all endpoints in the collection
+    #
     #
     # @return [String]
     #

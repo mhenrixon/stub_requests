@@ -13,7 +13,6 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.2
   #
-  # :reek:TooManyInstanceVariables
   class RequestStub
     include Property
     extend Forwardable

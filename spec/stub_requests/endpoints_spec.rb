@@ -16,6 +16,56 @@ RSpec.describe StubRequests::Endpoints do
     its(:endpoints) { is_expected.to be_a(Concurrent::Map) }
   end
 
+  shared_examples "convenient endpoint registration" do
+    subject(:register) { endpoints.send(verb, path, as: endpoint_id) }
+
+    before do
+      allow(endpoints).to receive(:register).and_return(true)
+      register
+    end
+
+    it "delegates to #register" do
+      expect(endpoints).to have_received(:register)
+        .with(endpoint_id, verb, path)
+    end
+  end
+
+  describe "#any" do
+    let(:verb) { :any }
+
+    it_behaves_like "convenient endpoint registration"
+  end
+
+  describe "#get" do
+    let(:verb) { :get }
+
+    it_behaves_like "convenient endpoint registration"
+  end
+
+  describe "#post" do
+    let(:verb) { :post }
+
+    it_behaves_like "convenient endpoint registration"
+  end
+
+  describe "#patch" do
+    let(:verb) { :patch }
+
+    it_behaves_like "convenient endpoint registration"
+  end
+
+  describe "#put" do
+    let(:verb) { :put }
+
+    it_behaves_like "convenient endpoint registration"
+  end
+
+  describe "#delete" do
+    let(:verb) { :delete }
+
+    it_behaves_like "convenient endpoint registration"
+  end
+
   describe "#register" do
     subject(:register) { endpoints.register(endpoint_id, verb, path) }
 
