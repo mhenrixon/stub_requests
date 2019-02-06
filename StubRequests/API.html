@@ -193,6 +193,29 @@ or included in say RSpec</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#register_callback-instance_method" title="#register_callback (instance method)">#<strong>register_callback</strong>(service_id, endpoint_id, verb, callback)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Subscribe to notifications for a service endpoint.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#register_service-instance_method" title="#register_service (instance method)">#<strong>register_service</strong>(service_id, service_uri, &amp;block)  &#x21d2; Service </a>
     
 
@@ -216,7 +239,7 @@ or included in say RSpec</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#stub_endpoint-instance_method" title="#stub_endpoint (instance method)">#<strong>stub_endpoint</strong>(service_id, endpoint_id, uri_replacements = {}, options = {}, &amp;callback)  &#x21d2; WebMock::RequestStub </a>
+      <a href="#stub_endpoint-instance_method" title="#stub_endpoint (instance method)">#<strong>stub_endpoint</strong>(service_id, endpoint_id, route_params = {}, &amp;callback)  &#x21d2; WebMock::RequestStub </a>
     
 
     
@@ -239,30 +262,7 @@ or included in say RSpec</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#subscribe_to-instance_method" title="#subscribe_to (instance method)">#<strong>subscribe_to</strong>(service_id, endpoint_id, verb, callback)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Subscribe to notifications for a service endpoint.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#unsubscribe_from-instance_method" title="#unsubscribe_from (instance method)">#<strong>unsubscribe_from</strong>(service_id, endpoint_id, verb)  &#x21d2; void </a>
+      <a href="#unregister_callback-instance_method" title="#unregister_callback (instance method)">#<strong>unregister_callback</strong>(service_id, endpoint_id, verb)  &#x21d2; void </a>
     
 
     
@@ -353,380 +353,9 @@ or included in say RSpec</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="register_service-instance_method">
+  <h3 class="signature first" id="register_callback-instance_method">
   
-    #<strong>register_service</strong>(service_id, service_uri, &amp;block)  &#x21d2; <tt>Service</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Register a service in the service registry</p>
-
-<p>:reek:UtilityFunction</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'><p>Register a service with endpoints</p>
-</div></p>
-      
-      <pre class="example code"><code><span class='id identifier rubyid_register_service'>register_service</span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://company.com/api/v1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_register_endpoints'>register_endpoints</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:index</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='comma'>,</span> <span class='symbol'>:post</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:update</span><span class='comma'>,</span> <span class='symbol'>:patch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:destroy</span><span class='comma'>,</span> <span class='symbol'>:delete</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>service_id</span>
-      
-      
-        <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>a descriptive id for the service</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>service_uri</span>
-      
-      
-        <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the uri used to call the service</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Service</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>a new service or a previously registered service</p>
-</div>
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-49
-50
-51</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 49</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_register_service'>register_service</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_service_uri'>service_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Registration.html" title="StubRequests::Registration (module)">Registration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_service'><span class='object_link'><a href="Registration.html#register_service-class_method" title="StubRequests::Registration.register_service (method)">register_service</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_service_uri'>service_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="stub_endpoint-instance_method">
-  
-    #<strong>stub_endpoint</strong>(service_id, endpoint_id, uri_replacements = {}, options = {}, &amp;callback)  &#x21d2; <tt>WebMock::RequestStub</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'><p>the kind of timeout error raised by webmock is depending on the HTTP client used</p>
-</div>
-  </div>
-
-<p>Stub a request to a registered service endpoint</p>
-
-<p>:reek:UtilityFunction
-:reek:LongParameterList { max_params: 5 }</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'><p>Stub a request to a registered service endpoint</p>
-</div></p>
-      
-      <pre class="example code"><code><span class='id identifier rubyid_register_stub'>register_stub</span><span class='lparen'>(</span>
-  <span class='symbol'>:google_api</span><span class='comma'>,</span>
-  <span class='symbol'>:get_map_location</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='comment'># No URI replacements needed for this endpoint
-</span>  <span class='lbrace'>{</span> <span class='label'>request:</span> <span class='lbrace'>{</span> <span class='label'>headers:</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rbrace'>}</span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span> <span class='label'>response:</span> <span class='lbrace'>{</span> <span class='label'>body:</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>abyasdjasd</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>status:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>successful</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rbrace'>}</span><span class='rbrace'>}</span>
-<span class='rparen'>)</span></code></pre>
-    
-      
-        <p class="example_title"><div class='inline'><p>Stub a request to a registered service endpoint using block version</p>
-</div></p>
-      
-      <pre class="example code"><code>register_stub(:documents, :index) do
-  with(headers: { &quot;Accept&quot; =&gt; &quot;application/json&quot; }}})
-  to_return(body: &quot;No content&quot;, status: 204)
-end</code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>service_id</span>
-      
-      
-        <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the id of a registered service</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>endpoint_id</span>
-      
-      
-        <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the id of a registered endpoint</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>uri_replacements</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>a list of URI replacements</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-    </li>
-  
-</ul>
-
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
-    <ul class="option">
-      
-        <li>
-          <span class="name">:request</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>webmock request options</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:response</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>webmock response options</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:error</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>, <tt>Exception</tt>, <tt>StandardError</tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>webmock error to raise</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:timeout</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>set to true to raise some kind of timeout error</p>
-</div>
-          
-        </li>
-      
-    </ul>
-  
-    
-    
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>WebMock::RequestStub</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>a mocked request</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li>#stub_http_request</li>
-    
-  </ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-88
-89
-90</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 88</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_stub_endpoint'>stub_endpoint</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_uri_replacements'>uri_replacements</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Registration.html" title="StubRequests::Registration (module)">Registration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="Registration.html#stub_endpoint-class_method" title="StubRequests::Registration.stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_uri_replacements'>uri_replacements</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="subscribe_to-instance_method">
-  
-    #<strong>subscribe_to</strong>(service_id, endpoint_id, verb, callback)  &#x21d2; <tt>void</tt> 
+    #<strong>register_callback</strong>(service_id, endpoint_id, verb, callback)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -751,7 +380,7 @@ end</code></pre>
         <span class='name'>service_id</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -766,7 +395,7 @@ end</code></pre>
         <span class='name'>endpoint_id</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -781,7 +410,7 @@ end</code></pre>
         <span class='name'>verb</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -830,15 +459,15 @@ end</code></pre>
       <pre class="lines">
 
 
-104
-105
-106</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 90</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_subscribe_to'>subscribe_to</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Observable.html" title="StubRequests::Observable (module)">Observable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_subscribe_to'><span class='object_link'><a href="Observable.html#subscribe_to-class_method" title="StubRequests::Observable.subscribe_to (method)">subscribe_to</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_register_callback'>register_callback</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CallbackRegistry.html" title="StubRequests::CallbackRegistry (class)">CallbackRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register'><span class='object_link'><a href="CallbackRegistry.html#register-class_method" title="StubRequests::CallbackRegistry.register (method)">register</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -846,9 +475,290 @@ end</code></pre>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="unsubscribe_from-instance_method">
+  <h3 class="signature " id="register_service-instance_method">
   
-    #<strong>unsubscribe_from</strong>(service_id, endpoint_id, verb)  &#x21d2; <tt>void</tt> 
+    #<strong>register_service</strong>(service_id, service_uri, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Register a service in the service registry</p>
+
+<p>:reek:UtilityFunction</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Register a service with endpoints</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_register_service'>register_service</span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://company.com/api/v1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_register_endpoints'>register_endpoints</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:index</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='comma'>,</span> <span class='symbol'>:post</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:update</span><span class='comma'>,</span> <span class='symbol'>:patch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:destroy</span><span class='comma'>,</span> <span class='symbol'>:delete</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service_id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a descriptive id for the service</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service_uri</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the uri used to call the service</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a new service or a previously registered service</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_register_service'>register_service</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_service_uri'>service_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ServiceRegistry.html" title="StubRequests::ServiceRegistry (class)">ServiceRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_service'><span class='object_link'><a href="ServiceRegistry.html#register_service-class_method" title="StubRequests::ServiceRegistry.register_service (method)">register_service</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_service_uri'>service_uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="stub_endpoint-instance_method">
+  
+    #<strong>stub_endpoint</strong>(service_id, endpoint_id, route_params = {}, &amp;callback)  &#x21d2; <tt>WebMock::RequestStub</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>the kind of timeout error raised by webmock is depending on the HTTP client used</p>
+</div>
+  </div>
+
+<p>Stub a request to a registered service endpoint</p>
+
+<p>:reek:UtilityFunction
+:reek:LongParameterList { max_params: 5 }</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Stub a request to a registered service endpoint using block version</p>
+</div></p>
+      
+      <pre class="example code"><code>register_stub(:documents, :index) do
+  with(headers: { &quot;Accept&quot; =&gt; &quot;application/json&quot; }}})
+  to_return(body: &quot;No content&quot;, status: 204)
+end</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service_id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the id of a registered service</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>endpoint_id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the id of a registered endpoint</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>route_params</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>a map with route parameters</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>WebMock::RequestStub</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a mocked request</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#stub_http_request</li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_stub_endpoint'>stub_endpoint</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ServiceRegistry.html" title="StubRequests::ServiceRegistry (class)">ServiceRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="ServiceRegistry.html#stub_endpoint-class_method" title="StubRequests::ServiceRegistry.stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unregister_callback-instance_method">
+  
+    #<strong>unregister_callback</strong>(service_id, endpoint_id, verb)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -872,7 +782,7 @@ end</code></pre>
         <span class='name'>service_id</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -887,7 +797,7 @@ end</code></pre>
         <span class='name'>endpoint_id</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -921,15 +831,15 @@ end</code></pre>
       <pre class="lines">
 
 
-117
-118
-119</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/api.rb', line 103</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_unsubscribe_from'>unsubscribe_from</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Observable.html" title="StubRequests::Observable (module)">Observable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_unsubscribe_from'><span class='object_link'><a href="Observable.html#unsubscribe_from-class_method" title="StubRequests::Observable.unsubscribe_from (method)">unsubscribe_from</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_unregister_callback'>unregister_callback</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CallbackRegistry.html" title="StubRequests::CallbackRegistry (class)">CallbackRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_unregister'><span class='object_link'><a href="CallbackRegistry.html#unregister-class_method" title="StubRequests::CallbackRegistry.unregister (method)">unregister</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -941,7 +851,7 @@ end</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Mon Feb  4 14:51:26 2019 by
+  Generated on Wed Feb  6 16:27:54 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

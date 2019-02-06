@@ -185,7 +185,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#options-instance_method" title="#options (instance method)">#<strong>options</strong>  &#x21d2; Hash&lt;Symbol&gt; </a>
+      <a href="#options-instance_method" title="#options (instance method)">#<strong>options</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
     
@@ -202,7 +202,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A Hash with default request/response options.</p>
+    <span class="summary_desc"><div class='inline'><p>An array with required route params.</p>
 </div></span>
   
 </li>
@@ -211,7 +211,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#uri_template-instance_method" title="#uri_template (instance method)">#<strong>uri_template</strong>  &#x21d2; String </a>
+      <a href="#path-instance_method" title="#path (instance method)">#<strong>path</strong>  &#x21d2; String </a>
     
 
     
@@ -230,6 +230,108 @@
   
     <span class="summary_desc"><div class='inline'><p>A string template for the endpoint.</p>
 </div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#route_params-instance_method" title="#route_params (instance method)">#<strong>route_params</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#service-instance_method" title="#service (instance method)">#<strong>service</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#service_id-instance_method" title="#service_id (instance method)">#<strong>service_id</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#service_uri-instance_method" title="#service_uri (instance method)">#<strong>service_uri</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -320,7 +422,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(service, endpoint_id, verb, uri_template, options = {})  &#x21d2; Endpoint </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(service, endpoint_id, verb, path)  &#x21d2; Endpoint </a>
     
 
     
@@ -336,7 +438,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>An endpoint for a specific <span class='object_link'><a href="Registration/Service.html" title="StubRequests::Registration::Service (class)">Registration::Service</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>An endpoint for a specific <span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span>.</p>
 </div></span>
   
 </li>
@@ -368,7 +470,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#update-instance_method" title="#update (instance method)">#<strong>update</strong>(verb, uri_template, options)  &#x21d2; Registration::Endpoint </a>
+      <a href="#update-instance_method" title="#update (instance method)">#<strong>update</strong>(verb, path)  &#x21d2; Endpoint </a>
     
 
     
@@ -421,7 +523,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(service, endpoint_id, verb, uri_template, options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt> 
+    #<strong>initialize</strong>(service, endpoint_id, verb, path)  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt> 
   
 
   
@@ -429,7 +531,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>An endpoint for a specific <span class='object_link'><a href="Registration/Service.html" title="StubRequests::Registration::Service (class)">Registration::Service</a></span></p>
+    <p>An endpoint for a specific <span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span></p>
 
 
   </div>
@@ -440,10 +542,25 @@
   
     <li>
       
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a registered service</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>endpoint_id</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -458,7 +575,7 @@
         <span class='name'>verb</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -470,7 +587,7 @@
   
     <li>
       
-        <span class='name'>uri_template</span>
+        <span class='name'>path</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
@@ -483,85 +600,7 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-    </li>
-  
 </ul>
-
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
-    <ul class="option">
-      
-        <li>
-          <span class="name">:request</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.with</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:response</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.to_return</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:error</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>, <tt>Exception</tt>, <tt>StandardError</tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.to_raise</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:timeout</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.to_timeout</p>
-</div>
-          
-        </li>
-      
-    </ul>
-  
 
 <p class="tag_title">Since:</p>
 <ul class="since">
@@ -585,23 +624,29 @@
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
-59</pre>
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 66</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri_template'>uri_template</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_service'>service</span>      <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>           <span class='op'>=</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verb'>verb</span>         <span class='op'>=</span> <span class='id identifier rubyid_verb'>verb</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uri_template'>uri_template</span> <span class='op'>=</span> <span class='id identifier rubyid_uri_template'>uri_template</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>   <span class='op'>=</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verb'>verb</span> <span class='op'>=</span> <span class='id identifier rubyid_verb'>verb</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
+
+  <span class='ivar'>@service</span>      <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span>
+  <span class='ivar'>@service_id</span>   <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+  <span class='ivar'>@service_uri</span>  <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span>
+  <span class='ivar'>@route_params</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="URI.html" title="StubRequests::URI (module)">URI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_route_params'><span class='object_link'><a href="URI.html#route_params-class_method" title="StubRequests::URI.route_params (method)">route_params</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -618,7 +663,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="id-instance_method">
   
-    #<strong>id</strong>  &#x21d2; <tt>Symbol</tt> 
+    #<strong>id</strong>  &#x21d2; <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt> 
   
 
   
@@ -639,7 +684,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -657,12 +702,12 @@
       <pre class="lines">
 
 
-26</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 23</span>
 
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:id</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'>Symbol</span></pre>
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:id</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span></pre>
     </td>
   </tr>
 </table>
@@ -673,7 +718,7 @@
       <div class="method_details ">
   <h3 class="signature " id="options-instance_method">
   
-    #<strong>options</strong>  &#x21d2; <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt> 
+    #<strong>options</strong>  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt> 
   
 
   
@@ -681,7 +726,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a Hash with default request/response options</p>
+    <p>Returns an array with required route params</p>
 
 
   </div>
@@ -694,12 +739,12 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>a Hash with default request/response options</p>
+        <div class='inline'><p>an array with required route params</p>
 </div>
       
     </li>
@@ -719,23 +764,23 @@
       <pre class="lines">
 
 
-39</pre>
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 55</span>
 
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:options</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span></pre>
+<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:route_params</span></pre>
     </td>
   </tr>
 </table>
 </div>
     
       
-      <span id="uri_template=-instance_method"></span>
+      <span id="path=-instance_method"></span>
       <div class="method_details ">
-  <h3 class="signature " id="uri_template-instance_method">
+  <h3 class="signature " id="path-instance_method">
   
-    #<strong>uri_template</strong>  &#x21d2; <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt> 
+    #<strong>path</strong>  &#x21d2; <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -774,12 +819,236 @@
       <pre class="lines">
 
 
-34</pre>
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 31</span>
 
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:uri_template</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span></pre>
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:path</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="route_params-instance_method">
+  
+    #<strong>route_params</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_route_params'>route_params</span>
+  <span class='ivar'>@route_params</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="service=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="service-instance_method">
+  
+    #<strong>service</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_service'>service</span>
+  <span class='ivar'>@service</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="service_id=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="service_id-instance_method">
+  
+    #<strong>service_id</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_service_id'>service_id</span>
+  <span class='ivar'>@service_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="service_uri=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="service_uri-instance_method">
+  
+    #<strong>service_uri</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_service_uri'>service_uri</span>
+  <span class='ivar'>@service_uri</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -790,7 +1059,7 @@
       <div class="method_details ">
   <h3 class="signature " id="verb-instance_method">
   
-    #<strong>verb</strong>  &#x21d2; <tt>Symbol</tt> 
+    #<strong>verb</strong>  &#x21d2; <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt> 
   
 
   
@@ -811,7 +1080,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -829,12 +1098,12 @@
       <pre class="lines">
 
 
-30</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 27</span>
 
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:verb</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'>Symbol</span></pre>
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:verb</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span></pre>
     </td>
   </tr>
 </table>
@@ -886,15 +1155,17 @@
       <pre class="lines">
 
 
-81
-82
-83</pre>
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_id'>id</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+  <span class='id identifier rubyid_service_id'>service_id</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_service_id'>service_id</span> <span class='op'>&amp;&amp;</span>
+    <span class='id identifier rubyid_id'>id</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -940,12 +1211,12 @@
       <pre class="lines">
 
 
-85
-86
-87</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -1008,15 +1279,15 @@
       <pre class="lines">
 
 
-96
-97
-98</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> id=:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'> verb=:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_verb'>verb</span><span class='embexpr_end'>}</span><span class='tstring_content'> uri_template=&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri_template'>uri_template</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;&gt;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> id=:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'> verb=:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_verb'>verb</span><span class='embexpr_end'>}</span><span class='tstring_content'> path=&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;&gt;</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1026,7 +1297,7 @@
       <div class="method_details ">
   <h3 class="signature " id="update-instance_method">
   
-    #<strong>update</strong>(verb, uri_template, options)  &#x21d2; <tt><span class='object_link'><a href="Registration/Endpoint.html" title="StubRequests::Registration::Endpoint (class)">Registration::Endpoint</a></span></tt> 
+    #<strong>update</strong>(verb, path)  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt> 
   
 
   
@@ -1048,7 +1319,7 @@
         <span class='name'>verb</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
       
@@ -1060,7 +1331,7 @@
   
     <li>
       
-        <span class='name'>uri_template</span>
+        <span class='name'>path</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
@@ -1073,79 +1344,7 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-      
-      
-      
-    </li>
-  
 </ul>
-
-  
-    
-    
-    
-    
-    
-    
-    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
-    <ul class="option">
-      
-        <li>
-          <span class="name">:request</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.with</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:response</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;Symbol&gt;</tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.to_return</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:error</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>, <tt>Exception</tt>, <tt>StandardError</tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.to_raise</p>
-</div>
-          
-        </li>
-      
-        <li>
-          <span class="name">:timeout</span>
-          <span class="type">(<tt>optional</tt>, <tt><span class='object_link'><a href="../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></tt>)</span>
-          <span class="default">
-            
-          </span>
-          
-            &mdash; <div class='inline'><p>for request_stub.to_timeout</p>
-</div>
-          
-        </li>
-      
-    </ul>
-  
 
 <p class="tag_title">Returns:</p>
 <ul class="return">
@@ -1153,7 +1352,7 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Registration/Endpoint.html" title="StubRequests::Registration::Endpoint (class)">Registration::Endpoint</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt>)</span>
       
       
       
@@ -1186,20 +1385,18 @@
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
-79</pre>
+86
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/endpoint.rb', line 86</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri_template'>uri_template</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verb'>verb</span>            <span class='op'>=</span> <span class='id identifier rubyid_verb'>verb</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uri_template'>uri_template</span>    <span class='op'>=</span> <span class='id identifier rubyid_uri_template'>uri_template</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verb'>verb</span> <span class='op'>=</span> <span class='id identifier rubyid_verb'>verb</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1212,7 +1409,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Feb  4 14:51:26 2019 by
+  Generated on Wed Feb  6 16:27:54 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

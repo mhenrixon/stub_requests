@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: StubRequests::DSL
+  
+    &mdash; Documentation by YARD 0.9.18
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "StubRequests::DSL";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span>
+     &raquo; 
+    <span class="title">DSL</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: StubRequests::DSL
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">StubRequests::DSL</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/stub_requests/dsl.rb<span class="defines">,<br />
+  lib/stub_requests/dsl/define_method.rb,<br /> lib/stub_requests/dsl/method_definition.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Module DSL takes the id of a registered service</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p><strong>Register service with endpoints</strong></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_service'><span class='object_link'><a href="API.html#register_service-instance_method" title="StubRequests::API#register_service (method)">register_service</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://company.com/api/v1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_register_endpoints'>register_endpoints</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:index</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='comma'>,</span> <span class='symbol'>:post</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><strong>Create a receiver module for the stub methods</strong></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='kw'>module</span> <span class='const'>Stubs</span><span class='semicolon'>;</span> <span class='kw'>end</span>
+
+<span class='const'>Stubs</span><span class='period'>.</span><span class='id identifier rubyid_instance_methods'>instance_methods</span> <span class='comment'>#=&gt; []</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><strong>Define the endpoint methods using the DSL</strong></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'>DSL</span><span class='period'>.</span><span class='id identifier rubyid_define_endpoint_methods'><span class='object_link'><a href="#define_endpoint_methods-class_method" title="StubRequests::DSL.define_endpoint_methods (method)">define_endpoint_methods</a></span></span><span class='lparen'>(</span>
+  <span class='symbol'>:documents</span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='const'>Stubs</span>
+<span class='rparen'>)</span>
+
+<span class='comment'># This turns the module Stubs into the following:
+</span>
+<span class='const'>Stubs</span><span class='period'>.</span><span class='id identifier rubyid_instance_methods'>instance_methods</span> <span class='comment'>#=&gt; [:stub_documents_show, :stub_documents_index, :stub_documents_create]
+</span><span class='kw'>module</span> <span class='const'>Stubs</span>
+   <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_show'>stub_documents_show</span><span class='lparen'>(</span><span class='label'>id:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_stub_endpoint'>stub_endpoint</span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:show</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+   <span class='kw'>end</span>
+
+   <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_index'>stub_documents_index</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_stub_endpoint'>stub_endpoint</span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:index</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+   <span class='kw'>end</span>
+
+   <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_create'>stub_documents_create</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_stub_endpoint'>stub_endpoint</span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:create</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+   <span class='kw'>end</span>
+ <span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><strong>Use the helper methods in your tests</strong></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='const'>Stubs</span>
+
+<span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='symbol'>:document_id</span><span class='rparen'>)</span>   <span class='lbrace'>{</span> <span class='int'>1234</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='symbol'>:request_body</span><span class='rparen'>)</span>  <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='symbol'>:response_body</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='id identifier rubyid_document_id'>document_id</span><span class='comma'>,</span> <span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span> <span class='rbrace'>}</span>
+
+<span class='id identifier rubyid_before'>before</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_stub_documents_create'>stub_documents_create</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_with'>with</span><span class='lparen'>(</span><span class='label'>body:</span> <span class='id identifier rubyid_request_body'>request_body</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_to_return'>to_return</span><span class='lparen'>(</span><span class='label'>body:</span> <span class='id identifier rubyid_response_body'>response_body</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_stub_documents_show'>stub_documents_show</span><span class='lparen'>(</span><span class='label'>id:</span> <span class='id identifier rubyid_document_id'>document_id</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_with'>with</span><span class='lparen'>(</span><span class='label'>body:</span> <span class='id identifier rubyid_request_body'>request_body</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_to_return'>to_return</span><span class='lparen'>(</span><span class='label'>body:</span> <span class='id identifier rubyid_response_body'>response_body</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_it'>it</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stubs the requests nicely</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_create_uri'>create_uri</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="URI.html" title="StubRequests::URI (module)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://company.com/api/v1/documents</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span>   <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='period'>.</span><span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='id identifier rubyid_create_uri'>create_uri</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_be_json_eql'>be_json_eql</span><span class='lparen'>(</span><span class='id identifier rubyid_response_body'>response_body</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_show_uri'>show_uri</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="URI.html" title="StubRequests::URI (module)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://company.com/api/v1/documents/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_document_id'>document_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='period'>.</span><span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='id identifier rubyid_create_uri'>create_uri</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_be_json_eql'>be_json_eql</span><span class='lparen'>(</span><span class='id identifier rubyid_response_body'>response_body</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>Mikael Henriksson <a href="mailto:mikael@zoolutions.se">mikael@zoolutions.se</a></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DSL/DefineMethod.html" title="StubRequests::DSL::DefineMethod (class)">DefineMethod</a></span>, <span class='object_link'><a href="DSL/MethodDefinition.html" title="StubRequests::DSL::MethodDefinition (class)">MethodDefinition</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#endpoints-instance_method" title="#endpoints (instance method)">#<strong>endpoints</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#receiver-instance_method" title="#receiver (instance method)">#<strong>receiver</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#service-instance_method" title="#service (instance method)">#<strong>service</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#define_endpoint_methods-class_method" title="define_endpoint_methods (class method)">.<strong>define_endpoint_methods</strong>(service_id, receiver:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#define_endpoint_methods-instance_method" title="#define_endpoint_methods (instance method)">#<strong>define_endpoint_methods</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(service_id, receiver:)  &#x21d2; DSL </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of DSL.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(service_id, receiver:)  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::DSL (class)">DSL</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of DSL</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/dsl.rb', line 79</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='label'>receiver:</span><span class='rparen'>)</span>
+  <span class='ivar'>@service</span>   <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ServiceRegistry.html" title="StubRequests::ServiceRegistry (class)">ServiceRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='rparen'>)</span>
+  <span class='ivar'>@receiver</span>  <span class='op'>=</span> <span class='id identifier rubyid_receiver'>receiver</span>
+  <span class='ivar'>@endpoints</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="endpoints-instance_method">
+  
+    #<strong>endpoints</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/dsl.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_endpoints'>endpoints</span>
+  <span class='ivar'>@endpoints</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="receiver-instance_method">
+  
+    #<strong>receiver</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/dsl.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_receiver'>receiver</span>
+  <span class='ivar'>@receiver</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="service-instance_method">
+  
+    #<strong>service</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/dsl.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_service'>service</span>
+  <span class='ivar'>@service</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="define_endpoint_methods-class_method">
+  
+    .<strong>define_endpoint_methods</strong>(service_id, receiver:)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/dsl.rb', line 73</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_define_endpoint_methods'>define_endpoint_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='label'>receiver:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='id identifier rubyid_receiver'>receiver</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_define_endpoint_methods'>define_endpoint_methods</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="define_endpoint_methods-instance_method">
+  
+    #<strong>define_endpoint_methods</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.4</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/dsl.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_define_endpoint_methods'>define_endpoint_methods</span>
+  <span class='id identifier rubyid_receiver'>receiver</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:include</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="API.html" title="StubRequests::API (module)">API</a></span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="DSL/MethodDefinition.html" title="StubRequests::DSL::MethodDefinition (class)">MethodDefinition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DSL/MethodDefinition.html#initialize-instance_method" title="StubRequests::DSL::MethodDefinition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_route_params'>route_params</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="DSL/DefineMethod.html" title="StubRequests::DSL::DefineMethod (class)">DefineMethod</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DSL/DefineMethod.html#initialize-instance_method" title="StubRequests::DSL::DefineMethod#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_definition'>definition</span><span class='comma'>,</span> <span class='id identifier rubyid_receiver'>receiver</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_define'><span class='object_link'><a href="DSL/DefineMethod.html#define-instance_method" title="StubRequests::DSL::DefineMethod#define (method)">define</a></span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Feb  6 16:27:54 2019 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.18 (ruby-2.5.3).
+</div>
+
+    </div>
+  </body>
+</html>
