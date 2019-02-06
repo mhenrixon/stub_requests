@@ -49,6 +49,34 @@ module StubRequests
     end
 
     #
+    # Define stub methods for service in the receiver
+    #
+    #
+    # @see DSL#define_stubs
+    #
+    # @param [Symbol] service_id the id of a registered service
+    # @param [Module] receiver the receiver of the stub methods
+    #
+    # @return [void] outputs a list of methods to the console
+    #
+    def define_stubs(service_id, receiver:)
+      DSL.new(service_id, receiver: receiver).define_stubs
+    end
+
+    #
+    # Print stub method definitions to manually add to a module or class
+    #
+    # @see DSL#print_stubs
+    #
+    # @param [Symbol] service_id the id of a registered service
+    #
+    # @return [void] prints to STDOUT
+    #
+    def print_stubs(service_id)
+      DSL.new(service_id).print_stubs
+    end
+
+    #
     # Stub a request to a registered service endpoint
     #
     #

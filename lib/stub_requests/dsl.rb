@@ -71,31 +71,6 @@ module StubRequests
   #   end
   class DSL
     #
-    # Define stub methods for service in the receiver
-    #
-    # @see DSL#define
-    #
-    # @param [Symbol] service_id the id of a registered service
-    # @param [Module] receiver the receiver of the stub methods
-    #
-    # @return [void] outputs a list of methods to the console
-    #
-    def self.define_stubs(service_id, receiver:)
-      new(service_id, receiver: receiver).define_stubs
-    end
-
-    #
-    # Print stub method definitions to manually add to a module or class
-    #
-    # @param [Symbol] service_id the id of a registered service
-    #
-    # @return [STDOUT] prints to STDOUT
-    #
-    def self.print_stubs(service_id)
-      new(service_id).print_stubs
-    end
-
-    #
     # @!attribute [r] service
     #   @return [Service] an instance of a service
     attr_reader :service
@@ -142,7 +117,7 @@ module StubRequests
     #
     def print_stubs
       method_definitions.each do |method_definition|
-        print("#{method_definition}\n\n")
+        puts("#{method_definition}\n\n")
       end
     end
 

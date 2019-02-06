@@ -37,6 +37,52 @@ RSpec.describe StubRequests::API do
     }
   end
 
+  describe "#define_stubs" do
+    subject(:define_stubs) { described_class.define_stubs(service_id, receiver: stub_module) }
+
+    let(:dsl) { StubRequests::DSL.new(service_id, receiver: stub_module) }
+    let(:stub_module) { Class.new(Module) }
+
+    before do
+      StubRequests.register_service(service_id, service_uri)
+
+      allow(StubRequests::DSL).to receive(:new)
+        .with(service_id, receiver: stub_module)
+        .and_return(dsl)
+
+      allow(dsl).to receive(:define_stubs)
+
+      define_stubs
+    end
+
+    it "delegates to DSL#define_stubs" do
+      expect(dsl).to have_received(:define_stubs)
+    end
+  end
+
+  describe "#print_stubs" do
+    subject(:print_stubs) { described_class.print_stubs(service_id) }
+
+    let(:stub_module) { Class.new(Module) }
+    let(:dsl) { StubRequests::DSL.new(service_id, receiver: stub_module) }
+
+    before do
+      StubRequests.register_service(service_id, service_uri)
+
+      allow(StubRequests::DSL).to receive(:new)
+        .with(service_id)
+        .and_return(dsl)
+
+      allow(dsl).to receive(:print_stubs)
+
+      print_stubs
+    end
+
+    it "delegates to DSL#print_stubs" do
+      expect(dsl).to have_received(:print_stubs)
+    end
+  end
+
   describe "#register_service" do
     subject(:register_service) do
       described_class.register_service(service_id, service_uri)

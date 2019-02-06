@@ -31,42 +31,6 @@ RSpec.describe StubRequests::DSL do
     end
   end
 
-  describe ".define_stubs" do
-    subject(:define_stubs) { described_class.define_stubs(service_id, receiver: stub_module) }
-
-    before do
-      allow(described_class).to receive(:new)
-        .with(service_id, receiver: stub_module)
-        .and_return(dsl)
-
-      allow(dsl).to receive(:define_stubs)
-
-      define_stubs
-    end
-
-    it "delegates to #define_stubs" do
-      expect(dsl).to have_received(:define_stubs)
-    end
-  end
-
-  describe ".print_stubs" do
-    subject(:print_stubs) { described_class.print_stubs(service_id) }
-
-    before do
-      allow(described_class).to receive(:new)
-        .with(service_id)
-        .and_return(dsl)
-
-      allow(dsl).to receive(:print_stubs)
-
-      print_stubs
-    end
-
-    it "delegates to #print_stubs" do
-      expect(dsl).to have_received(:print_stubs)
-    end
-  end
-
   describe "#initialize" do
     subject { dsl }
 
