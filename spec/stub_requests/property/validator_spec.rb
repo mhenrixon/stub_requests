@@ -33,6 +33,7 @@ RSpec.describe StubRequests::Property::Validator do
 
     context "when argument :properties is nil" do
       let(:properties) { nil }
+
       it! { is_expected.not_to raise_error }
       its(:properties) { is_expected.to eq({}) }
     end
