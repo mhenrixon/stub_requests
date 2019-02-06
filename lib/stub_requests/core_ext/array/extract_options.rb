@@ -5,7 +5,7 @@ class Hash
   # @api private
   def extractable_options?
     instance_of?(Hash)
-  end
+  end unless method_defined?(:extractable_options?)
 end
 
 # :nodoc:
@@ -17,7 +17,7 @@ class Array
     else
       {}
     end
-  end
+  end unless method_defined?(:extract_options!)
 
   # :nodoc:
   def extract_options
@@ -26,5 +26,5 @@ class Array
     else
       {}
     end
-  end
+  end unless method_defined?(:extract_options)
 end
