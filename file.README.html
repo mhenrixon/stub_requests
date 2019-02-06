@@ -82,7 +82,8 @@
 <li><a href="#register-service-endpoints">Register service endpoints</a></li>
 <li><a href="#stubbing-service-endpoints">Stubbing service endpoints</a></li>
 <li><a href="#metrics">Metrics</a></li>
-<li><a href="#observing-endpoint-invocations">Observing endpoint invocations</a></li>
+<li><a href="#endpoint-invocation-callbacks">Endpoint invocation callbacks</a></li>
+<li><a href="#using-method-stubs">Using Method Stubs</a></li>
 </ul></li>
 <li><a href="#future-improvements">Future Improvements</a>
 
@@ -135,11 +136,12 @@
 <h3>Register service endpoints</h3>
 
 <pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_service'><span class='object_link'><a href="StubRequests/API.html#register_service-instance_method" title="StubRequests::API#register_service (method)">register_service</a></span></span><span class='lparen'>(</span><span class='symbol'>:google_ads</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://api.google.com/v5</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:index</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:update</span><span class='comma'>,</span> <span class='symbol'>:patch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='comma'>,</span> <span class='symbol'>:post</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:destroy</span><span class='comma'>,</span> <span class='symbol'>:delete</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_get'>get</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>     <span class='label'>as:</span> <span class='symbol'>:ads_index</span>
+  <span class='id identifier rubyid_get'>get</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:ads_show</span>
+  <span class='id identifier rubyid_patch'>patch</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:ads_update</span>
+  <span class='id identifier rubyid_put'>put</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:ads_update</span>
+  <span class='id identifier rubyid_post'>post</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>     <span class='label'>as:</span> <span class='symbol'>:ads_create</span>
+  <span class='id identifier rubyid_delete'>delete</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ads/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:ads_destroy</span>
 <span class='kw'>end</span>
 </code></pre>
 
@@ -185,9 +187,9 @@
 <span class='kw'>end</span>
 </code></pre>
 
-<p><a id="observing-endpoint-invocations"></a></p>
+<p><a id="endpoint-invocation-callbacks"></a></p>
 
-<h3>Observing endpoint invocations</h3>
+<h3>Endpoint invocation callbacks</h3>
 
 <pre class="code ruby"><code class="ruby"><span class='comment'># To jump into pry when a request is called
 </span><span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='id identifier rubyid_lambda'>lambda</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_request'>request</span><span class='op'>|</span>
@@ -197,11 +199,135 @@
 
 <span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_request'>request</span><span class='semicolon'>;</span> <span class='id identifier rubyid_binding'>binding</span><span class='period'>.</span><span class='id identifier rubyid_pry'>pry</span> <span class='rbrace'>}</span>
 
-<span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='symbol'>:document_service</span><span class='comma'>,</span> <span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_callback'><span class='object_link'><a href="StubRequests/API.html#register_callback-instance_method" title="StubRequests::API#register_callback (method)">register_callback</a></span></span><span class='lparen'>(</span><span class='symbol'>:document_service</span><span class='comma'>,</span> <span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
 </code></pre>
 
 <pre class="code ruby"><code class="ruby"><span class='comment'># To unsubscribe from notifications
-</span><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_unregister'>unregister</span><span class='lparen'>(</span><span class='symbol'>:document_service</span><span class='comma'>,</span> <span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='rparen'>)</span>
+</span><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_unregister_callback'><span class='object_link'><a href="StubRequests/API.html#unregister_callback-instance_method" title="StubRequests::API#unregister_callback (method)">unregister_callback</a></span></span><span class='lparen'>(</span><span class='symbol'>:document_service</span><span class='comma'>,</span> <span class='symbol'>:show</span><span class='comma'>,</span> <span class='symbol'>:get</span><span class='rparen'>)</span>
+</code></pre>
+
+<p><a id="using-method-stubs"></a></p>
+
+<h3>Using Method Stubs</h3>
+
+<pre class="code ruby"><code class="ruby">#
+# 1. Register some service endpoints
+#
+StubRequests.register_service(:documents, &quot;https://company.com/api/v1&quot;) do
+  get    &quot;documents/:id&quot;, as: :documents_show
+  get    &quot;documents&quot;,     as: :documents_index
+  post   &quot;documents&quot;,     as: :documents_create
+  patch  &quot;documents/:id&quot;, as: :documents_update
+  put    &quot;documents/:id&quot;, as: :document_put
+  delete &quot;documents/:id&quot;  as: :documents_destroy
+end
+
+#
+# 2. Create a module where the methods should be defined
+#
+module Stubs
+  module Documents
+  end
+end
+
+#
+# 3. Define the stubs for the registered endpoints
+#
+StubRequests::DSL.define_stubs(:documents, Stubs::Documents)
+
+Documents.instance_methods #=&gt;
+ [
+   :stub_documents_show
+   :stub_documents_index
+   :stub_documents_create
+   :stub_documents_update
+   :stub_document_put
+   :stub_documents_destroy
+ ]
+
+#
+# 4. Use the module in our tests
+#
+RSpec.describe ClassThatCallsTheDocumentService do
+  include Stubs::Documents
+
+  let(:document_id) { 123455 }
+  let(:documents_show_body) do
+    {
+      id: document_id,
+      status: &quot;draft&quot;,
+    }
+  end
+
+  before do
+    stub_documents_show(id: document_id)
+      .to_return(status: 200, body: documents_show_body.to_json)
+  end
+
+  it &quot;stubs the request nicely&quot; do
+    # execute code that calls the service
+    uri      = URI(&quot;https://company.com/api/v1/documents/#{document_id}&quot;)
+    response = Net::HTTP.get(uri)
+
+    expect(response).to be_json_eql(example_api_list_task_response.to_json)
+  end
+end
+</code></pre>
+
+<p>If you prefer to keep a hard copy of the methods in your project then you can print the method definitions to the console and copy paste.</p>
+
+<p>This puts the user in charge of keeping them up to date with the gem.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'>#
+</span><span class='comment'># 1. Register some service endpoints
+</span><span class='comment'>#
+</span><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_register_service'><span class='object_link'><a href="StubRequests/API.html#register_service-instance_method" title="StubRequests::API#register_service (method)">register_service</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://company.com/api/v1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_get'>get</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:documents_show</span>
+  <span class='id identifier rubyid_get'>get</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>     <span class='label'>as:</span> <span class='symbol'>:documents_index</span>
+  <span class='id identifier rubyid_post'>post</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>     <span class='label'>as:</span> <span class='symbol'>:documents_create</span>
+  <span class='id identifier rubyid_patch'>patch</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:documents_update</span>
+  <span class='id identifier rubyid_put'>put</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:document_put</span>
+  <span class='id identifier rubyid_delete'>delete</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>documents/:id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>as:</span> <span class='symbol'>:documents_destroy</span>
+<span class='kw'>end</span>
+
+<span class='comment'>#
+</span><span class='comment'># 2. Print the stub definitions to STDOUT
+</span><span class='comment'>#
+</span><span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_print_stubs'><span class='object_link'><a href="StubRequests/API.html#print_stubs-instance_method" title="StubRequests::API#print_stubs (method)">print_stubs</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='rparen'>)</span> <span class='comment'>#=&gt;
+</span>
+<span class='comment'>#
+</span><span class='comment'># 3. Copy the stubs into a module
+</span><span class='comment'>#
+</span><span class='kw'>module</span> <span class='const'>DocumentStubs</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_show'>stub_documents_show</span><span class='lparen'>(</span><span class='label'>id:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:documents_show</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_index'>stub_documents_index</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:documents_index</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_create'>stub_documents_create</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:documents_create</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_update'>stub_documents_update</span><span class='lparen'>(</span><span class='label'>id:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:documents_update</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_stub_document_put'>stub_document_put</span><span class='lparen'>(</span><span class='label'>id:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:document_put</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_stub_documents_destroy'>stub_documents_destroy</span><span class='lparen'>(</span><span class='label'>id:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='period'>.</span><span class='id identifier rubyid_stub_endpoint'><span class='object_link'><a href="StubRequests/API.html#stub_endpoint-instance_method" title="StubRequests::API#stub_endpoint (method)">stub_endpoint</a></span></span><span class='lparen'>(</span><span class='symbol'>:documents</span><span class='comma'>,</span> <span class='symbol'>:documents_destroy</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
 </code></pre>
 
 <p><a id="future-improvements"></a></p>
@@ -254,7 +380,7 @@ chat rooms and mailing lists is expected to follow the <a href="coc">code of con
 </div></div>
 
       <div id="footer">
-  Generated on Wed Feb  6 16:27:54 2019 by
+  Generated on Wed Feb  6 22:38:22 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

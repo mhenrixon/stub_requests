@@ -382,8 +382,6 @@
   <div class="discussion">
     <p>Initializes a new <span class='object_link'><a href="" title="StubRequests::Property::Validator (class)">StubRequests::Property::Validator</a></span></p>
 
-<p>:reek:LongParameterList</p>
-
 
   </div>
 </div>
@@ -479,21 +477,21 @@
       <pre class="lines">
 
 
+69
+70
 71
 72
 73
-74
-75
-76</pre>
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@type</span>       <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@default</span>    <span class='op'>=</span> <span class='id identifier rubyid_default'>default</span>
   <span class='ivar'>@name</span>       <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
-  <span class='ivar'>@properties</span> <span class='op'>=</span> <span class='id identifier rubyid_properties'>properties</span>
+  <span class='ivar'>@properties</span> <span class='op'>=</span> <span class='id identifier rubyid_properties'>properties</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -546,12 +544,12 @@
       <pre class="lines">
 
 
+56
 57
-58
-59</pre>
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default'>default</span>
   <span class='ivar'>@default</span>
@@ -602,12 +600,12 @@
       <pre class="lines">
 
 
+48
 49
-50
-51</pre>
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@name</span>
@@ -658,12 +656,12 @@
       <pre class="lines">
 
 
+60
 61
-62
-63</pre>
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_properties'>properties</span>
   <span class='ivar'>@properties</span>
@@ -714,12 +712,12 @@
       <pre class="lines">
 
 
+52
 53
-54
-55</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='ivar'>@type</span>
@@ -748,8 +746,6 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Validates that the property can be added to the class</p>
-
-<p>:reek:LongParameterList</p>
 
 
   </div>
@@ -885,12 +881,12 @@
       <pre class="lines">
 
 
+41
 42
-43
-44</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_default'>default</span><span class='comma'>,</span> <span class='id identifier rubyid_properties'>properties</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_default'>default</span><span class='comma'>,</span> <span class='id identifier rubyid_properties'>properties</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_run_validations'>run_validations</span>
@@ -989,14 +985,14 @@
       <pre class="lines">
 
 
+86
+87
 88
 89
-90
-91
-92</pre>
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/property/validator.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_validations'>run_validations</span>
   <span class='id identifier rubyid_validate_undefined'>validate_undefined</span>
@@ -1013,7 +1009,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Feb  6 16:27:55 2019 by
+  Generated on Wed Feb  6 22:38:24 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

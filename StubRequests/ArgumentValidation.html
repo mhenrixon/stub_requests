@@ -188,8 +188,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>:reek:UtilityFunction.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -215,8 +214,6 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Require the value to be any of the types past in</p>
-
-<p>:reek:UtilityFunction</p>
 
 
   </div>
@@ -311,13 +308,13 @@
       <pre class="lines">
 
 
+33
 34
 35
-36
-37</pre>
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/argument_validation.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/argument_validation.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span><span class='lparen'>(</span><span class='label'>name:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>type:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_type!'>validate_type!</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_name'>name</span>
@@ -339,8 +336,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>:reek:UtilityFunction</p>
-
+    
 
   </div>
 </div>
@@ -381,18 +377,18 @@
       <pre class="lines">
 
 
+38
+39
 40
 41
 42
 43
 44
 45
-46
-47
-48</pre>
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/argument_validation.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/argument_validation.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_type!'>validate_type!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expected_types'>expected_types</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -413,7 +409,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Feb  6 16:27:54 2019 by
+  Generated on Wed Feb  6 22:38:22 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>
