@@ -63,10 +63,10 @@ module StubRequests
     #
     def self.stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
       service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
-      endpoint_stub          = WebMock::Builder.build(endpoint.verb, uri, {}, &callback)
+      webmock_stub           = WebMock::Builder.build(endpoint.verb, uri, {}, &callback)
 
-      StubRegistry.record(service, endpoint, endpoint_stub)
-      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
+      StubRegistry.record(service, endpoint, webmock_stub)
+      ::WebMock::StubRegistry.instance.register_request_stub(webmock_stub)
     end
 
     # @api private
