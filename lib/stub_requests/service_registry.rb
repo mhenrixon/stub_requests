@@ -120,7 +120,7 @@ module StubRequests
     def register(service_id, service_uri)
       if (service = find(service_id))
         StubRequests.logger.warn("Service already registered #{service}")
-        raise ServiceHaveEndpoints, service if service.endpoints?
+        return service
       end
       services[service_id] = Service.new(service_id, service_uri)
     end
