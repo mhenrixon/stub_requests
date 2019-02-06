@@ -125,11 +125,11 @@ RSpec.describe StubRequests::CallbackRegistry do
     end
 
     context "without existing callbacks" do
-      before { allow(registry).to receive(:dispatch_callback) }
+      before { allow(callback).to receive(:call) }
 
       it "does not call back" do
         invoke_callbacks
-        expect(registry).not_to have_received(:dispatch_callback)
+        expect(callback).not_to have_received(:call)
       end
     end
 

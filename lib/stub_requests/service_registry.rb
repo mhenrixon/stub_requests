@@ -24,11 +24,11 @@ module StubRequests
     #
     # @example Register a service with endpoints
     #   register_service(:documents, "https://company.com/api/v1") do
-    #     register(:show, :get, "documents/:id")
-    #     register(:index, :get, "documents")
-    #     register(:create, :post, "documents")
-    #     register(:update, :patch, "documents/:id")
-    #     register(:destroy, :delete, "documents/:id")
+    #     get    "documents/:id", as: :show
+    #     get    "documents",     as: :index
+    #     post   "documents",     as: :create
+    #     patch  "documents/:id", as: :update
+    #     delete "documents/:id", as: :destroy
     #   end
     #
     # @return [Service] a new service or a previously registered service
@@ -50,35 +50,27 @@ module StubRequests
     # @note the kind of timeout error raised by webmock is depending on the HTTP client used
     #
     # @example Stub a request to a registered service endpoint
-    #   register_stub(
-    #     :google_api,
-    #     :get_map_location,
-    #     {}, # No URI replacements needed for this endpoint
-    #   )
-    #   .to_return(body: "No content", status: 204)
+    #   stub_endpoint(:google_api, :get_map_location)
+    #    .to_return(body: "No content", status: 204)
     #
     # @example Stub a request to a registered service endpoint using block
-    #   register_stub(:documents, :index) do
+    #   stub_endpoint(:documents, :index) do
     #     with(headers: { "Accept" => "application/json" }}})
     #     to_return(body: "No content", status: 204)
     #   end
     #
-    # @see #stub_http_request
     # @return [WebMock::RequestStub] a mocked request
     #
-    # :reek:UtilityFunction
-    # :reek:LongParameterList { max_params: 5 }
     def self.stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
       service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
-      endpoint_stub          = WebMock::Builder.build(endpoint.verb, uri, {}, &callback)
+      webmock_stub           = WebMock::Builder.build(endpoint.verb, uri, {}, &callback)
 
-      StubRegistry.record(service, endpoint, endpoint_stub)
-      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
+      StubRegistry.record(service, endpoint, webmock_stub)
+      ::WebMock::StubRegistry.instance.register_request_stub(webmock_stub)
     end
 
     # @api private
     # Used only for testing purposes
-    # :reek:LongParameterList { max_params: 4 }
     def self.__stub_endpoint(service_id, endpoint_id, route_params = {})
       _service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
       endpoint_stub           = WebMock::Builder.build(endpoint.verb, uri)

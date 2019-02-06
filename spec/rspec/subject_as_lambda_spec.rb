@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe RSpec::SubjectAsLambda do
-  # :reek:IrresponsibleModule
-  # :reek:UnusedParameters
   class NullFormatter
     private
 

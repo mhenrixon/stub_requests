@@ -30,13 +30,11 @@ module StubRequests
     #
     # @return [void]
     #
-    # :reek:UtilityFunction
     def validate!(name:, value:, type:)
       validate_type!(:name, name, [Symbol, String]) unless name
       validate_type!(name, value, type) if type
     end
 
-    # :reek:UtilityFunction
     def validate_type!(name, value, type)
       expected_types = Array(type).flatten
       return if expected_types.any? { |is_a| value.is_a?(is_a) }

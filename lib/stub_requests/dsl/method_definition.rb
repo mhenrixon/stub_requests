@@ -52,7 +52,7 @@ module StubRequests
       def to_s
         <<~METHOD
           def #{name}(#{keywords})
-            stub_endpoint(:#{service_id}, :#{endpoint_id}, #{arguments})
+            StubRequests.stub_endpoint(:#{service_id}, :#{endpoint_id}, #{arguments})
           end
         METHOD
       end

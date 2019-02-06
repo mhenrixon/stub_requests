@@ -13,9 +13,6 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.3
   #
-  # :reek:UtilityFunction
-  # :reek:DataClump
-  # :reek:FeatureEnvy
   class CallbackRegistry
     include Singleton
     include Enumerable
@@ -32,7 +29,6 @@ module StubRequests
     #
     # @return [Callback]
     #
-    # :reek:LongParameterList
     def self.register(service_id, endpoint_id, verb, callback)
       instance.register(service_id, endpoint_id, verb, callback)
     end
@@ -110,7 +106,6 @@ module StubRequests
     #
     # @return [Callback] the added callback
     #
-    # :reek:LongParameterList
     def register(service_id, endpoint_id, verb, block)
       callback = find_by(service_id, endpoint_id, verb)
       return callback if callback
@@ -130,7 +125,6 @@ module StubRequests
     #
     # @return [Callback] the deleted callback
     #
-    # :reek:ControlParameter
     def unregister(service_id, endpoint_id, verb)
       return unless (callback = find_by(service_id, endpoint_id, verb))
 
@@ -140,14 +134,14 @@ module StubRequests
     #
     # Notifies subscribers that a request was made
     #
-    # @param [RequestStub] request the stubbed request
+    # @param [RequestStub] request_stub the stubbed request
     #
     # @return [void]
     #
-    def invoke_callbacks(request)
-      return unless (callback = find_by(request.service_id, request.endpoint_id, request.verb))
+    def invoke_callbacks(request_stub)
+      return unless (callback = find_by(request_stub.service_id, request_stub.endpoint_id, request_stub.verb))
 
-      dispatch_callback(request, callback)
+      callback.call(request_stub)
     end
 
     private
@@ -162,26 +156,11 @@ module StubRequests
     #
     # @return [Callback]
     #
-    # :reek:ControlParameter
-    # :reek:DuplicateMethodCall
     def find_by(service_id, endpoint_id, verb)
       find do |sub|
         sub.service_id == service_id &&
           sub.endpoint_id == endpoint_id &&
           ([sub.verb, verb].include?(:any) || sub.verb == verb)
-      end
-    end
-
-    def dispatch_callback(request_stub, callback)
-      arity = callback.arity
-
-      case arity
-      when 0
-        callback.call
-      when 1
-        callback.call(request_stub)
-      else
-        raise InvalidCallback, "The callback for a callback can either take 0 or 1 arguments (was #{arity})"
       end
     end
   end

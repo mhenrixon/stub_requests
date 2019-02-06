@@ -20,7 +20,8 @@ This is achieve by keeping a registry over the service endpoints.
   - [Register service endpoints](#register-service-endpoints)
   - [Stubbing service endpoints](#stubbing-service-endpoints)
   - [Metrics](#metrics)
-  - [Observing endpoint invocations](#observing-endpoint-invocations)
+  - [Endpoint invocation callbacks](#endpoint-invocation-callbacks)
+  - [Using Method Stubs](#using-method-stubs)
 - [Future Improvements](#future-improvements)
   - [API Client Gem](#api-client-gem)
 - [Development](#development)
@@ -68,11 +69,12 @@ The naming of the `service_id` and `endpoint_id`'s is irrelevant. This is just h
 
 ```ruby
 StubRequests.register_service(:google_ads, "https://api.google.com/v5") do
-  register(:index, :get, "ads")
-  register(:show, :get, "ads/:id")
-  register(:update, :patch, "ads/:id")
-  register(:create, :post, "ads")
-  register(:destroy, :delete, "ads/:id")
+  get    "ads",     as: :ads_index
+  get    "ads/:id", as: :ads_show
+  patch  "ads/:id", as: :ads_update
+  put    "ads/:id", as: :ads_update
+  post   "ads",     as: :ads_create
+  delete "ads/:id", as: :ads_destroy
 end
 ```
 
@@ -119,8 +121,8 @@ StubRequests.configure do |config|
 end
 ```
 
-<a id="observing-endpoint-invocations"></a>
-### Observing endpoint invocations
+<a id="endpoint-invocation-callbacks"></a>
+### Endpoint invocation callbacks
 
 ```ruby
 # To jump into pry when a request is called
@@ -131,13 +133,139 @@ end
 
 callback = ->(request) { p request; binding.pry }
 
-StubRequests.register(:document_service, :show, :get, callback)
+StubRequests.register_callback(:document_service, :show, :get, callback)
 ```
 
 ```ruby
 # To unsubscribe from notifications
-StubRequests.unregister(:document_service, :show, :get)
+StubRequests.unregister_callback(:document_service, :show, :get)
 ```
+
+<a id="using-method-stubs"></a>
+### Using Method Stubs
+
+```ruby
+#
+# 1. Register some service endpoints
+#
+StubRequests.register_service(:documents, "https://company.com/api/v1") do
+  get    "documents/:id", as: :documents_show
+  get    "documents",     as: :documents_index
+  post   "documents",     as: :documents_create
+  patch  "documents/:id", as: :documents_update
+  put    "documents/:id", as: :document_put
+  delete "documents/:id"  as: :documents_destroy
+end
+
+#
+# 2. Create a module where the methods should be defined
+#
+module Stubs
+  module Documents
+  end
+end
+
+#
+# 3. Define the stubs for the registered endpoints
+#
+StubRequests::DSL.define_stubs(:documents, Stubs::Documents)
+
+Documents.instance_methods #=>
+ [
+   :stub_documents_show
+   :stub_documents_index
+   :stub_documents_create
+   :stub_documents_update
+   :stub_document_put
+   :stub_documents_destroy
+ ]
+
+#
+# 4. Use the module in our tests
+#
+RSpec.describe ClassThatCallsTheDocumentService do
+  include Stubs::Documents
+
+  let(:document_id) { 123455 }
+  let(:documents_show_body) do
+    {
+      id: document_id,
+      status: "draft",
+    }
+  end
+
+  before do
+    stub_documents_show(id: document_id)
+      .to_return(status: 200, body: documents_show_body.to_json)
+  end
+
+  it "stubs the request nicely" do
+    # execute code that calls the service
+    uri      = URI("https://company.com/api/v1/documents/#{document_id}")
+    response = Net::HTTP.get(uri)
+
+    expect(response).to be_json_eql(example_api_list_task_response.to_json)
+  end
+end
+```
+
+If you prefer to keep a hard copy of the methods in your project then you can print the method definitions to the console and copy paste.
+
+This puts the user in charge of keeping them up to date with the gem.
+
+```ruby
+#
+# 1. Register some service endpoints
+#
+StubRequests.register_service(:documents, "https://company.com/api/v1") do
+  get    "documents/:id", as: :documents_show
+  get    "documents",     as: :documents_index
+  post   "documents",     as: :documents_create
+  patch  "documents/:id", as: :documents_update
+  put    "documents/:id", as: :document_put
+  delete "documents/:id", as: :documents_destroy
+end
+
+#
+# 2. Print the stub definitions to STDOUT
+#
+StubRequests.print_stubs(:documents) #=>
+
+#
+# 3. Copy the stubs into a module
+#
+module DocumentStubs
+  def stub_documents_show(id:, &block)
+    StubRequests.stub_endpoint(:documents, :documents_show, id: id, &block)
+  end
+
+
+  def stub_documents_index(&block)
+    StubRequests.stub_endpoint(:documents, :documents_index, &block)
+  end
+
+
+  def stub_documents_create(&block)
+    StubRequests.stub_endpoint(:documents, :documents_create, &block)
+  end
+
+
+  def stub_documents_update(id:, &block)
+    StubRequests.stub_endpoint(:documents, :documents_update, id: id, &block)
+  end
+
+
+  def stub_document_put(id:, &block)
+    StubRequests.stub_endpoint(:documents, :document_put, id: id, &block)
+  end
+
+
+  def stub_documents_destroy(id:, &block)
+    StubRequests.stub_endpoint(:documents, :documents_destroy, id: id, &block)
+  end
+end
+```
+
 
 <a id="future-improvements"></a>
 ## Future Improvements

@@ -33,7 +33,6 @@ module StubRequests
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     #
-    # :reek:DataClump
     module ClassMethods
       #
       # Define property methods for the name

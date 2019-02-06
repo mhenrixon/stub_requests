@@ -47,8 +47,15 @@ module StubRequests
       self.callback    = callback
     end
 
-    def call(*args)
-      callback.call(*args)
+    def call(request_stub)
+      case arity
+      when 0
+        callback.call
+      when 1
+        callback.call(request_stub)
+      else
+        raise InvalidCallback, "The callback for a callback can either take 0 or 1 arguments (was #{arity})"
+      end
     end
 
     def arity
