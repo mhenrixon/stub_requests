@@ -24,11 +24,11 @@ module StubRequests
     #
     # @example Register a service with endpoints
     #   register_service(:documents, "https://company.com/api/v1") do
-    #     register(:show, :get, "documents/:id")
-    #     register(:index, :get, "documents")
-    #     register(:create, :post, "documents")
-    #     register(:update, :patch, "documents/:id")
-    #     register(:destroy, :delete, "documents/:id")
+    #     get    "documents/:id", as: :show
+    #     get    "documents",     as: :index
+    #     post   "documents",     as: :create
+    #     patch  "documents/:id", as: :update
+    #     delete "documents/:id", as: :destroy
     #   end
     #
     # @return [Service] a new service or a previously registered service
@@ -50,20 +50,15 @@ module StubRequests
     # @note the kind of timeout error raised by webmock is depending on the HTTP client used
     #
     # @example Stub a request to a registered service endpoint
-    #   register_stub(
-    #     :google_api,
-    #     :get_map_location,
-    #     {}, # No URI replacements needed for this endpoint
-    #   )
-    #   .to_return(body: "No content", status: 204)
+    #   stub_endpoint(:google_api, :get_map_location)
+    #    .to_return(body: "No content", status: 204)
     #
     # @example Stub a request to a registered service endpoint using block
-    #   register_stub(:documents, :index) do
+    #   stub_endpoint(:documents, :index) do
     #     with(headers: { "Accept" => "application/json" }}})
     #     to_return(body: "No content", status: 204)
     #   end
     #
-    # @see #stub_http_request
     # @return [WebMock::RequestStub] a mocked request
     #
     def self.stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)

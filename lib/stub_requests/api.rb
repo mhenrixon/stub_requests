@@ -33,13 +33,11 @@ module StubRequests
     #
     # @example Register a service with endpoints
     #   register_service(:documents, "https://company.com/api/v1") do
-    #     register_endpoints do
-    #       register(:show, :get, "documents/:id")
-    #       register(:index, :get, "documents")
-    #       register(:create, :post, "documents")
-    #       register(:update, :patch, "documents/:id")
-    #       register(:destroy, :delete, "documents/:id")
-    #     end
+    #     get    "documents/:id", as: :show
+    #     get    "documents",     as: :index
+    #     post   "documents",     as: :create
+    #     patch  "documents/:id", as: :update
+    #     delete "documents/:id", as: :destroy
     #   end
     #
     # @return [Service] a new service or a previously registered service
@@ -87,7 +85,7 @@ module StubRequests
     # @note the kind of timeout error raised by webmock is depending on the HTTP client used
     #
     # @example Stub a request to a registered service endpoint using block version
-    #   register_stub(:documents, :index) do
+    #   stub_endpoint(:documents, :index) do
     #     with(headers: { "Accept" => "application/json" }}})
     #     to_return(body: "No content", status: 204)
     #   end

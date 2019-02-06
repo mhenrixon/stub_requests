@@ -18,7 +18,6 @@ module StubRequests
     #
     # @author Mikael Henriksson <mikael@zoolutions.se>
     #
-    # :reek:TooManyInstanceVariables { max_instance_variables: 6 }
     class Builder
       #
       # @return [Regexp] A pattern for matching url segment keys

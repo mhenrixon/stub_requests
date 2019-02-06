@@ -10,9 +10,9 @@ module StubRequests
   # @example **Register service with endpoints**
   #   StubRequests.register_service(:documents, "https://company.com/api/v1") do
   #     register_endpoints do
-  #       register(:show, :get, "documents/:id")
-  #       register(:index, :get, "documents")
-  #       register(:create, :post, "documents")
+  #       get "documents/:id", as: :documents_show
+  #       get "documents",     as: :documents_index
+  #       post "documents",    as: :documents_create
   #     end
   #   end
   # @example **Create a receiver module for the stub methods**
