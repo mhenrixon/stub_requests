@@ -8,47 +8,48 @@ exclude_paths:
 detectors:
   DuplicateMethodCall:
     exclude:
-    - RSpec::SubjectAsLambda#it!
-    - StubRequests::CallbackRegistry#find_by
+      - RSpec::SubjectAsLambda#it!
+      - StubRequests::CallbackRegistry#find_by
   TooManyMethods:
     exclude:
-    - StubRequests::Endpoints
+      - StubRequests::Endpoints
   TooManyStatements:
     exclude:
-    - initialize
-    - RSpec::SubjectAsLambda#it!
+      - initialize
+      - RSpec::SubjectAsLambda#it!
   DataClump:
     exclude:
-    - StubRequests::API
-    - StubRequests::Endpoints
-    - StubRequests::StubRegistry
+      - StubRequests::API
+      - StubRequests::Endpoints
+      - StubRequests::StubRegistry
   LongParameterList:
     exclude:
-    - StubRequests::API#register_callback
-    - StubRequests::CallbackRegistry#register
-    - StubRequests::CallbackRegistry#self.register
-    - StubRequests::Property::Validator#self.call
+      - StubRequests::API#register_callback
+      - StubRequests::CallbackRegistry#register
+      - StubRequests::CallbackRegistry#self.register
+      - StubRequests::Property::Validator#self.call
   UtilityFunction:
     exclude:
-    - StubRequests::API#define_stubs
-    - StubRequests::API#print_stubs
-    - StubRequests::API#register_callback
-    - StubRequests::API#register_service
-    - StubRequests::API#stub_endpoint
-    - StubRequests::API#unregister_callback
-    - StubRequests::StubRegistry#initialize_endpoint_stub
+      - StubRequests::API#define_stubs
+      - StubRequests::API#print_stubs
+      - StubRequests::API#register_callback
+      - StubRequests::API#register_service
+      - StubRequests::API#stub_endpoint
+      - StubRequests::API#unregister_callback
+      - StubRequests::StubRegistry#initialize_endpoint_stub
   ControlParameter:
     exclude:
-    - StubRequests::CallbackRegistry#find_by
+      - StubRequests::CallbackRegistry#find_by
+      - StubRequests::Property::Validator#initialize
   FeatureEnvy:
     exclude:
-    - StubRequests::CallbackRegistry#dispatch_callback
-    - StubRequests::CallbackRegistry#find_by
-    - StubRequests::CallbackRegistry#invoke_callbacks
-    - StubRequests::StubRegistry#find_endpoint_stub
+      - StubRequests::CallbackRegistry#dispatch_callback
+      - StubRequests::CallbackRegistry#find_by
+      - StubRequests::CallbackRegistry#invoke_callbacks
+      - StubRequests::StubRegistry#find_endpoint_stub
   Attribute:
     exclude:
-    - StubRequests#logger
+      - StubRequests#logger
   TooManyInstanceVariables:
     exclude:
-    - StubRequests::URI::Builder
+      - StubRequests::URI::Builder
