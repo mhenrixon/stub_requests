@@ -20,7 +20,7 @@ module StubRequests
   #
   #   Stubs.instance_methods #=> []
   # @example **Define the endpoint methods using the DSL**
-  #   StubRequests::DSL.define_endpoint_methods(
+  #   StubRequests::DSL.define_stubs(
   #     :documents, receiver: Stubs
   #   )
   #
@@ -28,17 +28,17 @@ module StubRequests
   #
   #   Stubs.instance_methods #=> [:stub_documents_show, :stub_documents_index, :stub_documents_create]
   #   module Stubs
-  #      def stub_documents_show(id:, &block)
-  #         stub_endpoint(:documents, :show, id: id, &block)
-  #      end
+  #     def stub_documents_show(id:, &block)
+  #        stub_endpoint(:documents, :show, id: id, &block)
+  #     end
   #
-  #      def stub_documents_index(&block)
-  #         stub_endpoint(:documents, :index, &block)
-  #      end
+  #     def stub_documents_index(&block)
+  #        stub_endpoint(:documents, :index, &block)
+  #     end
   #
-  #      def stub_documents_create(&block)
-  #         stub_endpoint(:documents, :create, &block)
-  #      end
+  #     def stub_documents_create(&block)
+  #        stub_endpoint(:documents, :create, &block)
+  #     end
   #    end
   #
   # @example **Use the helper methods in your tests**
@@ -70,24 +70,85 @@ module StubRequests
   #     expect(response).to be_json_eql(response_body.to_json)
   #   end
   class DSL
-    def self.define_endpoint_methods(service_id, receiver:)
-      new(service_id, receiver: receiver).define_endpoint_methods
+    #
+    # Define stub methods for service in the receiver
+    #
+    # @see DSL#define
+    #
+    # @param [Symbol] service_id the id of a registered service
+    # @param [Module] receiver the receiver of the stub methods
+    #
+    # @return [void] outputs a list of methods to the console
+    #
+    def self.define_stubs(service_id, receiver:)
+      new(service_id, receiver: receiver).define_stubs
     end
 
-    attr_reader :service, :receiver, :endpoints
+    #
+    # Print stub method definitions to manually add to a module or class
+    #
+    # @param [Symbol] service_id the id of a registered service
+    #
+    # @return [STDOUT] prints to STDOUT
+    #
+    def self.print_stubs(service_id)
+      new(service_id).print_stubs
+    end
 
-    def initialize(service_id, receiver:)
-      @service   = StubRequests::ServiceRegistry.instance.find(service_id)
+    #
+    # @!attribute [r] service
+    #   @return [Service] an instance of a service
+    attr_reader :service
+    #
+    # @!attribute [r] receiver
+    #   @return [Module, nil] the receiver module
+    attr_reader :receiver
+    #
+    # @!attribute [r] endpoints
+    #   @return [Array<Endpoint>] a collection of endpoints
+    attr_reader :endpoints
+
+    #
+    # Initialize a new instance of DSL
+    #
+    # @param [Symbol] service_id the id of a registered service
+    # @param [Module] receiver the receiver of the stub methods
+    #
+    def initialize(service_id, receiver: nil)
+      @service   = StubRequests::ServiceRegistry.instance.find!(service_id)
       @receiver  = receiver
       @endpoints = service.endpoints.endpoints.values
     end
 
-    def define_endpoint_methods
+    #
+    # Defines stub methods for #endpoints in the #receiver
+    #
+    #
+    # @return [void]
+    #
+    def define_stubs
       receiver.send(:include, StubRequests::API)
 
-      endpoints.each do |endpoint|
-        definition = MethodDefinition.new(service.id, endpoint.id, endpoint.route_params)
-        DefineMethod.new(definition, receiver).define
+      method_definitions.each do |method_definition|
+        DefineMethod.new(method_definition, receiver).define
+      end
+    end
+
+    #
+    # Prints stub methods for #endpoints to STDOUT
+    #
+    #
+    # @return [void]
+    #
+    def print_stubs
+      method_definitions.each do |method_definition|
+        print("#{method_definition}\n\n")
+      end
+    end
+
+    def method_definitions
+      @method_definitions ||= endpoints.map do |endpoint|
+        MethodDefinition.new(service.id, endpoint.id, endpoint.route_params)
       end
     end
   end
