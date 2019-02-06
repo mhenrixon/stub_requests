@@ -28,7 +28,7 @@ RSpec.describe StubRequests::URI::Builder do
       let(:error_message) do
         "The URI segment(s) [:without_any] were not replaced" \
         " in template (another/random/endpoint/:without_any/value)." \
-        " Given replacements=[:bogus]"
+        " Given route_params=[:bogus]"
       end
 
       specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }
