@@ -49,7 +49,6 @@ module StubRequests
     #
     # @return [Endpoint]
     #
-    # :reek:LongParameterList { max_params: 4 }
     def register(endpoint_id, verb, path)
       endpoint =
         if (endpoint = find(endpoint_id))
@@ -74,7 +73,6 @@ module StubRequests
     #
     # @return [Endpoint] returns the updated endpoint
     #
-    # :reek:LongParameterList { max_params: 4 }
     def update(endpoint_id, verb, path)
       endpoint = find!(endpoint_id)
       endpoint.update(verb, path)

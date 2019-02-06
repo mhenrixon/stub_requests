@@ -66,8 +66,6 @@ module StubRequests
     # @see #stub_http_request
     # @return [WebMock::RequestStub] a mocked request
     #
-    # :reek:UtilityFunction
-    # :reek:LongParameterList { max_params: 5 }
     def self.stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
       service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
       endpoint_stub          = WebMock::Builder.build(endpoint.verb, uri, {}, &callback)
@@ -78,7 +76,6 @@ module StubRequests
 
     # @api private
     # Used only for testing purposes
-    # :reek:LongParameterList { max_params: 4 }
     def self.__stub_endpoint(service_id, endpoint_id, route_params = {})
       _service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
       endpoint_stub           = WebMock::Builder.build(endpoint.verb, uri)

@@ -15,7 +15,6 @@ module StubRequests
   #
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
-  # :reek:DataClump
   module API
     # extends "self"
     # @!parse extend self
@@ -45,7 +44,6 @@ module StubRequests
     #
     # @return [Service] a new service or a previously registered service
     #
-    # :reek:UtilityFunction
     def register_service(service_id, service_uri, &block)
       StubRequests::ServiceRegistry.register_service(service_id, service_uri, &block)
     end
@@ -69,8 +67,6 @@ module StubRequests
     # @see #stub_http_request
     # @return [WebMock::RequestStub] a mocked request
     #
-    # :reek:UtilityFunction
-    # :reek:LongParameterList { max_params: 5 }
     def stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
       StubRequests::ServiceRegistry.stub_endpoint(service_id, endpoint_id, route_params, &callback)
     end
@@ -85,8 +81,6 @@ module StubRequests
     #
     # @return [void]
     #
-    # :reek:UtilityFunction
-    # :reek:LongParameterList
     def register_callback(service_id, endpoint_id, verb, callback)
       StubRequests::CallbackRegistry.register(service_id, endpoint_id, verb, callback)
     end
@@ -99,7 +93,6 @@ module StubRequests
     #
     # @return [void]
     #
-    # :reek:UtilityFunction
     def unregister_callback(service_id, endpoint_id, verb)
       StubRequests::CallbackRegistry.unregister(service_id, endpoint_id, verb)
     end

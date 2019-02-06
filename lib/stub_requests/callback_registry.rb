@@ -13,9 +13,6 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   # @since 0.1.3
   #
-  # :reek:UtilityFunction
-  # :reek:DataClump
-  # :reek:FeatureEnvy
   class CallbackRegistry
     include Singleton
     include Enumerable
@@ -32,7 +29,6 @@ module StubRequests
     #
     # @return [Callback]
     #
-    # :reek:LongParameterList
     def self.register(service_id, endpoint_id, verb, callback)
       instance.register(service_id, endpoint_id, verb, callback)
     end
@@ -110,7 +106,6 @@ module StubRequests
     #
     # @return [Callback] the added callback
     #
-    # :reek:LongParameterList
     def register(service_id, endpoint_id, verb, block)
       callback = find_by(service_id, endpoint_id, verb)
       return callback if callback
@@ -130,7 +125,6 @@ module StubRequests
     #
     # @return [Callback] the deleted callback
     #
-    # :reek:ControlParameter
     def unregister(service_id, endpoint_id, verb)
       return unless (callback = find_by(service_id, endpoint_id, verb))
 
@@ -162,8 +156,6 @@ module StubRequests
     #
     # @return [Callback]
     #
-    # :reek:ControlParameter
-    # :reek:DuplicateMethodCall
     def find_by(service_id, endpoint_id, verb)
       find do |sub|
         sub.service_id == service_id &&
