@@ -1,5 +1,20 @@
 # Change Log
 
+## [v0.1.6](https://github.com/mhenrixon/stub_requests/tree/v0.1.6) (2019-02-06)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.5...v0.1.6)
+
+**Implemented enhancements:**
+
+- Remove the need for manual release steps \[ci-skip\] [\#23](https://github.com/mhenrixon/stub_requests/pull/23) ([mhenrixon](https://github.com/mhenrixon))
+
+**Fixed bugs:**
+
+- Load methods unless defined [\#22](https://github.com/mhenrixon/stub_requests/pull/22) ([mhenrixon](https://github.com/mhenrixon))
+
+**Merged pull requests:**
+
+- Update Changelog [\#21](https://github.com/mhenrixon/stub_requests/pull/21) ([mhenrixon](https://github.com/mhenrixon))
+
 ## [v0.1.5](https://github.com/mhenrixon/stub_requests/tree/v0.1.5) (2019-02-06)
 [Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.4...v0.1.5)
 
