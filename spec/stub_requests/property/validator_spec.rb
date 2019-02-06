@@ -30,6 +30,12 @@ RSpec.describe StubRequests::Property::Validator do
     its(:type)       { is_expected.to eq([type]) }
     its(:default)    { is_expected.to eq(default) }
     its(:properties) { is_expected.to eq(properties) }
+
+    context "when argument :properties is nil" do
+      let(:properties) { nil }
+      it! { is_expected.not_to raise_error }
+      its(:properties) { is_expected.to eq({}) }
+    end
   end
 
   describe "#run_validations" do

@@ -43,7 +43,7 @@ module StubRequests
       # @param [Hash<Symbol>] options a hash with options
       # @option options [Object] :default a default value for the property
       #
-      # @return [Object] the whatever
+      # @return [void]
       #
       def property(name, type:, **options)
         type = normalize_type(type, options)
