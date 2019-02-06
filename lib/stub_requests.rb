@@ -43,4 +43,6 @@ require "stub_requests/webmock/stub_registry_extension"
 
 require "stub_requests/api"
 require "stub_requests/stub_requests"
+require "stub_requests/dsl/method_definition"
+require "stub_requests/dsl/define_method"
 require "stub_requests/dsl"

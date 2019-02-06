@@ -70,38 +70,8 @@ module StubRequests
   #     expect(response).to be_json_eql(response_body.to_json)
   #   end
   class DSL
-    BLOCK_ARG = "&block"
-
-    attr_reader :endpoints
-
-    class MethodDefinitionBuilder
-      attr_reader :route_params, :endpoint_id, :service_id
-
-      def initialize(endpoint)
-        @route_params = endpoint.route_params
-        @endpoint_id  = endpoint.id
-        @service_id   = endpoint.service_id
-      end
-
-      def generate_definition
-        <<~METHOD
-        def #{method_name}(#{keywords})
-          stub_endpoint(:#{service_id}, :#{endpoint_id}, #{arguments})
-        end
-        METHOD
-      end
-
-      def method_name
-        @method_name ||= "stub_#{endpoint_id}"
-      end
-
-      def keywords
-        @keywords ||= route_params.map { |param| "#{param}:" }.concat([+BLOCK_ARG]).join(", ")
-      end
-
-      def arguments
-        @arguments ||= route_params.map { |param| "#{param}: #{param}" }.concat([+BLOCK_ARG]).join(", ")
-      end
+    def self.define_endpoint_methods(service_id, receiver:)
+      new(service_id, receiver: receiver).define_endpoint_methods
     end
 
     attr_reader :service, :receiver, :endpoints
@@ -114,23 +84,11 @@ module StubRequests
 
     def define_endpoint_methods
       receiver.send(:include, StubRequests::API)
+
       endpoints.each do |endpoint|
-
+        definition = MethodDefinition.new(service.id, endpoint.id, endpoint.route_params)
+        DefineMethod.new(definition, receiver).define
       end
-    end
-
-    def define_method_for(endpoint)
-      method_builder = MethodDefinitionBuilder.new(endpoint)
-      Docile.dsl_eval(receiver) do
-        silence_redefinition_of_method(method_builder.method_name)
-        module_eval <<-METHOD, __FILE__, __LINE__ + 1
-          #{method_builder.generate_definition}
-        METHOD
-      end
-    end
-
-    def self.define_endpoint_methods(service_id, receiver:) # rubocop:disable Metrics/MethodLength
-      new(service_id, receiver: receiver).define_endpoint_methods
     end
   end
 end
