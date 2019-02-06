@@ -2,6 +2,7 @@
 /.rspec_status
 /.yardoc
 /_yardoc/
+/gemfiles/*.lock
 /coverage/
 /doc/
 /docs
