@@ -21,7 +21,7 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
       task_id: task_id,
     }
   end
-  let(:callback) { -> { } }
+  let(:callback) { -> {} }
 
   let(:example_api_list_task_status) { 200 }
   let(:example_api_list_task_response) do
