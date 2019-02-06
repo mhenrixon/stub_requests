@@ -38,7 +38,6 @@ module StubRequests
       #
       # @return [void]
       #
-      # :reek:LongParameterList
       def self.call(name, type, default, properties)
         new(name, type, default, properties).run_validations
       end
@@ -67,7 +66,6 @@ module StubRequests
       # @param [Object] default the default value of the property
       # @param [Hash] properties the list of currently defined properties
       #
-      # :reek:LongParameterList
       def initialize(name, type, default = nil, properties = {})
         @type       = Array(type).flatten
         @default    = default

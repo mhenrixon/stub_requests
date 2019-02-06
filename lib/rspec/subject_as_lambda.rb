@@ -105,8 +105,7 @@ module RSpec
     #     before { subject.age = 25 }
     #     its(:age) { should eq(25) }
     #   end
-    # :reek:DuplicateMethodCall
-    # :reek:TooManyStatements
+    #
     def it!(*options, &block)
       it_lambda_caller = caller.reject { |file_line| file_line =~ %r{/rspec/subject_as_lambda} }
       describe(nil, caller: it_lambda_caller) do

@@ -32,7 +32,7 @@ RSpec.describe StubRequests::DSL::MethodDefinition do
       specify do
         is_expected.to eq(<<~METHOD)
           def stub_show(&block)
-            stub_endpoint(:documents, :show, &block)
+            StubRequests.stub_endpoint(:documents, :show, &block)
           end
         METHOD
       end
@@ -46,7 +46,7 @@ RSpec.describe StubRequests::DSL::MethodDefinition do
       specify do
         is_expected.to eq(<<~METHOD)
           def stub_person_documents_show(person_id:, id:, &block)
-            stub_endpoint(:custom_api, :person_documents_show, person_id: person_id, id: id, &block)
+            StubRequests.stub_endpoint(:custom_api, :person_documents_show, person_id: person_id, id: id, &block)
           end
         METHOD
       end
