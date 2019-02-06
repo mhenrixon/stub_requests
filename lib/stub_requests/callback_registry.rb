@@ -134,14 +134,14 @@ module StubRequests
     #
     # Notifies subscribers that a request was made
     #
-    # @param [RequestStub] request the stubbed request
+    # @param [RequestStub] request_stub the stubbed request
     #
     # @return [void]
     #
-    def invoke_callbacks(request)
-      return unless (callback = find_by(request.service_id, request.endpoint_id, request.verb))
+    def invoke_callbacks(request_stub)
+      return unless (callback = find_by(request_stub.service_id, request_stub.endpoint_id, request_stub.verb))
 
-      dispatch_callback(request, callback)
+      callback.call(request_stub)
     end
 
     private
@@ -161,19 +161,6 @@ module StubRequests
         sub.service_id == service_id &&
           sub.endpoint_id == endpoint_id &&
           ([sub.verb, verb].include?(:any) || sub.verb == verb)
-      end
-    end
-
-    def dispatch_callback(request_stub, callback)
-      arity = callback.arity
-
-      case arity
-      when 0
-        callback.call
-      when 1
-        callback.call(request_stub)
-      else
-        raise InvalidCallback, "The callback for a callback can either take 0 or 1 arguments (was #{arity})"
       end
     end
   end
