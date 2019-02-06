@@ -25,4 +25,5 @@ task :changelog do
   sh(COMMIT_CHANGELOG_CMD)
   sh(GIT_PUSH_CMD)
   sh(OPEN_PR_CMD)
+  sh("git checkout master")
 end
