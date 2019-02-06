@@ -106,18 +106,18 @@ module StubRequests
     # @param [Symbol] service_id the id of a service
     # @param [Symbol] endpoint_id the id of an endpoint
     # @param [optional, Symbol] verb the HTTP verb to subscribe to
-    # @param [proc] callback the callback to use for when.a request was made
+    # @param [proc] block the callback to use for when.a request was made
     #
     # @return [Callback] the added callback
     #
     # :reek:LongParameterList
-    def register(service_id, endpoint_id, verb, callback)
-      registered_callback = find_by(service_id, endpoint_id, verb)
-      return registered_callback if registered_callback
+    def register(service_id, endpoint_id, verb, block)
+      callback = find_by(service_id, endpoint_id, verb)
+      return callback if callback
 
-      registered_callback = Callback.new(service_id, endpoint_id, verb, callback)
-      callbacks.push(registered_callback)
-      registered_callback
+      callback = Callback.new(service_id, endpoint_id, verb, block)
+      callbacks.push(callback)
+      callback
     end
 
     #
@@ -172,15 +172,14 @@ module StubRequests
       end
     end
 
-    def dispatch_callback(request, callback)
-      callback = callback.callback
-      arity    = callback.arity
+    def dispatch_callback(request_stub, callback)
+      arity = callback.arity
 
       case arity
       when 0
         callback.call
       when 1
-        callback.call(request)
+        callback.call(request_stub)
       else
         raise InvalidCallback, "The callback for a callback can either take 0 or 1 arguments (was #{arity})"
       end

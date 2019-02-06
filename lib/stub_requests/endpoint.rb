@@ -57,6 +57,8 @@ module StubRequests
     #
     # An endpoint for a specific {StubRequests::Service}
     #
+    #
+    # @param [Service] service a registered service
     # @param [Symbol] endpoint_id a descriptive id for the endpoint
     # @param [Symbol] verb a HTTP verb
     # @param [String] path how to reach the endpoint
@@ -74,6 +76,7 @@ module StubRequests
 
     #
     # Updates this endpoint
+    #
     #
     # @param [Symbol] verb a HTTP verb
     # @param [String] path how to reach the endpoint

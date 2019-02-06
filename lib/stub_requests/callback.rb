@@ -50,5 +50,9 @@ module StubRequests
     def call(*args)
       callback.call(*args)
     end
+
+    def arity
+      callback.arity
+    end
   end
 end
