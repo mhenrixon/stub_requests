@@ -9,5 +9,5 @@
 module StubRequests
   #
   # @return [String] a version string
-  VERSION = "0.1.4"
+  VERSION = "0.1.5"
 end
