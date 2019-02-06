@@ -22,7 +22,7 @@ class Symbol
   end unless method_defined?(:to_route_param)
 end
 
-# :nodoc:
+# :nodoc:key => "value",
 # @api private
 class Hash
   # :nodoc:
