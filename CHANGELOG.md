@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/mhenrixon/stub_requests/tree/HEAD)
-
-[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.4...HEAD)
+## [v0.1.5](https://github.com/mhenrixon/stub_requests/tree/v0.1.5) (2019-02-06)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.4...v0.1.5)
 
 **Implemented enhancements:**
 
@@ -15,6 +14,7 @@
 
 **Merged pull requests:**
 
+- Update Changelog [\#20](https://github.com/mhenrixon/stub_requests/pull/20) ([mhenrixon](https://github.com/mhenrixon))
 - Update Changelog [\#16](https://github.com/mhenrixon/stub_requests/pull/16) ([mhenrixon](https://github.com/mhenrixon))
 
 ## [v0.1.4](https://github.com/mhenrixon/stub_requests/tree/v0.1.4) (2019-02-06)
