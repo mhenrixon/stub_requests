@@ -19,3 +19,9 @@ YARD::Rake::YardocTask.new do |t|
 end
 
 task default: :spec
+
+task :release do
+  sh("gem bump --tag --release --push")
+  sh("./update_docs.sh")
+  Rake::Task["changelog"].invoke
+end
