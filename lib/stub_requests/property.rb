@@ -65,18 +65,21 @@ module StubRequests
 
       # @api private
       def define_property(name, type, default)
-        property_reader(name)
+        property_reader(name, default)
         property_predicate(name)
         property_writer(name, type)
 
+        set_property_default(name, default)
         set_property_defined(name, type, default)
       end
 
       # @api private
-      def property_reader(name)
+      def property_reader(name, default)
+        invar = "@#{name}"
         silence_redefinition_of_method(name.to_s)
         redefine_method(name) do
-          instance_variable_get("@#{name}") || properties.dig(name, :default)
+          instance_variable_set(invar, default) unless instance_variable_defined?(invar)
+          instance_variable_get(invar)
         end
       end
 
@@ -96,8 +99,13 @@ module StubRequests
         end
       end
 
+      def set_property_default(name, default)
+        instance_variable_set("@#{name}", default)
+      end
+
       # @api private
       def set_property_defined(name, type, default)
+        self.properties ||= {}
         properties[name] = { type: type, default: default }
       end
     end
