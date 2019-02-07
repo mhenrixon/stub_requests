@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/mhenrixon/stub_requests/tree/HEAD)
-
-[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.9...HEAD)
+## [v0.1.10](https://github.com/mhenrixon/stub_requests/tree/v0.1.10) (2019-02-07)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.9...v0.1.10)
 
 **Implemented enhancements:**
 
