@@ -1212,11 +1212,11 @@ configuration option :collect_metrics is true.</p>
       <pre class="code"><span class="info file"># File 'lib/stub_requests/stub_registry.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='comma'>,</span> <span class='id identifier rubyid_webmock_stub'>webmock_stub</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_endpoint'>endpoint</span> <span class='op'>=</span> <span class='id identifier rubyid_find_or_initialize_endpoint_stub'>find_or_initialize_endpoint_stub</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_webmock_stub'>webmock_stub</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoint_stub'>endpoint_stub</span> <span class='op'>=</span> <span class='id identifier rubyid_find_or_initialize_endpoint_stub'>find_or_initialize_endpoint_stub</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoint_stub'>endpoint_stub</span><span class='period'>.</span><span class='id identifier rubyid_record'>record</span><span class='lparen'>(</span><span class='id identifier rubyid_webmock_stub'>webmock_stub</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_endpoint'>endpoint</span>
+  <span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint_stub'>endpoint_stub</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_endpoint_stub'>endpoint_stub</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1287,7 +1287,7 @@ configuration option :collect_metrics is true.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Feb  6 23:01:43 2019 by
+  Generated on Thu Feb  7 10:16:38 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>
