@@ -9,7 +9,7 @@ if [[ "$(git diff --stat)" != "" ]]; then
   git stash push -u -a -m "Before updating docs"
 fi;
 
-git reset --hard origin/master
+git pull --rebase
 
 rake yard
 
