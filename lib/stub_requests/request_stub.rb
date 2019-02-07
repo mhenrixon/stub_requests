@@ -14,15 +14,20 @@ module StubRequests
   # @since 0.1.2
   #
   class RequestStub
-    include Property
+    # extends "Forwardable"
+    # @!parse extend Forwardable
     extend Forwardable
 
+    # includes "Concerns::Property"
+    # @!parse include Concerns::Property
+    include Concerns::Property
+
     # Delegate service_id, endpoint_id, verb and path to endpoint
-    delegate [:service_id, :endpoint_id, :verb, :path] => :endpoint
+    delegate [:service_id, :service_uri, :verb, :path] => :endpoint
     #
     # @!attribute [r] endpoint
-    #   @return [StubRequests::EndpointStub] a stubbed endpoint
-    property :endpoint, type: StubRequests::EndpointStub
+    #   @return [Symbol] the id of a registered {Endpoint}
+    property :endpoint_id, type: Symbol
     #
     # @!attribute [r] verb
     #   @return [Symbol] a HTTP verb/method
@@ -30,11 +35,11 @@ module StubRequests
     #
     # @!attribute [r] uri
     #   @return [String] the full URI for this endpoint
-    property :uri, type: String
+    property :request_uri, type: String
     #
-    # @!attribute [r] request_stub
+    # @!attribute [r] webmock_stub
     #   @return [WebMock::RequestStub] a webmock stubbed request
-    property :request_stub, type: WebMock::RequestStub
+    property :webmock_stub, type: WebMock::RequestStub
     #
     # @!attribute [r] recorded_at
     #   @return [Time] the time this record was recorded
@@ -52,18 +57,28 @@ module StubRequests
     # Initialize a new Record
     #
     #
-    # @param [Endpoint] endpoint a stubbed endpoint
-    # @param [WebMock::RequestStub] request_stub the stubbed webmock request
+    # @param [Endpoint] endpoint_id the id of a stubbed endpoint
+    # @param [WebMock::RequestStub] webmock_stub the stubbed webmock request
     #
-    def initialize(endpoint, request_stub)
-      request_pattern = request_stub.request_pattern
-      self.endpoint       = endpoint
+    def initialize(endpoint_id, webmock_stub)
+      request_pattern     = webmock_stub.request_pattern
+      self.endpoint_id    = endpoint_id
       self.verb           = request_pattern.method_pattern.to_s.to_sym
-      self.uri            = request_pattern.uri_pattern.to_s
-      self.request_stub   = request_stub
+      self.request_uri    = request_pattern.uri_pattern.to_s
+      self.webmock_stub   = webmock_stub
       self.recorded_at    = Time.now
       self.recorded_from  = RSpec.current_example.metadata[:location]
       @responded_at = nil # ByPass the validation for the initializer
+    end
+
+    #
+    # Retrieve the endpoint for this request stub
+    #
+    #
+    # @return [Endpoint] <description>
+    #
+    def endpoint
+      EndpointRegistry.instance[endpoint_id]
     end
 
     #

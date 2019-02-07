@@ -19,6 +19,7 @@ detectors:
       - RSpec::SubjectAsLambda#it!
   DataClump:
     exclude:
+      - StubRequests::Concerns::RegisterVerb
       - StubRequests::API
       - StubRequests::Endpoints
       - StubRequests::StubRegistry
@@ -27,20 +28,14 @@ detectors:
       - StubRequests::API#register_callback
       - StubRequests::CallbackRegistry#register
       - StubRequests::CallbackRegistry#self.register
-      - StubRequests::Property::Validator#self.call
+      - StubRequests::Concerns::Property::Validator#self.call
   UtilityFunction:
     exclude:
-      - StubRequests::API#define_stubs
-      - StubRequests::API#print_stubs
-      - StubRequests::API#register_callback
-      - StubRequests::API#register_service
-      - StubRequests::API#stub_endpoint
-      - StubRequests::API#unregister_callback
-      - StubRequests::StubRegistry#initialize_endpoint_stub
+      - StubRequests::API
   ControlParameter:
     exclude:
       - StubRequests::CallbackRegistry#find_by
-      - StubRequests::Property::Validator#initialize
+      - StubRequests::Concerns::Property::Validator#initialize
   FeatureEnvy:
     exclude:
       - StubRequests::CallbackRegistry#dispatch_callback
@@ -52,4 +47,5 @@ detectors:
       - StubRequests#logger
   TooManyInstanceVariables:
     exclude:
+      - StubRequests::Endpoint
       - StubRequests::URI::Builder

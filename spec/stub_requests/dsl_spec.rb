@@ -23,18 +23,17 @@ RSpec.describe StubRequests::DSL do
 
   before do
     StubRequests.register_service(service_id, service_uri) do
-      register :person_documents_show,   :get,    "persons/:person_id/documents/:id"
-      register :person_documents_index,  :get,    "persons/:person_id/documents"
-      register :person_documents_create, :post,   "persons/:person_id/documents"
-      register :person_documents_patch,  :patch,  "persons/:person_id/documents/:id"
-      register :person_documents_delete, :delete, "persons/:person_id/documents/:id"
+      get    "persons/:person_id/documents/:id", as: :person_documents_show
+      get    "persons/:person_id/documents",     as: :person_documents_index
+      post   "persons/:person_id/documents",     as: :person_documents_create
+      patch  "persons/:person_id/documents/:id", as: :person_documents_patch
+      delete "persons/:person_id/documents/:id", as: :person_documents_destroy
     end
   end
 
   describe "#initialize" do
     subject { dsl }
 
-    its(:service)   { is_expected.to be_a(StubRequests::Service) }
     its(:receiver)  { is_expected.to eq(stub_module) }
     its(:endpoints) { is_expected.to be_a(Array) }
 
@@ -54,7 +53,7 @@ RSpec.describe StubRequests::DSL do
     it { is_expected.to respond_to(:stub_person_documents_show).with_keywords(:person_id, :id) }
     it { is_expected.to respond_to(:stub_person_documents_index).with_keywords(:person_id) }
     it { is_expected.to respond_to(:stub_person_documents_patch).with_keywords(:person_id, :id) }
-    it { is_expected.to respond_to(:stub_person_documents_delete).with_keywords(:person_id, :id) }
+    it { is_expected.to respond_to(:stub_person_documents_destroy).with_keywords(:person_id, :id) }
 
     describe "#stub_person_documents_create" do
       it "stubs WebMock with the right request details" do
@@ -95,6 +94,16 @@ RSpec.describe StubRequests::DSL do
         end
       end
     end
+
+    describe "#stub_person_documents_destroy" do
+      it "stubs WebMock with the right request details" do
+        test_instance.stub_person_documents_destroy(person_id: 789, id: 321) do
+          expect(self).to be_a(WebMock::RequestStub)
+          expect(request_pattern.uri_pattern.to_s).to eq("https://domain.com/api/internal/persons/789/documents/321")
+          expect(request_pattern.method_pattern.to_s).to eq("delete")
+        end
+      end
+    end
   end
 
   describe "#print_stubs" do
@@ -103,7 +112,7 @@ RSpec.describe StubRequests::DSL do
     let(:stub_person_documents_create) do
       a_string_including(<<~METHOD)
         def stub_person_documents_create(person_id:, &block)
-          StubRequests.stub_endpoint(:person_documents_internal, :person_documents_create, person_id: person_id, &block)
+          StubRequests.stub_endpoint(:person_documents_create, person_id: person_id, &block)
         end
       METHOD
     end
@@ -111,7 +120,7 @@ RSpec.describe StubRequests::DSL do
     let(:stub_person_documents_show) do
       a_string_including(<<~METHOD)
         def stub_person_documents_show(person_id:, id:, &block)
-          StubRequests.stub_endpoint(:person_documents_internal, :person_documents_show, person_id: person_id, id: id, &block)
+          StubRequests.stub_endpoint(:person_documents_show, person_id: person_id, id: id, &block)
         end
       METHOD
     end
@@ -119,7 +128,7 @@ RSpec.describe StubRequests::DSL do
     let(:stub_person_documents_index) do
       a_string_including(<<~METHOD)
         def stub_person_documents_index(person_id:, &block)
-          StubRequests.stub_endpoint(:person_documents_internal, :person_documents_index, person_id: person_id, &block)
+          StubRequests.stub_endpoint(:person_documents_index, person_id: person_id, &block)
         end
       METHOD
     end
@@ -127,15 +136,15 @@ RSpec.describe StubRequests::DSL do
     let(:stub_person_documents_patch) do
       a_string_including(<<~METHOD)
         def stub_person_documents_patch(person_id:, id:, &block)
-          StubRequests.stub_endpoint(:person_documents_internal, :person_documents_patch, person_id: person_id, id: id, &block)
+          StubRequests.stub_endpoint(:person_documents_patch, person_id: person_id, id: id, &block)
         end
       METHOD
     end
 
-    let(:stub_person_documents_delete) do
+    let(:stub_person_documents_destroy) do
       a_string_including(<<~METHOD)
-        def stub_person_documents_delete(person_id:, id:, &block)
-          StubRequests.stub_endpoint(:person_documents_internal, :person_documents_delete, person_id: person_id, id: id, &block)
+        def stub_person_documents_destroy(person_id:, id:, &block)
+          StubRequests.stub_endpoint(:person_documents_destroy, person_id: person_id, id: id, &block)
         end
       METHOD
     end
@@ -144,7 +153,7 @@ RSpec.describe StubRequests::DSL do
     it! { is_expected.to output(stub_person_documents_show).to_stdout }
     it! { is_expected.to output(stub_person_documents_index).to_stdout }
     it! { is_expected.to output(stub_person_documents_patch).to_stdout }
-    it! { is_expected.to output(stub_person_documents_delete).to_stdout }
+    it! { is_expected.to output(stub_person_documents_destroy).to_stdout }
   end
 end
 # rubocop:enable RSpec/MultipleExpectations

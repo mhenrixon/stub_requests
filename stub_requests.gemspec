@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "webmock",         ">= 2.3", "< 4.0"
   spec.add_dependency "concurrent-ruby", "~> 1.0", "< 2"
   spec.add_dependency "public_suffix",   "~> 3.0", "< 4"
+  spec.add_dependency "jaro_winkler",    "~> 1.0", "< 2"
 
   # ===== Basics =====
   spec.add_development_dependency "bundler",        ">= 2.0"

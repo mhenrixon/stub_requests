@@ -15,6 +15,10 @@ module StubRequests
   # @since 0.1.2
   #
   class StubRegistry
+    # extend "Forwardable"
+    # @!parse extend Forwardable
+    extend Forwardable
+
     # includes "Singleton"
     # @!parse include Singleton
     include Singleton
@@ -22,50 +26,19 @@ module StubRequests
     # @!parse include Enumerable
     include Enumerable
 
-    #
-    # Records metrics about stubbed endpoints
-    #
-    #
-    # @param [Service] service a Service
-    # @param [Endpoint] endpoint an Endpoint
-    # @param [WebMock::RequestStub] webmock_stub the stubbed webmock request
-    #
-    # @note the class method of record validates that
-    #   configuration option :collect_metrics is true.
-    #
-    # @return [EndpointStub] the stub that was recorded
-    #
-    def self.record(service, endpoint, webmock_stub)
-      # Note: The class method v
-      return unless StubRequests.config.record_metrics?
-
-      instance.record(service, endpoint, webmock_stub)
-    end
+    delegate [:each, :concat] => :stubs
 
     #
-    # Mark a {RequestStub} as having responded
-    #
-    # @note Called when webmock responds successfully
-    #
-    # @param [WebMock::RequestStub] webmock_stub the stubbed webmock request
-    #
-    # @return [void]
-    #
-    def self.mark_as_responded(webmock_stub)
-      instance.mark_as_responded(webmock_stub)
-    end
-
-    #
-    # @!attribute [rw] services
-    #   @return [Concurrent::Array<Endpoint>] a map with stubbed endpoints
-    attr_reader :endpoints
+    # @!attribute [r] stubs
+    #   @return [Concurrent::Array] a collection of {RequestStub}
+    attr_reader :stubs
 
     #
     # Initialize a new registry
     #
     #
     def initialize
-      @endpoints = Concurrent::Array.new
+      reset
     end
 
     #
@@ -74,37 +47,22 @@ module StubRequests
     #
     # @api private
     def reset
-      endpoints.clear
+      @stubs = Concurrent::Array.new
     end
 
     #
-    # Required by Enumerable
+    # Records a WebMock::RequestStub as stubbed
     #
+    # @param [WebMock::RequestStub] webmock_stub <description>
     #
-    # @return [Concurrent::Array<Endpoint>] an array with stubbed endpoints
+    # @return [RequestStub]
     #
-    # @yield used by Enumerable
-    #
-    def each(&block)
-      endpoints.each(&block)
-    end
+    def record(endpoint_id, webmock_stub)
+      return unless StubRequests.config.record_stubs?
 
-    #
-    # Records metrics about stubbed endpoints
-    #
-    #
-    # @param [Service] service a symbolic id of the service
-    # @param [Endpoint] endpoint a string with a base_uri to the service
-    # @param [WebMock::RequestStub] webmock_stub the stubbed request
-    #
-    # @return [Service] the service that was just registered
-    #
-    def record(service, endpoint, webmock_stub)
-      endpoint_stub = find_or_initialize_endpoint_stub(service, endpoint)
-      endpoint_stub.record(webmock_stub)
-
-      endpoints.push(endpoint_stub)
-      endpoint_stub
+      request_stub = RequestStub.new(endpoint_id, webmock_stub)
+      concat([request_stub])
+      request_stub
     end
 
     #
@@ -117,10 +75,10 @@ module StubRequests
     # @return [void]
     #
     def mark_as_responded(webmock_stub)
-      return unless (request_stub = find_request_stub(webmock_stub))
+      return unless (request_stub = find_by_webmock_stub(webmock_stub))
 
       request_stub.mark_as_responded
-      CallbackRegistry.invoke_callbacks(request_stub)
+      CallbackRegistry.instance.invoke_callbacks(request_stub)
       request_stub
     end
 
@@ -132,24 +90,8 @@ module StubRequests
     #
     # @return [RequestStub] the request_stubbed matching the request stub
     #
-    def find_request_stub(webmock_stub)
-      map do |endpoint|
-        endpoint.find_by(attribute: :request_stub, value: webmock_stub)
-      end.compact.first
-    end
-
-    private
-
-    def find_or_initialize_endpoint_stub(service, endpoint)
-      find_endpoint_stub(service, endpoint) || initialize_endpoint_stub(service, endpoint)
-    end
-
-    def find_endpoint_stub(service, endpoint)
-      find { |ep| ep.service_id == service.id && ep.endpoint_id == endpoint.id }
-    end
-
-    def initialize_endpoint_stub(service, endpoint)
-      EndpointStub.new(service, endpoint)
+    def find_by_webmock_stub(webmock_stub)
+      find { |stub| stub.webmock_stub == webmock_stub }
     end
   end
 end

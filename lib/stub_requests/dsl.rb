@@ -29,15 +29,15 @@ module StubRequests
   #   Stubs.instance_methods #=> [:stub_documents_show, :stub_documents_index, :stub_documents_create]
   #   module Stubs
   #     def stub_documents_show(id:, &block)
-  #        stub_endpoint(:documents, :show, id: id, &block)
+  #        stub_endpoint(:documents_show, id: id, &block)
   #     end
   #
   #     def stub_documents_index(&block)
-  #        stub_endpoint(:documents, :index, &block)
+  #        stub_endpoint(:documents_index, &block)
   #     end
   #
   #     def stub_documents_create(&block)
-  #        stub_endpoint(:documents, :create, &block)
+  #        stub_endpoint(:documents_create, &block)
   #     end
   #    end
   #
@@ -90,9 +90,8 @@ module StubRequests
     # @param [Module] receiver the receiver of the stub methods
     #
     def initialize(service_id, receiver: nil)
-      @service   = StubRequests::ServiceRegistry.instance.find!(service_id)
+      @endpoints = StubRequests::EndpointRegistry[service_id]
       @receiver  = receiver
-      @endpoints = service.endpoints.endpoints.values
     end
 
     #
@@ -123,7 +122,7 @@ module StubRequests
 
     def method_definitions
       @method_definitions ||= endpoints.map do |endpoint|
-        MethodDefinition.new(service.id, endpoint.id, endpoint.route_params)
+        MethodDefinition.new(endpoint.id, endpoint.route_params)
       end
     end
   end

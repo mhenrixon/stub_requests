@@ -13,10 +13,12 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class Endpoint
-    extend Forwardable
-
+    # includes "Comparable"
+    # @!parse include Comparable
     include Comparable
-    include Property
+    # includes "Concerns::Property"
+    # @!parse include Concerns::Property
+    include Concerns::Property
     #
     # @!attribute [rw] id
     #   @return [Symbol] the id of the endpoint
@@ -29,49 +31,46 @@ module StubRequests
     # @!attribute [rw] path
     #   @return [String] a string template for the endpoint
     property :path, type: String
-
     #
-    # @!attribute [rw] service
-    #   @see
-    #   @return [Service] a service
-    attr_reader :service
-
+    # @!attribute [rw] uri
+    #   @return [String] the full uri for the endpoint
+    attr_reader :uri
     #
     # @!attribute [rw] service_id
     #   @see
     #   @return [Symbol] the id of the service
     attr_reader :service_id
-
     #
     # @!attribute [rw] service_uri
     #   @see
     #   @return [String] a service's base URI
     attr_reader :service_uri
-
     #
-    # @!attribute [rw] options
+    # @!attribute [rw] route_params
     #   @see
     #   @return [Array<Symbol>] an array with required route params
     attr_reader :route_params
 
     #
-    # An endpoint for a specific {StubRequests::Service}
+    # Initialize an endpoint for a specific {Service}
     #
     #
-    # @param [Service] service a registered service
     # @param [Symbol] endpoint_id a descriptive id for the endpoint
+    # @param [Symbol] service_id the id of a registered service
+    # @param [String] service_uri the uri of a registered service
     # @param [Symbol] verb a HTTP verb
     # @param [String] path how to reach the endpoint
     #
-    def initialize(service, endpoint_id, verb, path)
-      self.id   = endpoint_id
-      self.verb = verb
-      self.path = path
+    def initialize(endpoint_id:, service_id:, service_uri:, verb:, path:)
+      self.id       = endpoint_id
+      self.verb     = verb
+      self.path     = path
 
-      @service      = service
-      @service_id   = service.id
-      @service_uri  = service.uri
+      @service_id   = service_id
+      @service_uri  = service_uri
+      @uri          = URI.safe_join(service_uri, path)
       @route_params = URI.route_params(path)
+      @stubs        = Concurrent::Array.new
     end
 
     #
@@ -84,8 +83,8 @@ module StubRequests
     # @return [Endpoint] returns the updated endpoint
     #
     def update(verb, path)
-      self.verb = verb
-      self.path = path
+      @verb = verb
+      @path = path
       self
     end
 

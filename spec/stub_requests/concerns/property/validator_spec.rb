@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Property::Validator do
+RSpec.describe StubRequests::Concerns::Property::Validator do
   let(:validator)  { described_class.new(name, type, default, properties) }
   let(:name)       { :a_method_name }
   let(:type)       { String }

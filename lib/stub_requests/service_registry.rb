@@ -13,79 +13,42 @@ module StubRequests
   # @author Mikael Henriksson <mikael@zoolutions.se>
   #
   class ServiceRegistry
+    # extend "Forwardable"
+    # @!parse extend Forwardable
+    extend Forwardable
+
+    # includes "Singleton"
+    # @!parse include Singleton
     include Singleton
+    # includes "Enumerable"
+    # @!parse include Enumerable
     include Enumerable
 
-    # Register a service in the service registry
-    #
-    #
-    # @param [Symbol] service_id a descriptive id for the service
-    # @param [Symbol] service_uri the uri used to call the service
-    #
-    # @example Register a service with endpoints
-    #   register_service(:documents, "https://company.com/api/v1") do
-    #     get    "documents/:id", as: :show
-    #     get    "documents",     as: :index
-    #     post   "documents",     as: :create
-    #     patch  "documents/:id", as: :update
-    #     delete "documents/:id", as: :destroy
-    #   end
-    #
-    # @return [Service] a new service or a previously registered service
-    #
-    def self.register_service(service_id, service_uri, &block)
-      service = instance.register(service_id, service_uri)
-      Docile.dsl_eval(service.endpoints, &block) if block.present?
-      service
-    end
-
-    #
-    # Stub a request to a registered service endpoint
-    #
-    #
-    # @param [Symbol] service_id the id of a registered service
-    # @param [Symbol] endpoint_id the id of a registered endpoint
-    # @param [Hash<Symbol>] route_params a map with route parameters
-    #
-    # @note the kind of timeout error raised by webmock is depending on the HTTP client used
-    #
-    # @example Stub a request to a registered service endpoint
-    #   stub_endpoint(:google_api, :get_map_location)
-    #    .to_return(body: "No content", status: 204)
-    #
-    # @example Stub a request to a registered service endpoint using block
-    #   stub_endpoint(:documents, :index) do
-    #     with(headers: { "Accept" => "application/json" }}})
-    #     to_return(body: "No content", status: 204)
-    #   end
-    #
-    # @return [WebMock::RequestStub] a mocked request
-    #
-    def self.stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
-      service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
-      webmock_stub           = WebMock::Builder.build(endpoint.verb, uri, {}, &callback)
-
-      StubRegistry.record(service, endpoint, webmock_stub)
-      ::WebMock::StubRegistry.instance.register_request_stub(webmock_stub)
-    end
-
-    # @api private
-    # Used only for testing purposes
-    def self.__stub_endpoint(service_id, endpoint_id, route_params = {})
-      _service, endpoint, uri = StubRequests::URI.for_service_endpoint(service_id, endpoint_id, route_params)
-      endpoint_stub           = WebMock::Builder.build(endpoint.verb, uri)
-
-      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
-    end
+    delegate [:each, :[], :[]=, :keys, :delete] => :services
 
     #
     # @!attribute [rw] services
     #   @return [Concurrent::Map<Symbol, Service>] a map with services
     attr_reader :services
 
+    #
+    # Initialize a new instance (used by Singleton)
+    #
+    #
     def initialize
       @services = Concurrent::Map.new
     end
+
+    #
+    # Returns the size of the registry
+    #
+    #
+    # @return [Integer]
+    #
+    def size
+      keys.size
+    end
+    alias count size
 
     #
     # Resets the map with registered services
@@ -94,18 +57,6 @@ module StubRequests
     # @api private
     def reset
       services.clear
-    end
-
-    #
-    # Required by Enumerable
-    #
-    #
-    # @return [Concurrent::Map<Symbol, Service>] an map with services
-    #
-    # @yield used by Enumerable
-    #
-    def each(&block)
-      services.each(&block)
     end
 
     #
@@ -118,11 +69,11 @@ module StubRequests
     # @return [Service] the service that was just registered
     #
     def register(service_id, service_uri)
-      if (service = find(service_id))
-        StubRequests.logger.warn("Service already registered #{service}")
-        return service
-      end
-      services[service_id] = Service.new(service_id, service_uri)
+      service = Service.new(service_id, service_uri)
+      StubRequests.logger.warn("Service already registered #{service}") if self[service_id]
+
+      self[service_id] = service
+      service
     end
 
     #
@@ -134,7 +85,7 @@ module StubRequests
     # @raise [ServiceNotFound] when the service was not removed
     #
     def remove(service_id)
-      services.delete(service_id) || raise(ServiceNotFound, service_id)
+      delete(service_id) || raise(ServiceNotFound, service_id)
     end
 
     #
@@ -146,7 +97,7 @@ module StubRequests
     # @return [Service] the found service
     #
     def find(service_id)
-      services[service_id]
+      self[service_id]
     end
 
     #
@@ -160,7 +111,7 @@ module StubRequests
     # @return [Service]
     #
     def find!(service_id)
-      find(service_id) || raise(ServiceNotFound, service_id)
+      self[service_id] || raise(ServiceNotFound, service_id)
     end
   end
 end

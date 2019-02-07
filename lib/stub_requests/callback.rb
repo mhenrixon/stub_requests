@@ -14,7 +14,9 @@ module StubRequests
   # @since 0.1.3
   #
   class Callback
-    include Property
+    # includes "Concerns::Property"
+    # @!parse include Concerns::Property
+    include Concerns::Property
     #
     # @!attribute [rw] service_id
     #   @return [Symbol] the id of a service

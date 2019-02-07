@@ -23,11 +23,6 @@ module StubRequests
   include API
 
   #
-  # @!attribute [rw] logger
-  #   @return [Logger] the logger to use in the gem
-  attr_accessor :logger
-
-  #
   # Allows the gem to be configured
   #
   #
@@ -48,6 +43,14 @@ module StubRequests
   #
   def config
     @config ||= Configuration.new
+  end
+
+  def logger
+    config.logger
+  end
+
+  def logger=(obj)
+    config.logger = obj
   end
 
   #

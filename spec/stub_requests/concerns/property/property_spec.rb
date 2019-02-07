@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::Property, ".property" do
+RSpec.describe StubRequests::Concerns::Property, ".property" do
   subject { test_class }
 
   let(:test_instance) { test_class.new }
   let(:test_class) do
     class TestProperty
-      include StubRequests::Property
+      include StubRequests::Concerns::Property
     end
   end
 

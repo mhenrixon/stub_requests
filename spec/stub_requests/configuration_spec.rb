@@ -5,22 +5,22 @@ require "spec_helper"
 RSpec.describe StubRequests::Configuration do
   let(:config) { described_class.new }
 
-  describe "#record_metrics" do
-    subject(:record_metrics) { config.record_metrics }
+  describe "#record_stubs" do
+    subject(:record_stubs) { config.record_stubs }
 
     context "when not configured" do
       it { is_expected.to eq(false) }
     end
 
     context "when configured with true" do
-      before { config.record_metrics = true }
+      before { config.record_stubs = true }
 
       it { is_expected.to eq(true) }
     end
   end
 
-  describe "#record_metrics=" do
-    subject { config.record_metrics = new_value }
+  describe "#record_stubs=" do
+    subject { config.record_stubs = new_value }
 
     let(:new_value) { true }
 
@@ -33,20 +33,20 @@ RSpec.describe StubRequests::Configuration do
 
       let(:error) { StubRequests::InvalidArgumentType }
       let(:message) do
-        "The argument `:record_metrics` was `String`, expected any of [TrueClass, FalseClass]"
+        "The argument `:record_stubs` was `String`, expected any of [TrueClass, FalseClass]"
       end
 
       it! { is_expected.to raise_error(error, message) }
     end
   end
 
-  describe "#record_metrics?" do
-    subject { config.record_metrics? }
+  describe "#record_stubs?" do
+    subject { config.record_stubs? }
 
     it { is_expected.to eq(false) }
 
-    context "when record_metrics is true" do
-      before { config.record_metrics = true }
+    context "when record_stubs is true" do
+      before { config.record_stubs = true }
 
       it { is_expected.to eq(true) }
     end
