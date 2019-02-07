@@ -14,52 +14,18 @@ module StubRequests
   # @since 0.1.3
   #
   class CallbackRegistry
+    # extend "Forwardable"
+    # @!parse extend Forwardable
+    extend Forwardable
+
+    # includes "Singleton"
+    # @!parse include Singleton
     include Singleton
+    # includes "Enumerable"
+    # @!parse include Enumerable
     include Enumerable
 
-    #
-    # Register to a service endpoint call
-    # @see CallbackRegistry#register
-    #
-    #
-    # @param [Symbol] service_id the id of a service
-    # @param [Symbol] endpoint_id the id of an endpoint
-    # @param [Symbol] verb the HTTP verb to subscribe to
-    # @param [Proc] callback the callback to use for when.a request was made
-    #
-    # @return [Callback]
-    #
-    def self.register(service_id, endpoint_id, verb, callback)
-      instance.register(service_id, endpoint_id, verb, callback)
-    end
-
-    #
-    # Unregister from a service endpoint call
-    # @see CallbackRegistry#unregister
-    #
-    #
-    # @param [Symbol] service_id the id of a service
-    # @param [Symbol] endpoint_id the id of an endpoint
-    # @param [Symbol] verb the HTTP verb to subscribe to
-    #
-    # @return [Callback]
-    #
-    def self.unregister(service_id, endpoint_id, verb)
-      instance.unregister(service_id, endpoint_id, verb)
-    end
-
-    #
-    # Notifies subscribers that a request was made
-    # @see CallbackRegistry#invoke_callbacks
-    #
-    #
-    # @param [RequestStub] request the stubbed request
-    #
-    # @return [RequestStub]
-    #
-    def self.invoke_callbacks(request)
-      instance.invoke_callbacks(request)
-    end
+    delegate [:each] => :callbacks
 
     #
     # @!attribute [r] callbacks
@@ -81,18 +47,6 @@ module StubRequests
     # @api private
     def reset
       callbacks.clear
-    end
-
-    #
-    # Required by Enumerable
-    #
-    #
-    # @return [Concurrent::Array<Callback>] a list with callbacks
-    #
-    # @yield used by Enumerable
-    #
-    def each(&block)
-      callbacks.each(&block)
     end
 
     #

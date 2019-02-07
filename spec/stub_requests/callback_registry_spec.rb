@@ -9,47 +9,6 @@ RSpec.describe StubRequests::CallbackRegistry do
   let(:verb)        { :any }
   let(:callback)    { -> {} }
 
-  shared_examples "delegates to instance method" do
-    before do
-      allow(registry).to receive(registry_method)
-      subject
-    end
-
-    it "delegates to CallbackRegistry.instance" do
-      expect(registry).to have_received(registry_method)
-        .with(*expected_args)
-    end
-  end
-
-  describe ".register" do
-    subject { described_class.register(service_id, endpoint_id, verb, callback) }
-
-    let(:registry_method) { :register }
-    let(:callback)        { ->(request) { p request } }
-    let(:expected_args)   { [service_id, endpoint_id, verb, callback] }
-
-    it_behaves_like "delegates to instance method"
-  end
-
-  describe ".unregister" do
-    subject { described_class.unregister(service_id, endpoint_id, verb) }
-
-    let(:registry_method) { :unregister }
-    let(:expected_args)   { [service_id, endpoint_id, verb] }
-
-    it_behaves_like "delegates to instance method"
-  end
-
-  describe ".invoke_callbacks" do
-    subject { described_class.invoke_callbacks(request) }
-
-    let(:registry_method) { :invoke_callbacks }
-    let(:request)         { instance_spy(StubRequests::RequestStub) }
-    let(:expected_args)   { [request] }
-
-    it_behaves_like "delegates to instance method"
-  end
-
   describe "#register" do
     subject(:register) { registry.register(service_id, endpoint_id, verb, callback) }
 

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe StubRequests::ArgumentValidation, ".validate!" do
+RSpec.describe StubRequests::Concerns::ArgumentValidation, ".validate!" do
   subject(:validate) { described_class.validate!(argument) }
 
   let(:name)     { :an_argument }

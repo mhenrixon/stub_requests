@@ -36,7 +36,7 @@ RSpec.describe StubRequests::ServiceRegistry do
       end
 
       context "with registered endpoints" do
-        before { other_service.endpoints.register(:bogus, :delete, "bogus/:id") }
+        before { other_service.register(:bogus, :delete, "bogus/:id") }
 
         let(:error_message) do
           "Service with id basecamp have already been registered. #{other_service}"

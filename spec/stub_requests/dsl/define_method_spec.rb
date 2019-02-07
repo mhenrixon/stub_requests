@@ -7,10 +7,9 @@ module RecevingModule; end
 RSpec.describe StubRequests::DSL::DefineMethod do
   let(:instance)   { described_class.new(definition, receiver) }
   let(:receiver)   { RecevingModule }
-  let(:definition) { StubRequests::DSL::MethodDefinition.new(service_id, endpoint_id, route_params) }
+  let(:definition) { StubRequests::DSL::MethodDefinition.new(endpoint_id, route_params) }
 
-  let(:service_id)   { :documents }
-  let(:endpoint_id)  { :show }
+  let(:endpoint_id)  { :todos_show }
   let(:route_params) { [:id] }
 
   describe "#initialize" do

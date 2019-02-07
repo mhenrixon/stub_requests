@@ -43,7 +43,49 @@ module StubRequests
     # @return [Service] a new service or a previously registered service
     #
     def register_service(service_id, service_uri, &block)
-      StubRequests::ServiceRegistry.register_service(service_id, service_uri, &block)
+      service = ServiceRegistry.instance.register(service_id, service_uri)
+      Docile.dsl_eval(service, &block) if block.present?
+      service
+    end
+    alias register_service2 register_service
+
+    #
+    # Stub a request to a registered service endpoint
+    #
+    #
+    # @param [Symbol] endpoint_id the id of a registered endpoint
+    # @param [Hash<Symbol>] route_params a map with route parameters
+    #
+    # @note the kind of timeout error raised by webmock is depending on the HTTP client used
+    #
+    # @example Stub a request to a registered service endpoint
+    #   stub_endpoint(:get_map_location, id: 1)
+    #    .to_return(body: "No content", status: 204)
+    #
+    # @example Stub a request to a registered service endpoint using block
+    #   stub_endpoint(:documents_index) do
+    #     with(headers: { "Accept" => "application/json" }}})
+    #     to_return(body: "No content", status: 204)
+    #   end
+    #
+    # @return [WebMock::RequestStub] a mocked request
+    #
+    def stub_endpoint(endpoint_id, route_params = {}, &callback)
+      endpoint      = EndpointRegistry.instance.find!(endpoint_id)
+      uri           = URI::Builder.build(endpoint.service_uri, endpoint.path, route_params)
+      webmock_stub  = WebMock::Builder.build(endpoint.verb, uri, &callback)
+
+      StubRegistry.instance.record(endpoint.id, webmock_stub)
+      ::WebMock::StubRegistry.instance.register_request_stub(webmock_stub)
+    end
+
+    # :nodoc:
+    def __stub_endpoint(endpoint_id, route_params = {})
+      endpoint      = EndpointRegistry.instance.find!(endpoint_id)
+      uri           = URI::Builder.build(endpoint.service_uri, endpoint.path, route_params)
+      endpoint_stub = WebMock::Builder.build(endpoint.verb, uri)
+
+      ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
     end
 
     #
@@ -75,29 +117,6 @@ module StubRequests
     end
 
     #
-    # Stub a request to a registered service endpoint
-    #
-    #
-    # @param [Symbol] service_id the id of a registered service
-    # @param [Symbol] endpoint_id the id of a registered endpoint
-    # @param [Hash<Symbol>] route_params a map with route parameters
-    #
-    # @note the kind of timeout error raised by webmock is depending on the HTTP client used
-    #
-    # @example Stub a request to a registered service endpoint using block version
-    #   stub_endpoint(:documents, :index) do
-    #     with(headers: { "Accept" => "application/json" }}})
-    #     to_return(body: "No content", status: 204)
-    #   end
-    #
-    # @see #stub_http_request
-    # @return [WebMock::RequestStub] a mocked request
-    #
-    def stub_endpoint(service_id, endpoint_id, route_params = {}, &callback)
-      StubRequests::ServiceRegistry.stub_endpoint(service_id, endpoint_id, route_params, &callback)
-    end
-
-    #
     # Subscribe to notifications for a service endpoint
     #
     # @param [Symbol] service_id the id of a service
@@ -108,7 +127,7 @@ module StubRequests
     # @return [void]
     #
     def register_callback(service_id, endpoint_id, verb, callback)
-      StubRequests::CallbackRegistry.register(service_id, endpoint_id, verb, callback)
+      StubRequests::CallbackRegistry.instance.register(service_id, endpoint_id, verb, callback)
     end
 
     #
@@ -120,7 +139,7 @@ module StubRequests
     # @return [void]
     #
     def unregister_callback(service_id, endpoint_id, verb)
-      StubRequests::CallbackRegistry.unregister(service_id, endpoint_id, verb)
+      StubRequests::CallbackRegistry.instance.unregister(service_id, endpoint_id, verb)
     end
   end
 end

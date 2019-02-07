@@ -40,22 +40,5 @@ module StubRequests
     def self.safe_join(host, path)
       [host.chomp("/"), path.sub(%r{\A/}, "")].join("/")
     end
-
-    #
-    # UtilityFunction to construct the full URI for a service endpoint
-    #
-    # @param [Symbol] service_id the id of a service
-    # @param [Symbol] endpoint_id the id of an endpoint
-    # @param [Hash<Symbol>] route_params hash with route_params
-    #
-    # @return [Array<Service, Endpoint, String] the service, endpoint and full URI
-    #
-    def self.for_service_endpoint(service_id, endpoint_id, route_params)
-      service  = ServiceRegistry.instance.find!(service_id)
-      endpoint = service.endpoints.find!(endpoint_id)
-      uri      = URI::Builder.build(service.uri, endpoint.path, route_params)
-
-      [service, endpoint, uri]
-    end
   end
 end

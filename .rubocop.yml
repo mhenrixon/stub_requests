@@ -49,6 +49,7 @@ Naming/FileName:
 Naming/UncommunicativeMethodParamName:
   AllowedNames:
     - ex
+    - id
 
 AlignLeftLetBrace:
   Enabled: true

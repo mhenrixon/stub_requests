@@ -4,12 +4,12 @@ require "spec_helper"
 require "net/http"
 require "securerandom"
 
-RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable RSpec/DescribeClass
+RSpec.describe "Stubs HTTP requests", record_stubs: true do # rubocop:disable RSpec/DescribeClass
   include StubRequests::API
 
   let(:service_id)   { :example_api }
   let(:service_uri)  { "https://example.com/api/v1" }
-  let(:endpoint)     { service.endpoints.register(endpoint_id, verb, path) }
+  let(:endpoint)     { service.register(endpoint_id, verb, path) }
   let(:endpoint_id)  { :list_task }
   let(:verb)         { :get }
   let(:path)         { "lists/:list_id/tasks/:task_id" }
@@ -44,7 +44,7 @@ RSpec.describe "Stubs HTTP requests", record_metrics: true do # rubocop:disable 
   end
 
   def register_stubs
-    stub_endpoint(service_id, endpoint_id, route_params) do
+    stub_endpoint(endpoint_id, route_params) do
       to_return(
         body: example_api_list_task_response.to_json,
         status: example_api_list_task_status,

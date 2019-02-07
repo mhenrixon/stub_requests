@@ -15,7 +15,34 @@ module StubRequests
   #
   # EndpointNotFound is raised when an endpoint cannot be found
   #
-  class EndpointNotFound < Error; end
+  class EndpointNotFound < Error
+    attr_reader :id
+
+    def initialize(id:, suggestions: [])
+      @id           = id
+      @suggestions  = Array(suggestions).compact
+      error_message = [base_message, suggestions_message].join(".")
+      super(error_message)
+    end
+
+    def base_message
+      @base_message ||= "Couldn't find an endpoint with id=:#{id}"
+    end
+
+    def suggestions_message
+      return if suggestions.none?
+
+      @suggestions_message ||= " Did you mean one of the following? (#{suggestions_string})"
+    end
+
+    def suggestions
+      @suggestions.map { |sym| ":#{sym}" }
+    end
+
+    def suggestions_string
+      suggestions.join(", ")
+    end
+  end
 
   #
   # Class InvalidCallback is raised when a callback argument doesn't have the correct number of arguments
@@ -52,15 +79,6 @@ module StubRequests
     def initialize(name:, type:, default:)
       default = "nil" if default.is_a?(NilClass)
       super("Property ##{name} was already defined as `{ type: #{type}, default: #{default} }")
-    end
-  end
-
-  #
-  # ServiceHaveEndpoints is raised to prevent overwriting a registered service's endpoints
-  #
-  class ServiceHaveEndpoints < StandardError
-    def initialize(service)
-      super("Service with id #{service.id} have already been registered. #{service}")
     end
   end
 

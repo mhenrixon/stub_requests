@@ -84,7 +84,7 @@ Now we have a list of endpoints we can stub.
 ### Stubbing service endpoints
 
 ```ruby
-StubRequests.stub_endpoint(:google_ads, :index)
+StubRequests.stub_endpoint(:ads_index)
             .to_return(code: 204, body: "")
 
 # This is the equivalent of doing the following in WebMock
@@ -95,7 +95,7 @@ WebMock.stub_request(:get, "#{Settings.google_ads_base_uri}/ads")
 ```
 
 ```ruby
-StubRequests.stub_endpoint(:google_ads, :update, id: 1) do
+StubRequests.stub_endpoint(:ads_update, id: 1) do
   with(body: request_body.to_json)
   to_return(code: 200, body: response_body.to_json)
 end
@@ -117,7 +117,7 @@ Metrics collection are by default turned off. It can be turned on by the followi
 
 ```ruby
 StubRequests.configure do |config|
-  config.record_metrics = true
+  config.record_stubs = true
 end
 ```
 
@@ -233,32 +233,32 @@ StubRequests.print_stubs(:documents)
 #
 module DocumentStubs
   def stub_documents_show(id:, &block)
-    StubRequests.stub_endpoint(:documents, :documents_show, id: id, &block)
+    StubRequests.stub_endpoint(:documents_show, id: id, &block)
   end
 
 
   def stub_documents_index(&block)
-    StubRequests.stub_endpoint(:documents, :documents_index, &block)
+    StubRequests.stub_endpoint(:documents_index, &block)
   end
 
 
   def stub_documents_create(&block)
-    StubRequests.stub_endpoint(:documents, :documents_create, &block)
+    StubRequests.stub_endpoint(:documents_create, &block)
   end
 
 
   def stub_documents_update(id:, &block)
-    StubRequests.stub_endpoint(:documents, :documents_update, id: id, &block)
+    StubRequests.stub_endpoint(:documents_update, id: id, &block)
   end
 
 
   def stub_document_put(id:, &block)
-    StubRequests.stub_endpoint(:documents, :document_put, id: id, &block)
+    StubRequests.stub_endpoint(:document_put, id: id, &block)
   end
 
 
   def stub_documents_destroy(id:, &block)
-    StubRequests.stub_endpoint(:documents, :documents_destroy, id: id, &block)
+    StubRequests.stub_endpoint(:documents_destroy, id: id, &block)
   end
 end
 ```

@@ -14,10 +14,6 @@ module StubRequests
       BLOCK_ARG = "&block"
 
       #
-      # @!attribute [r] service_id
-      #   @return [Symbol] the id of a registered service
-      attr_reader :service_id
-      #
       # @!attribute [r] endpoint_id
       #   @return [Symbol] the id of a registered endpoint
       attr_reader :endpoint_id
@@ -29,12 +25,10 @@ module StubRequests
       #
       # Initialize a new endpoint of {MethodDefinition}
       #
-      # @param [Symbol] service_id the id of a registered service
       # @param [Symbol] endpoint_id the id of a registered endpoint
       # @param [Array<Symbol>] route_params the route parameter keys
       #
-      def initialize(service_id, endpoint_id, route_params)
-        @service_id   = service_id
+      def initialize(endpoint_id, route_params)
         @endpoint_id  = endpoint_id
         @route_params = route_params
       end
@@ -52,7 +46,7 @@ module StubRequests
       def to_s
         <<~METHOD
           def #{name}(#{keywords})
-            StubRequests.stub_endpoint(:#{service_id}, :#{endpoint_id}, #{arguments})
+            StubRequests.stub_endpoint(:#{endpoint_id}, #{arguments})
           end
         METHOD
       end
