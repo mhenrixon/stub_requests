@@ -12,18 +12,12 @@ task :changelog do
     --no-verbose
     --token
   ]
-  CHECKOUT_CHANGELOG_CMD ||= "git checkout -B update-changelog"
   ADD_CHANGELOG_CMD      ||= "git add --all"
   COMMIT_CHANGELOG_CMD   ||= "git commit -a -m 'Update changelog'"
-  GIT_PUSH_CMD           ||= "git push -u origin update-changelog"
-  OPEN_PR_CMD            ||= "hub pull-request -b master  -m 'Update Changelog' -a mhenrixon -l changelog"
   # rubocop:enable Style/MutableConstant
 
+  sh("git checkout master")
   sh(*CHANGELOG_CMD.push(ENV["CHANGELOG_GITHUB_TOKEN"]))
-  sh(CHECKOUT_CHANGELOG_CMD)
   sh(ADD_CHANGELOG_CMD)
   sh(COMMIT_CHANGELOG_CMD)
-  sh(GIT_PUSH_CMD)
-  sh(OPEN_PR_CMD)
-  sh("git checkout master")
 end
