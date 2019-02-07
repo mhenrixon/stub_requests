@@ -21,8 +21,8 @@ end
 task default: :spec
 
 task :release do
-  sh("gem release --tag --push")
-  Rake::Task["changelog"].invoke
   sh("./update_docs.sh")
+  Rake::Task["changelog"].invoke
+  sh("gem release --tag --push")
   sh("gem bump")
 end
