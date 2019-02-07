@@ -100,11 +100,11 @@ module StubRequests
     # @return [Service] the service that was just registered
     #
     def record(service, endpoint, webmock_stub)
-      endpoint = find_or_initialize_endpoint_stub(service, endpoint)
-      endpoint.record(webmock_stub)
+      endpoint_stub = find_or_initialize_endpoint_stub(service, endpoint)
+      endpoint_stub.record(webmock_stub)
 
-      endpoints.push(endpoint)
-      endpoint
+      endpoints.push(endpoint_stub)
+      endpoint_stub
     end
 
     #

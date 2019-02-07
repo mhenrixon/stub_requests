@@ -42,7 +42,7 @@ RSpec.describe StubRequests::ServiceRegistry do
           "Service with id basecamp have already been registered. #{other_service}"
         end
 
-        specify { expect { register }.to raise_error(StubRequests::ServiceHaveEndpoints, error_message) }
+        it { is_expected.to eq(other_service) }
       end
     end
   end
