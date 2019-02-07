@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.1.9](https://github.com/mhenrixon/stub_requests/tree/v0.1.9) (2019-02-07)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.8...v0.1.9)
+
+## [v0.1.8](https://github.com/mhenrixon/stub_requests/tree/v0.1.8) (2019-02-07)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.7...v0.1.8)
+
+**Merged pull requests:**
+
+- Reduce number of warnings [\#27](https://github.com/mhenrixon/stub_requests/pull/27) ([mhenrixon](https://github.com/mhenrixon))
+- Update Changelog [\#26](https://github.com/mhenrixon/stub_requests/pull/26) ([mhenrixon](https://github.com/mhenrixon))
+
 ## [v0.1.7](https://github.com/mhenrixon/stub_requests/tree/v0.1.7) (2019-02-07)
 [Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.6...v0.1.7)
 
