@@ -26,7 +26,7 @@ class NilClass
   # :nodoc:
   def blank?
     true
-  end
+  end unless method_defined?(:blank?)
 end
 
 # @see FalseClass
@@ -35,7 +35,7 @@ class FalseClass
   # :nodoc:
   def blank?
     true
-  end
+  end unless method_defined?(:blank?)
 end
 
 # @see TrueClass
@@ -44,31 +44,31 @@ class TrueClass
   # :nodoc:
   def blank?
     false
-  end
+  end unless method_defined?(:blank?)
 end
 
 # @see Array
 # :nodoc:
 class Array
   # :nodoc:
-  alias blank? empty?
+  alias blank? empty? unless method_defined?(:blank?)
 end
 
 # @see Hash
 # :nodoc:
 class Hash
   # :nodoc:
-  alias blank? empty?
+  alias blank? empty? unless method_defined?(:blank?)
 end
 
 # @see String
 class String
   # :nodoc:
   # :nodoc:
-  BLANK_RE = /\A[[:space:]]*\z/.freeze
+  BLANK_RE ||= /\A[[:space:]]*\z/.freeze
   # :nodoc:
   # :nodoc:
-  ENCODED_BLANKS = Concurrent::Map.new do |map, enc|
+  ENCODED_BLANKS ||= Concurrent::Map.new do |map, enc|
     map[enc] = Regexp.new(BLANK_RE.source.encode(enc), BLANK_RE.options | Regexp::FIXEDENCODING)
   end
 
@@ -91,7 +91,7 @@ class String
           !!ENCODED_BLANKS[encoding].match(self)
         end
       end
-  end
+  end unless method_defined?(:blank?)
 end
 
 # @see Numeric
@@ -100,7 +100,7 @@ class Numeric
   # :nodoc:
   def blank?
     false
-  end
+  end unless method_defined?(:blank?)
 end
 
 # @see Time
@@ -109,5 +109,5 @@ class Time
   # :nodoc:
   def blank?
     false
-  end
+  end unless method_defined?(:blank?)
 end
