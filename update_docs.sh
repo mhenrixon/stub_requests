@@ -24,7 +24,7 @@ mv doc/* ./
 echo "Sending new documentation to github"
 git add --all
 git commit -a -m 'Update documentation'
-git push
+git push --force
 
 if [[ $stash_created == 1 ]]; then
   git stash pop
