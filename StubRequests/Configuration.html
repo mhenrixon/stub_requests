@@ -89,7 +89,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="Property.html" title="StubRequests::Property (module)">Property</a></span></dd>
+      <dd><span class='object_link'><a href="Concerns/Property.html" title="StubRequests::Concerns::Property (module)">StubRequests::Concerns::Property</a></span></dd>
   </dl>
   
   
@@ -148,6 +148,89 @@
 
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#jaro_options-instance_method" title="#jaro_options (instance method)">#<strong>jaro_options</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Options to use for jaro winkler.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#logger-instance_method" title="#logger (instance method)">#<strong>logger</strong>  &#x21d2; Logger </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Any object that responds to the standard logger methods.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#record_stubs-instance_method" title="#record_stubs (instance method)">#<strong>record_stubs</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Record_stubs set to true to keep track of stubs.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -160,8 +243,8 @@
   
   <h2>Method Summary</h2>
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Property.html" title="StubRequests::Property (module)">Property</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Property.html#included-class_method" title="StubRequests::Property.included (method)">included</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Concerns/Property.html" title="StubRequests::Concerns::Property (module)">StubRequests::Concerns::Property</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Concerns/Property.html#included-class_method" title="StubRequests::Concerns::Property.included (method)">included</a></span></p>
 
   
   
@@ -171,14 +254,192 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="ArgumentValidation.html" title="StubRequests::ArgumentValidation (module)">ArgumentValidation</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ArgumentValidation.html#validate!-instance_method" title="StubRequests::ArgumentValidation#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="ArgumentValidation.html#validate_type!-instance_method" title="StubRequests::ArgumentValidation#validate_type! (method)">#validate_type!</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Concerns/ArgumentValidation.html" title="StubRequests::Concerns::ArgumentValidation (module)">StubRequests::Concerns::ArgumentValidation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Concerns/ArgumentValidation.html#validate!-instance_method" title="StubRequests::Concerns::ArgumentValidation#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="Concerns/ArgumentValidation.html#validate_type!-instance_method" title="StubRequests::Concerns::ArgumentValidation#validate_type! (method)">#validate_type!</a></span></p>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="jaro_options=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="jaro_options-instance_method">
+  
+    #<strong>jaro_options</strong>  &#x21d2; <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns options to use for jaro winkler</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>options to use for jaro winkler</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/configuration.rb', line 28</span>
+
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:jaro_options</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span>
+  <span class='label'>weight:</span> <span class='float'>0.1</span><span class='comma'>,</span>
+  <span class='label'>threshold:</span> <span class='float'>0.7</span><span class='comma'>,</span>
+  <span class='label'>ignore_case:</span> <span class='kw'>true</span><span class='comma'>,</span>
+<span class='rbrace'>}</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="logger=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="logger-instance_method">
+  
+    #<strong>logger</strong>  &#x21d2; <tt>Logger</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns any object that responds to the standard logger methods</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Logger</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>any object that responds to the standard logger methods</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/configuration.rb', line 36</span>
+
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:logger</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'>Logger</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="record_stubs=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="record_stubs-instance_method">
+  
+    #<strong>record_stubs</strong>  &#x21d2; <tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns record_stubs set to true to keep track of stubs</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>record_stubs set to true to keep track of stubs</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/configuration.rb', line 24</span>
+
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:record_stubs</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../FalseClass.html" title="FalseClass (class)">FalseClass</a></span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
 </div>
 
       <div id="footer">
-  Generated on Thu Feb  7 10:19:09 2019 by
+  Generated on Thu Feb  7 21:56:28 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

@@ -89,7 +89,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="Property.html" title="StubRequests::Property (module)">Property</a></span></dd>
+      <dd><span class='object_link'><a href="Concerns/Property.html" title="StubRequests::Concerns::Property (module)">StubRequests::Concerns::Property</a></span></dd>
   </dl>
   
   
@@ -349,8 +349,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Property.html" title="StubRequests::Property (module)">Property</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Property.html#included-class_method" title="StubRequests::Property.included (method)">included</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Concerns/Property.html" title="StubRequests::Concerns::Property (module)">StubRequests::Concerns::Property</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Concerns/Property.html#included-class_method" title="StubRequests::Concerns::Property.included (method)">included</a></span></p>
 
   
   
@@ -360,8 +360,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="ArgumentValidation.html" title="StubRequests::ArgumentValidation (module)">ArgumentValidation</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ArgumentValidation.html#validate!-instance_method" title="StubRequests::ArgumentValidation#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="ArgumentValidation.html#validate_type!-instance_method" title="StubRequests::ArgumentValidation#validate_type! (method)">#validate_type!</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Concerns/ArgumentValidation.html" title="StubRequests::Concerns::ArgumentValidation (module)">StubRequests::Concerns::ArgumentValidation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Concerns/ArgumentValidation.html#validate!-instance_method" title="StubRequests::Concerns::ArgumentValidation#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="Concerns/ArgumentValidation.html#validate_type!-instance_method" title="StubRequests::Concerns::ArgumentValidation#validate_type! (method)">#validate_type!</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -469,15 +469,15 @@
       <pre class="lines">
 
 
-43
-44
 45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_service_id'>service_id</span>  <span class='op'>=</span> <span class='id identifier rubyid_service_id'>service_id</span>
@@ -539,10 +539,10 @@
       <pre class="lines">
 
 
-33</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 35</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:callback</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'>Proc</span></pre>
     </td>
@@ -594,10 +594,10 @@
       <pre class="lines">
 
 
-25</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 27</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:endpoint_id</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span></pre>
     </td>
@@ -649,10 +649,10 @@
       <pre class="lines">
 
 
-21</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 23</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:service_id</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span></pre>
     </td>
@@ -704,10 +704,10 @@
       <pre class="lines">
 
 
-29</pre>
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 31</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:verb</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:any</span></pre>
     </td>
@@ -761,12 +761,12 @@
       <pre class="lines">
 
 
-61
-62
-63</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_arity'>arity</span>
   <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>
@@ -815,8 +815,6 @@
       <pre class="lines">
 
 
-50
-51
 52
 53
 54
@@ -824,10 +822,12 @@
 56
 57
 58
-59</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/callback.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_arity'>arity</span>
@@ -849,7 +849,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb  7 10:19:08 2019 by
+  Generated on Thu Feb  7 21:56:28 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

@@ -213,29 +213,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#for_service_endpoint-class_method" title="for_service_endpoint (class method)">.<strong>for_service_endpoint</strong>(service_id, endpoint_id, route_params)  &#x21d2; Array&lt;Service, Endpoint, String] the service, endpoint and full URI </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>UtilityFunction to construct the full URI for a service endpoint.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#route_params-class_method" title="route_params (class method)">.<strong>route_params</strong>(string)  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
@@ -289,136 +266,7 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="for_service_endpoint-class_method">
-  
-    .<strong>for_service_endpoint</strong>(service_id, endpoint_id, route_params)  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span>, <span class='object_link'><a href="Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span>, <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>] the service</tt>, <tt>endpoint and full <span class='object_link'><a href="" title="StubRequests::URI (module)">URI</a></span></tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>UtilityFunction to construct the full URI for a service endpoint</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>service_id</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the id of a service</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>endpoint_id</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the id of an endpoint</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>route_params</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>hash with route_params</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Service.html" title="StubRequests::Service (class)">Service</a></span>, <span class='object_link'><a href="Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span>, <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>] the service</tt>, <tt>endpoint and full <span class='object_link'><a href="" title="StubRequests::URI (module)">URI</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Array&lt;Service, Endpoint, String] the service, endpoint and full URI</p>
-</div>
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.2</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-53
-54
-55
-56
-57
-58
-59</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri.rb', line 53</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_for_service_endpoint'>for_service_endpoint</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_service'>service</span>  <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ServiceRegistry.html" title="StubRequests::ServiceRegistry (class)">ServiceRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_find!'>find!</span><span class='lparen'>(</span><span class='id identifier rubyid_service_id'>service_id</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_endpoint'>endpoint</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_endpoints'>endpoints</span><span class='period'>.</span><span class='id identifier rubyid_find!'>find!</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_uri'>uri</span>      <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="StubRequests::URI (module)">URI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="URI/Builder.html" title="StubRequests::URI::Builder (class)">Builder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build'><span class='object_link'><a href="URI/Builder.html#build-class_method" title="StubRequests::URI::Builder.build (method)">build</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='rparen'>)</span>
-
-  <span class='lbracket'>[</span><span class='id identifier rubyid_service'>service</span><span class='comma'>,</span> <span class='id identifier rubyid_endpoint'>endpoint</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="route_params-class_method">
+  <h3 class="signature first" id="route_params-class_method">
   
     .<strong>route_params</strong>(string)  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt> 
   
@@ -619,7 +467,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb  7 10:19:08 2019 by
+  Generated on Thu Feb  7 21:56:28 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

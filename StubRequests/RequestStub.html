@@ -94,7 +94,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="Property.html" title="StubRequests::Property (module)">Property</a></span></dd>
+      <dd><span class='object_link'><a href="Concerns/Property.html" title="StubRequests::Concerns::Property (module)">Concerns::Property</a></span></dd>
   </dl>
   
   
@@ -159,7 +159,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#endpoint-instance_method" title="#endpoint (instance method)">#<strong>endpoint</strong>  &#x21d2; StubRequests::EndpointStub </a>
+      <a href="#endpoint-instance_method" title="#endpoint (instance method)">#<strong>endpoint</strong>  &#x21d2; Endpoint </a>
     
 
     
@@ -178,7 +178,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A stubbed endpoint.</p>
+    <span class="summary_desc"><div class='inline'><p>Retrieve the endpoint for this request stub.</p>
 </div></span>
   
 </li>
@@ -235,34 +235,6 @@
 
   
     <span class="summary_desc"><div class='inline'><p>The relative path to the spec that recorded it.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#request_stub-instance_method" title="#request_stub (instance method)">#<strong>request_stub</strong>  &#x21d2; WebMock::RequestStub </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>A webmock stubbed request.</p>
 </div></span>
   
 </li>
@@ -352,6 +324,34 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#webmock_stub-instance_method" title="#webmock_stub (instance method)">#<strong>webmock_stub</strong>  &#x21d2; WebMock::RequestStub </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A webmock stubbed request.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -368,7 +368,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(endpoint, request_stub)  &#x21d2; RequestStub </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(endpoint_id, webmock_stub)  &#x21d2; RequestStub </a>
     
 
     
@@ -426,8 +426,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Property.html" title="StubRequests::Property (module)">Property</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Property.html#included-class_method" title="StubRequests::Property.included (method)">included</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Concerns/Property.html" title="StubRequests::Concerns::Property (module)">Concerns::Property</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Concerns/Property.html#included-class_method" title="StubRequests::Concerns::Property.included (method)">included</a></span></p>
 
   
   
@@ -437,15 +437,15 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="ArgumentValidation.html" title="StubRequests::ArgumentValidation (module)">ArgumentValidation</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ArgumentValidation.html#validate!-instance_method" title="StubRequests::ArgumentValidation#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="ArgumentValidation.html#validate_type!-instance_method" title="StubRequests::ArgumentValidation#validate_type! (method)">#validate_type!</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Concerns/ArgumentValidation.html" title="StubRequests::Concerns::ArgumentValidation (module)">Concerns::ArgumentValidation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Concerns/ArgumentValidation.html#validate!-instance_method" title="StubRequests::Concerns::ArgumentValidation#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="Concerns/ArgumentValidation.html#validate_type!-instance_method" title="StubRequests::Concerns::ArgumentValidation#validate_type! (method)">#validate_type!</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(endpoint, request_stub)  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::RequestStub (class)">RequestStub</a></span></tt> 
+    #<strong>initialize</strong>(endpoint_id, webmock_stub)  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::RequestStub (class)">RequestStub</a></span></tt> 
   
 
   
@@ -464,7 +464,7 @@
   
     <li>
       
-        <span class='name'>endpoint</span>
+        <span class='name'>endpoint_id</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt>)</span>
@@ -472,14 +472,14 @@
       
       
         &mdash;
-        <div class='inline'><p>a stubbed endpoint</p>
+        <div class='inline'><p>the id of a stubbed endpoint</p>
 </div>
       
     </li>
   
     <li>
       
-        <span class='name'>request_stub</span>
+        <span class='name'>webmock_stub</span>
       
       
         <span class='type'>(<tt>WebMock::RequestStub</tt>)</span>
@@ -516,26 +516,26 @@
       <pre class="lines">
 
 
-58
-59
-60
-61
-62
 63
 64
 65
 66
-67</pre>
+67
+68
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 63</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='comma'>,</span> <span class='id identifier rubyid_request_stub'>request_stub</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_request_pattern'>request_pattern</span> <span class='op'>=</span> <span class='id identifier rubyid_request_stub'>request_stub</span><span class='period'>.</span><span class='id identifier rubyid_request_pattern'>request_pattern</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_endpoint'>endpoint</span>       <span class='op'>=</span> <span class='id identifier rubyid_endpoint'>endpoint</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_endpoint_id'>endpoint_id</span><span class='comma'>,</span> <span class='id identifier rubyid_webmock_stub'>webmock_stub</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_request_pattern'>request_pattern</span>     <span class='op'>=</span> <span class='id identifier rubyid_webmock_stub'>webmock_stub</span><span class='period'>.</span><span class='id identifier rubyid_request_pattern'>request_pattern</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_endpoint_id'>endpoint_id</span>    <span class='op'>=</span> <span class='id identifier rubyid_endpoint_id'>endpoint_id</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_verb'>verb</span>           <span class='op'>=</span> <span class='id identifier rubyid_request_pattern'>request_pattern</span><span class='period'>.</span><span class='id identifier rubyid_method_pattern'>method_pattern</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span>            <span class='op'>=</span> <span class='id identifier rubyid_request_pattern'>request_pattern</span><span class='period'>.</span><span class='id identifier rubyid_uri_pattern'>uri_pattern</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_request_stub'>request_stub</span>   <span class='op'>=</span> <span class='id identifier rubyid_request_stub'>request_stub</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_request_uri'>request_uri</span>    <span class='op'>=</span> <span class='id identifier rubyid_request_pattern'>request_pattern</span><span class='period'>.</span><span class='id identifier rubyid_uri_pattern'>uri_pattern</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_webmock_stub'>webmock_stub</span>   <span class='op'>=</span> <span class='id identifier rubyid_webmock_stub'>webmock_stub</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_recorded_at'>recorded_at</span>    <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_recorded_from'>recorded_from</span>  <span class='op'>=</span> <span class='const'>RSpec</span><span class='period'>.</span><span class='id identifier rubyid_current_example'>current_example</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span><span class='lbracket'>[</span><span class='symbol'>:location</span><span class='rbracket'>]</span>
   <span class='ivar'>@responded_at</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='comment'># ByPass the validation for the initializer
@@ -555,7 +555,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="endpoint-instance_method">
   
-    #<strong>endpoint</strong>  &#x21d2; <tt><span class='object_link'><a href="EndpointStub.html" title="StubRequests::EndpointStub (class)">StubRequests::EndpointStub</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>endpoint</strong>  &#x21d2; <tt><span class='object_link'><a href="Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -563,7 +563,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a stubbed endpoint</p>
+    <p>Retrieve the endpoint for this request stub</p>
 
 
   </div>
@@ -576,12 +576,27 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="EndpointStub.html" title="StubRequests::EndpointStub (class)">StubRequests::EndpointStub</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Endpoint.html" title="StubRequests::Endpoint (class)">Endpoint</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>a stubbed endpoint</p>
+        <div class='inline'><p><description></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.2</p>
 </div>
       
     </li>
@@ -594,12 +609,12 @@
       <pre class="lines">
 
 
-25</pre>
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 30</span>
 
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:endpoint</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../StubRequests.html" title="StubRequests (module)">StubRequests</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EndpointStub.html" title="StubRequests::EndpointStub (class)">EndpointStub</a></span></span></pre>
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:endpoint_id</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span></pre>
     </td>
   </tr>
 </table>
@@ -649,10 +664,10 @@
       <pre class="lines">
 
 
-41</pre>
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 46</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:recorded_at</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span></pre>
     </td>
@@ -704,67 +719,12 @@
       <pre class="lines">
 
 
-45</pre>
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 50</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:recorded_from</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="request_stub-instance_method">
-  
-    #<strong>request_stub</strong>  &#x21d2; <tt>WebMock::RequestStub</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns a webmock stubbed request</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>WebMock::RequestStub</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>a webmock stubbed request</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-37</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 37</span>
-
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:request_stub</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="WebMock.html" title="StubRequests::WebMock (module)">WebMock</a></span></span><span class='op'>::</span><span class='const'>RequestStub</span></pre>
     </td>
   </tr>
 </table>
@@ -814,10 +774,10 @@
       <pre class="lines">
 
 
-49</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 54</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:responded_at</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span></pre>
     </td>
@@ -869,12 +829,12 @@
       <pre class="lines">
 
 
-33</pre>
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 38</span>
 
-<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:uri</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span></pre>
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:request_uri</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span></pre>
     </td>
   </tr>
 </table>
@@ -924,12 +884,67 @@
       <pre class="lines">
 
 
-29</pre>
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 34</span>
 
 <span class='id identifier rubyid_property'>property</span> <span class='symbol'>:verb</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="webmock_stub-instance_method">
+  
+    #<strong>webmock_stub</strong>  &#x21d2; <tt>WebMock::RequestStub</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a webmock stubbed request</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>WebMock::RequestStub</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a webmock stubbed request</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 42</span>
+
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:webmock_stub</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="WebMock.html" title="StubRequests::WebMock (module)">WebMock</a></span></span><span class='op'>::</span><span class='const'>RequestStub</span></pre>
     </td>
   </tr>
 </table>
@@ -999,12 +1014,12 @@
       <pre class="lines">
 
 
-75
-76
-77</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/request_stub.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mark_as_responded'>mark_as_responded</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_responded_at'>responded_at</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
@@ -1019,7 +1034,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb  7 10:19:09 2019 by
+  Generated on Thu Feb  7 21:56:28 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>

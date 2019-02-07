@@ -87,11 +87,6 @@
   
   
   
-  <dl>
-      <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../HashUtil.html" title="StubRequests::HashUtil (module)">HashUtil</a></span></dd>
-  </dl>
-  
   
 
   
@@ -181,34 +176,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#options-instance_method" title="#options (instance method)">#<strong>options</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#request_stub-instance_method" title="#request_stub (instance method)">#<strong>request_stub</strong>  &#x21d2; Object </a>
+      <a href="#webmock_stub-instance_method" title="#webmock_stub (instance method)">#<strong>webmock_stub</strong>  &#x21d2; Object </a>
     
 
     
@@ -248,7 +216,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build-class_method" title="build (class method)">.<strong>build</strong>(verb, uri, options = {}) { ... } &#x21d2; WebMock::RequestStub </a>
+      <a href="#build-class_method" title="build (class method)">.<strong>build</strong>(verb, uri) { ... } &#x21d2; WebMock::RequestStub </a>
     
 
     
@@ -303,7 +271,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(verb, uri, options = {}) { ... } &#x21d2; Builder </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(verb, uri) { ... } &#x21d2; Builder </a>
     
 
     
@@ -328,24 +296,13 @@
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../HashUtil.html" title="StubRequests::HashUtil (module)">HashUtil</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../HashUtil.html#compact-class_method" title="StubRequests::HashUtil.compact (method)">compact</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(verb, uri, options = {}) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::WebMock::Builder (class)">Builder</a></span></tt> 
+    #<strong>initialize</strong>(verb, uri) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::WebMock::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -392,23 +349,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>&lt;<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>request/response options for Webmock::RequestStub</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 <p class="tag_title">Yields:</p>
@@ -450,18 +390,16 @@
       <pre class="lines">
 
 
-65
-66
-67
-68
-69</pre>
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 57</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
-  <span class='ivar'>@request_stub</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>WebMock</span><span class='op'>::</span><span class='const'>RequestStub</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
-  <span class='ivar'>@options</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='ivar'>@webmock_stub</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>WebMock</span><span class='op'>::</span><span class='const'>RequestStub</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
   <span class='ivar'>@callback</span>     <span class='op'>=</span> <span class='id identifier rubyid_callback'>callback</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -515,12 +453,12 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_callback'>callback</span>
   <span class='ivar'>@callback</span>
@@ -533,65 +471,9 @@
       
       <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="options-instance_method">
+  <h3 class="signature " id="webmock_stub-instance_method">
   
-    #<strong>options</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.2</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-49
-50
-51</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 49</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
-  <span class='ivar'>@options</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="request_stub-instance_method">
-  
-    #<strong>request_stub</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>webmock_stub</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -627,15 +509,15 @@
       <pre class="lines">
 
 
-45
-46
-47</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 42</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_request_stub'>request_stub</span>
-  <span class='ivar'>@request_stub</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_webmock_stub'>webmock_stub</span>
+  <span class='ivar'>@webmock_stub</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -652,7 +534,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="build-class_method">
   
-    .<strong>build</strong>(verb, uri, options = {}) { ... } &#x21d2; <tt>WebMock::RequestStub</tt> 
+    .<strong>build</strong>(verb, uri) { ... } &#x21d2; <tt>WebMock::RequestStub</tt> 
   
 
   
@@ -699,23 +581,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>&lt;<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>request/response options for Webmock::RequestStub</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 <p class="tag_title">Yields:</p>
@@ -745,10 +610,6 @@
       
       
       
-        &mdash;
-        <div class='inline'><p>the registered stub</p>
-</div>
-      
     </li>
   
 </ul>
@@ -774,15 +635,15 @@
       <pre class="lines">
 
 
-38
-39
-40</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 35</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -852,27 +713,17 @@
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82
-83
-84
-85</pre>
+68
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/webmock/builder.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='const'>Docile</span><span class='period'>.</span><span class='id identifier rubyid_dsl_eval'>dsl_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_request_stub'>request_stub</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_prepare_mock_request'>prepare_mock_request</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_request_stub'>request_stub</span>
+  <span class='const'>Docile</span><span class='period'>.</span><span class='id identifier rubyid_dsl_eval'>dsl_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_webmock_stub'>webmock_stub</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='id identifier rubyid_webmock_stub'>webmock_stub</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -884,7 +735,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb  7 10:19:09 2019 by
+  Generated on Thu Feb  7 21:56:29 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>
