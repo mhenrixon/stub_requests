@@ -17,5 +17,9 @@ module StubRequests
     include Property
 
     property :record_metrics, type: [TrueClass, FalseClass], default: false
+    #
+    # @!attribute [rw] logger
+    #   @return [Logger] any object that responds to the standard logger methods
+    attr_accessor :logger
   end
 end
