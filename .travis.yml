@@ -42,11 +42,11 @@ notifications:
     recipients:
       - mikael@zoolutions.se
 
-deploy:
-  provider: rubygems
-  api_key:
-    secure: EhdN7pRCvnoI/WYKo4/B4NzzT+OAswhlDrW56KK0CmKmR8SrEBOwBB10MxEmOM24cMSrZGYb1MQCGqQ7yt2Erx4Z2E6OVSAlUIlWjhNaFhyTFmxQB5pP3ulH5gGJuw6BYFomPTW504BKIMay/IzMnbcx9fORsKlckU9W0WC7jMrVkmhPrMRBrrxaLW7ZJuV3CxsdVVLm4c1CQiGu3Lm6oXPBGe2L1Ctw+q/BHQvXJIDE3smJ4aNZBSpQouzlw8HSJd3Poq7m8AP8foc7oA9brrx55to3dBkhVJxeZa7fvYP+3J3IZUVL+5mOr+QXwivZnqL2NmIOZZjOisf1njQO5Mk4v/HM5wBgi8R5RMBp55A6iz7ZPca9Tj5DoVEINGfncQ0JGAeovx2/Z/g9/Dj3zr2kU9fI51tomnSJbmgxZ4wzwTP8afUdGEa013AeVcGQlXUnBljsU4MttVXufXPptWm9ABtN2oTvPNs4pYzXliGjT97d1TS4hhf7I+Fd6yUXPOyNokmrVMT68ZWou3IBM+gm8He41oNe9l/17vevG+GpOMjPo54ASpTuOc6DcuWGJPkvBPZ3ijz7kn3c/YT+LpSy7zxwjn3QA4VGj4W5JzlsLmlCSBsan9X8SIgmqY41Z/J/R86L+ndW+TY8m4oxl86LF0J2w0JAX97pcyD4Bo4=
-  gem: stub_requests
-  on:
-    tags: true
-    repo: mhenrixon/stub_requests
+# deploy:
+#   provider: rubygems
+#   api_key:
+#     secure: EhdN7pRCvnoI/WYKo4/B4NzzT+OAswhlDrW56KK0CmKmR8SrEBOwBB10MxEmOM24cMSrZGYb1MQCGqQ7yt2Erx4Z2E6OVSAlUIlWjhNaFhyTFmxQB5pP3ulH5gGJuw6BYFomPTW504BKIMay/IzMnbcx9fORsKlckU9W0WC7jMrVkmhPrMRBrrxaLW7ZJuV3CxsdVVLm4c1CQiGu3Lm6oXPBGe2L1Ctw+q/BHQvXJIDE3smJ4aNZBSpQouzlw8HSJd3Poq7m8AP8foc7oA9brrx55to3dBkhVJxeZa7fvYP+3J3IZUVL+5mOr+QXwivZnqL2NmIOZZjOisf1njQO5Mk4v/HM5wBgi8R5RMBp55A6iz7ZPca9Tj5DoVEINGfncQ0JGAeovx2/Z/g9/Dj3zr2kU9fI51tomnSJbmgxZ4wzwTP8afUdGEa013AeVcGQlXUnBljsU4MttVXufXPptWm9ABtN2oTvPNs4pYzXliGjT97d1TS4hhf7I+Fd6yUXPOyNokmrVMT68ZWou3IBM+gm8He41oNe9l/17vevG+GpOMjPo54ASpTuOc6DcuWGJPkvBPZ3ijz7kn3c/YT+LpSy7zxwjn3QA4VGj4W5JzlsLmlCSBsan9X8SIgmqY41Z/J/R86L+ndW+TY8m4oxl86LF0J2w0JAX97pcyD4Bo4=
+#   gem: stub_requests
+#   on:
+#     tags: true
+#     repo: mhenrixon/stub_requests
