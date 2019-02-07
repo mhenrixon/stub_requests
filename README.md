@@ -154,16 +154,13 @@ StubRequests.register_service(:documents, "https://company.com/api/v1") do
   post   "documents",     as: :documents_create
   patch  "documents/:id", as: :documents_update
   put    "documents/:id", as: :document_put
-  delete "documents/:id"  as: :documents_destroy
+  delete "documents/:id", as: :documents_destroy
 end
 
 #
 # 2. Create a module where the methods should be defined
 #
-module Stubs
-  module Documents
-  end
-end
+module Stubs::Documents; end
 
 #
 # 3. Define the stubs for the registered endpoints
@@ -171,14 +168,14 @@ end
 StubRequests::DSL.define_stubs(:documents, Stubs::Documents)
 
 Documents.instance_methods #=>
- [
-   :stub_documents_show
-   :stub_documents_index
-   :stub_documents_create
-   :stub_documents_update
-   :stub_document_put
-   :stub_documents_destroy
- ]
+  [
+    :stub_documents_show,
+    :stub_documents_index,
+    :stub_documents_create,
+    :stub_documents_update,
+    :stub_document_put,
+    :stub_documents_destroy,
+  ]
 
 #
 # 4. Use the module in our tests
@@ -229,7 +226,7 @@ end
 #
 # 2. Print the stub definitions to STDOUT
 #
-StubRequests.print_stubs(:documents) #=>
+StubRequests.print_stubs(:documents)
 
 #
 # 3. Copy the stubs into a module
