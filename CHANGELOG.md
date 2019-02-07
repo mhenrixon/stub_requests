@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.1.7](https://github.com/mhenrixon/stub_requests/tree/v0.1.7) (2019-02-07)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.6...v0.1.7)
+
+**Fixed bugs:**
+
+- Don't crash when service was registered [\#25](https://github.com/mhenrixon/stub_requests/pull/25) ([mhenrixon](https://github.com/mhenrixon))
+
+**Merged pull requests:**
+
+- Update Changelog [\#24](https://github.com/mhenrixon/stub_requests/pull/24) ([mhenrixon](https://github.com/mhenrixon))
+
 ## [v0.1.6](https://github.com/mhenrixon/stub_requests/tree/v0.1.6) (2019-02-06)
 [Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.5...v0.1.6)
 
