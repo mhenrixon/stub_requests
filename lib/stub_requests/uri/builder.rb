@@ -48,9 +48,9 @@ module StubRequests
       #   @return [Hash<Symbol] a hash with keys matching the {#template}
       attr_reader :route_params
       #
-      # @!attribute [r] actual_keys
+      # @!attribute [r] received_keys
       #   @return [Array<String>] a list with actual {#route_params} keys
-      attr_reader :actual_keys
+      attr_reader :received_keys
       #
       # @!attribute [r] expected_keys
       #   @return [Array<String>] a list of expected route keys
@@ -66,7 +66,7 @@ module StubRequests
       def initialize(uri, route_params = {})
         @uri           = +uri
         @route_params  = route_params.to_route_param
-        @actual_keys   = @route_params.keys
+        @received_keys = @route_params.keys
         @expected_keys = uri.scan(URI_KEY).flatten.uniq
       end
 
@@ -91,12 +91,11 @@ module StubRequests
 
       def validate_uri_has_route_params!
         return if validate_uri_has_route_params
-        raise UriSegmentMismatch,
-              "The URI (#{uri}) expected the following route params `#{expected_keys.join(', ')}` but received `#{actual_keys.join(', ')}`"
+        raise UriSegmentMismatch, uri: uri, expected_keys: expected_keys, received_keys: received_keys
       end
 
       def validate_uri_has_route_params
-        expected_keys.sort == actual_keys.sort
+        expected_keys.sort == received_keys.sort
       end
 
       def build_uri
@@ -106,10 +105,6 @@ module StubRequests
       end
 
       def replace_key(key, value)
-        return unless uri.include?(key)
-
-        actual_keys.delete(key)
-        expected_keys.delete(key)
         uri.gsub!(key, value.to_s)
       end
 

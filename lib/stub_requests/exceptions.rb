@@ -94,5 +94,54 @@ module StubRequests
   #
   # UriSegmentMismatch is raised when a segment cannot be replaced
   #
-  class UriSegmentMismatch < Error; end
+  class UriSegmentMismatch < Error
+    attr_reader :uri, :expected_keys, :received_keys
+    def initialize(uri:, expected_keys:, received_keys:)
+      @uri           = uri
+      @expected_keys = expected_keys
+      @received_keys = received_keys
+
+      super(message_parts.join("\n  "))
+    end
+
+    private
+
+    def message_parts
+      [].tap do |arr|
+        arr << default_part
+        arr << expected_keys_part
+        arr << received_keys_part
+        arr << missing_keys_part if missing_keys.any?
+        arr << invalid_keys_part if invalid_keys.any?
+      end
+    end
+
+    def default_part
+      "The URI (#{uri}) received unexpected route parameters"
+    end
+
+    def expected_keys_part
+      "Expected: [#{expected_keys.join(',')}]"
+    end
+
+    def received_keys_part
+      "Received: [#{received_keys.join(',')}]"
+    end
+
+    def missing_keys_part
+      "Missing: [#{missing_keys.join(',')}]"
+    end
+
+    def invalid_keys_part
+      "Invalid: [#{invalid_keys.join(',')}]"
+    end
+
+    def missing_keys
+      @missing_keys ||= expected_keys - received_keys
+    end
+
+    def invalid_keys
+      @invalid_keys ||= received_keys - expected_keys
+    end
+  end
 end
