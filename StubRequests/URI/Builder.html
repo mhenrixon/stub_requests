@@ -148,7 +148,7 @@
 
     <dl class="constants">
       
-        <dt id="URL_SEGMENT_REGEX-constant" class="">URL_SEGMENT_REGEX =
+        <dt id="URI_KEY-constant" class="">URI_KEY =
           <div class="docstring">
   <div class="discussion">
     <p>Returns A pattern for matching url segment keys</p>
@@ -193,7 +193,7 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(:\w+)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(:[a-zA-Z_]+)</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
   
@@ -207,7 +207,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#host-instance_method" title="#host (instance method)">#<strong>host</strong>  &#x21d2; Object </a>
+      <a href="#expected_keys-instance_method" title="#expected_keys (instance method)">#<strong>expected_keys</strong>  &#x21d2; Object </a>
     
 
     
@@ -234,7 +234,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#path-instance_method" title="#path (instance method)">#<strong>path</strong>  &#x21d2; Object </a>
+      <a href="#received_keys-instance_method" title="#received_keys (instance method)">#<strong>received_keys</strong>  &#x21d2; Object </a>
     
 
     
@@ -288,61 +288,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#template-instance_method" title="#template (instance method)">#<strong>template</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#unreplaced-instance_method" title="#unreplaced (instance method)">#<strong>unreplaced</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#unused-instance_method" title="#unused (instance method)">#<strong>unused</strong>  &#x21d2; Object </a>
+      <a href="#uri-instance_method" title="#uri (instance method)">#<strong>uri</strong>  &#x21d2; Object </a>
     
 
     
@@ -382,7 +328,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build-class_method" title="build (class method)">.<strong>build</strong>(host, template, route_params = {})  &#x21d2; String </a>
+      <a href="#build-class_method" title="build (class method)">.<strong>build</strong>(uri, route_params = {})  &#x21d2; String </a>
     
 
     
@@ -437,7 +383,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(host, template, route_params = {})  &#x21d2; Builder </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(uri, route_params = {})  &#x21d2; Builder </a>
     
 
     
@@ -468,7 +414,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(host, template, route_params = {})  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::URI::Builder (class)">Builder</a></span></tt> 
+    #<strong>initialize</strong>(uri, route_params = {})  &#x21d2; <tt><span class='object_link'><a href="" title="StubRequests::URI::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -487,7 +433,7 @@
   
     <li>
       
-        <span class='name'>host</span>
+        <span class='name'>uri</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
@@ -496,21 +442,6 @@
       
         &mdash;
         <div class='inline'><p>the URI used to reach the service</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>template</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the endpoint template</p>
 </div>
       
     </li>
@@ -556,21 +487,21 @@
       <pre class="lines">
 
 
-76
-77
-78
-79
-80
-81</pre>
+66
+67
+68
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 66</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@host</span>         <span class='op'>=</span> <span class='op'>+</span><span class='id identifier rubyid_host'>host</span>
-  <span class='ivar'>@template</span>     <span class='op'>=</span> <span class='op'>+</span><span class='id identifier rubyid_template'>template</span>
-  <span class='ivar'>@path</span>         <span class='op'>=</span> <span class='op'>+</span><span class='ivar'>@template</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='ivar'>@route_params</span> <span class='op'>=</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='period'>.</span><span class='id identifier rubyid_to_route_param'>to_route_param</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@uri</span>           <span class='op'>=</span> <span class='op'>+</span><span class='id identifier rubyid_uri'>uri</span>
+  <span class='ivar'>@route_params</span>  <span class='op'>=</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='period'>.</span><span class='id identifier rubyid_to_route_param'>to_route_param</span>
+  <span class='ivar'>@received_keys</span> <span class='op'>=</span> <span class='ivar'>@route_params</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+  <span class='ivar'>@expected_keys</span> <span class='op'>=</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#URI_KEY-constant" title="StubRequests::URI::Builder::URI_KEY (constant)">URI_KEY</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -585,9 +516,9 @@
       
       <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="host-instance_method">
+  <h3 class="signature first" id="expected_keys-instance_method">
   
-    #<strong>host</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>expected_keys</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -623,15 +554,15 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 57</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_host'>host</span>
-  <span class='ivar'>@host</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_expected_keys'>expected_keys</span>
+  <span class='ivar'>@expected_keys</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -641,9 +572,9 @@
       
       <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="path-instance_method">
+  <h3 class="signature " id="received_keys-instance_method">
   
-    #<strong>path</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>received_keys</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -679,15 +610,15 @@
       <pre class="lines">
 
 
+53
 54
-55
-56</pre>
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 53</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
-  <span class='ivar'>@path</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_received_keys'>received_keys</span>
+  <span class='ivar'>@received_keys</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -735,12 +666,12 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_route_params'>route_params</span>
   <span class='ivar'>@route_params</span>
@@ -753,65 +684,9 @@
       
       <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="template-instance_method">
+  <h3 class="signature " id="uri-instance_method">
   
-    #<strong>template</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-50
-51
-52</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 50</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_template'>template</span>
-  <span class='ivar'>@template</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="unreplaced-instance_method">
-  
-    #<strong>unreplaced</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+    #<strong>uri</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -847,71 +722,15 @@
       <pre class="lines">
 
 
-66
-67
-68</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 45</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_unreplaced'>unreplaced</span>
-  <span class='ivar'>@unreplaced</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="unused-instance_method">
-  
-    #<strong>unused</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-62
-63
-64</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 62</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_unused'>unused</span>
-  <span class='ivar'>@unused</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_uri'>uri</span>
+  <span class='ivar'>@uri</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -928,7 +747,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="build-class_method">
   
-    .<strong>build</strong>(host, template, route_params = {})  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
+    .<strong>build</strong>(uri, route_params = {})  &#x21d2; <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -947,7 +766,7 @@
   
     <li>
       
-        <span class='name'>host</span>
+        <span class='name'>the</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
@@ -955,22 +774,7 @@
       
       
         &mdash;
-        <div class='inline'><p>the URI used to reach the service</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>template</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>the endpoint template</p>
+        <div class='inline'><p>URI to the service endpoint</p>
 </div>
       
     </li>
@@ -1063,15 +867,15 @@
       <pre class="lines">
 
 
+38
 39
-40
-41</pre>
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 38</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_route_params'>route_params</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1171,19 +975,21 @@
       <pre class="lines">
 
 
-92
-93
-94
-95
-96
-97</pre>
+82
+83
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/stub_requests/uri/builder.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
+  <span class='id identifier rubyid_validate_uri_has_route_params!'>validate_uri_has_route_params!</span>
   <span class='id identifier rubyid_build_uri'>build_uri</span>
-  <span class='id identifier rubyid_run_validations'>run_validations</span>
+  <span class='id identifier rubyid_validate_uri'>validate_uri</span>
 
   <span class='id identifier rubyid_uri'>uri</span>
 <span class='kw'>end</span></pre>
@@ -1197,7 +1003,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb  7 21:59:03 2019 by
+  Generated on Fri Feb  8 13:18:25 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.18 (ruby-2.5.3).
 </div>
