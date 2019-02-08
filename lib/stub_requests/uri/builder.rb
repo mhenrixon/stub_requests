@@ -102,7 +102,7 @@ module StubRequests
       def build_uri
         route_params.each do |key, value|
           replace_key(key, value)
-        end.compact
+        end
       end
 
       def replace_key(key, value)
