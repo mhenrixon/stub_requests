@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.1.11](https://github.com/mhenrixon/stub_requests/tree/v0.1.11) (2019-02-08)
+[Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.10...v0.1.11)
+
+**Implemented enhancements:**
+
+- Simplify URI::Builder [\#30](https://github.com/mhenrixon/stub_requests/pull/30) ([mhenrixon](https://github.com/mhenrixon))
+
 ## [v0.1.10](https://github.com/mhenrixon/stub_requests/tree/v0.1.10) (2019-02-07)
 [Full Changelog](https://github.com/mhenrixon/stub_requests/compare/v0.1.9...v0.1.10)
 
