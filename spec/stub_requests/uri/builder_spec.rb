@@ -3,9 +3,9 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::URI::Builder do
-  let(:builder) { described_class.new(service_uri, path, route_params) }
-
-  let(:service_uri) { "http://service-name:9292/internal" }
+  let(:builder)      { described_class.new(uri, route_params) }
+  let(:uri)          { StubRequests::URI.safe_join(service_uri, path) }
+  let(:service_uri)  { "http://service-name:9292/internal" }
   let(:path)         { "another/:bogus/endpoint" }
   let(:route_params) { { bogus: :random } }
 
@@ -16,22 +16,40 @@ RSpec.describe StubRequests::URI::Builder do
 
     context "when endpoint has unused uri segments" do
       let(:route_params) { { rocks: :my_world, my_boat: :floats } }
-      let(:error_message) do
-        "The URI segment(s) [:rocks,:my_boat] are missing in template (another/:bogus/endpoint)"
-      end
 
-      specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }
+      specify do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+        expect { build }.to raise_error do |error|
+          expect(error).to be_a(StubRequests::UriSegmentMismatch)
+          expect(error.message).to include(
+            "The URI (http://service-name:9292/internal/another/:bogus/endpoint)" \
+            " received unexpected route parameters",
+          )
+
+          expect(error.message).to include("Expected: [:bogus]")
+          expect(error.message).to include("Received: [:rocks,:my_boat]")
+          expect(error.message).to include("Missing: [:bogus]")
+          expect(error.message).to include("Invalid: [:rocks,:my_boat]")
+        end
+      end
     end
 
     context "when endpoint has not replaced URI segments" do
       let(:path) { "another/:bogus/endpoint/:without_any/value" }
-      let(:error_message) do
-        "The URI segment(s) [:without_any] were not replaced" \
-        " in template (another/random/endpoint/:without_any/value)." \
-        " Given route_params=[:bogus]"
-      end
 
-      specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }
+      specify do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+        expect { build }.to raise_error do |error|
+          expect(error).to be_a(StubRequests::UriSegmentMismatch)
+          expect(error.message).to include(
+            "The URI (http://service-name:9292/internal/another/:bogus/endpoint/:without_any/value)" \
+            " received unexpected route parameters",
+          )
+
+          expect(error.message).to include("Expected: [:bogus,:without_any]")
+          expect(error.message).to include("Received: [:bogus]")
+          expect(error.message).to include("Missing: [:without_any]")
+          expect(error.message).not_to include("Invalid: ")
+        end
+      end
     end
 
     context "when constructed URI is invalid" do

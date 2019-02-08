@@ -17,6 +17,7 @@ detectors:
     exclude:
       - initialize
       - RSpec::SubjectAsLambda#it!
+      - StubRequests::UriSegmentMismatch#message_parts
   DataClump:
     exclude:
       - StubRequests::Concerns::RegisterVerb
