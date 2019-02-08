@@ -3,9 +3,9 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::URI::Builder do
-  let(:builder) { described_class.new(service_uri, path, route_params) }
-
-  let(:service_uri) { "http://service-name:9292/internal" }
+  let(:builder)      { described_class.new(uri, route_params) }
+  let(:uri)          { StubRequests::URI.safe_join(service_uri, path) }
+  let(:service_uri)  { "http://service-name:9292/internal" }
   let(:path)         { "another/:bogus/endpoint" }
   let(:route_params) { { bogus: :random } }
 
@@ -17,7 +17,7 @@ RSpec.describe StubRequests::URI::Builder do
     context "when endpoint has unused uri segments" do
       let(:route_params) { { rocks: :my_world, my_boat: :floats } }
       let(:error_message) do
-        "The URI segment(s) [:rocks,:my_boat] are missing in template (another/:bogus/endpoint)"
+        "The URI (http://service-name:9292/internal/another/:bogus/endpoint) expected the following route params `:bogus` but received `:rocks, :my_boat`"
       end
 
       specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }
@@ -26,9 +26,8 @@ RSpec.describe StubRequests::URI::Builder do
     context "when endpoint has not replaced URI segments" do
       let(:path) { "another/:bogus/endpoint/:without_any/value" }
       let(:error_message) do
-        "The URI segment(s) [:without_any] were not replaced" \
-        " in template (another/random/endpoint/:without_any/value)." \
-        " Given route_params=[:bogus]"
+        "The URI (http://service-name:9292/internal/another/:bogus/endpoint/:without_any/value)" \
+        " expected the following route params `:bogus, :without_any` but received `:bogus`"
       end
 
       specify { expect { build }.to raise_error(StubRequests::UriSegmentMismatch, error_message) }

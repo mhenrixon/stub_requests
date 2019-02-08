@@ -72,7 +72,7 @@ module StubRequests
     #
     def stub_endpoint(endpoint_id, route_params = {}, &callback)
       endpoint      = EndpointRegistry.instance.find!(endpoint_id)
-      uri           = URI::Builder.build(endpoint.service_uri, endpoint.path, route_params)
+      uri           = URI::Builder.build(endpoint.uri, route_params)
       webmock_stub  = WebMock::Builder.build(endpoint.verb, uri, &callback)
 
       StubRegistry.instance.record(endpoint.id, webmock_stub)
@@ -82,7 +82,7 @@ module StubRequests
     # :nodoc:
     def __stub_endpoint(endpoint_id, route_params = {})
       endpoint      = EndpointRegistry.instance.find!(endpoint_id)
-      uri           = URI::Builder.build(endpoint.service_uri, endpoint.path, route_params)
+      uri           = URI::Builder.build(endpoint.uri, route_params)
       endpoint_stub = WebMock::Builder.build(endpoint.verb, uri)
 
       ::WebMock::StubRegistry.instance.register_request_stub(endpoint_stub)
