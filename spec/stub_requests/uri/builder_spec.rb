@@ -17,12 +17,12 @@ RSpec.describe StubRequests::URI::Builder do
     context "when endpoint has unused uri segments" do
       let(:route_params) { { rocks: :my_world, my_boat: :floats } }
 
-      specify do
+      specify do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
         expect { build }.to raise_error do |error|
           expect(error).to be_a(StubRequests::UriSegmentMismatch)
           expect(error.message).to include(
             "The URI (http://service-name:9292/internal/another/:bogus/endpoint)" \
-            " received unexpected route parameters"
+            " received unexpected route parameters",
           )
 
           expect(error.message).to include("Expected: [:bogus]")
@@ -36,12 +36,12 @@ RSpec.describe StubRequests::URI::Builder do
     context "when endpoint has not replaced URI segments" do
       let(:path) { "another/:bogus/endpoint/:without_any/value" }
 
-      specify do
+      specify do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
         expect { build }.to raise_error do |error|
           expect(error).to be_a(StubRequests::UriSegmentMismatch)
           expect(error.message).to include(
             "The URI (http://service-name:9292/internal/another/:bogus/endpoint/:without_any/value)" \
-            " received unexpected route parameters"
+            " received unexpected route parameters",
           )
 
           expect(error.message).to include("Expected: [:bogus,:without_any]")

@@ -21,7 +21,7 @@ module StubRequests
     class Builder
       #
       # @return [Regexp] A pattern for matching url segment keys
-      URI_KEY = %r{(:[a-zA-Z_]+)}.freeze
+      URI_KEY = /(:[a-zA-Z_]+)/.freeze
 
       #
       # Convenience method to avoid .new.build
@@ -91,6 +91,7 @@ module StubRequests
 
       def validate_uri_has_route_params!
         return if validate_uri_has_route_params
+
         raise UriSegmentMismatch, uri: uri, expected_keys: expected_keys, received_keys: received_keys
       end
 
