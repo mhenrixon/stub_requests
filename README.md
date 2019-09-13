@@ -3,6 +3,7 @@
 ## Badges
 
 [![Build Status](https://travis-ci.org/mhenrixon/stub_requests.svg?branch=master)](https://travis-ci.org/mhenrixon/stub_requests) [![Maintainability](https://api.codeclimate.com/v1/badges/c9217e458c2a77fff1bc/maintainability)](https://codeclimate.com/github/mhenrixon/stub_requests/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/c9217e458c2a77fff1bc/test_coverage)](https://codeclimate.com/github/mhenrixon/stub_requests/test_coverage)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmhenrixon%2Fstub_requests.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmhenrixon%2Fstub_requests?ref=badge_shield)
 
 This gem attempts to solve a problem I've had for the time with WebMock.
 
@@ -301,6 +302,9 @@ contributors are expected to adhere to the [Contributor Covenant](cc) code of co
 The gem is available as open source under the terms of the [MIT License](mit).
 
 <a id="code-of-conduct"></a>
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmhenrixon%2Fstub_requests.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmhenrixon%2Fstub_requests?ref=badge_large)
+
 ## Code of Conduct
 
 Everyone interacting in the StubRequests project’s codebases, issue trackers,
