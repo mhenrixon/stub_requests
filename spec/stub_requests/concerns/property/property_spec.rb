@@ -3,21 +3,21 @@
 require "spec_helper"
 
 RSpec.describe StubRequests::Concerns::Property, ".property" do
-  subject { test_class }
-
-  let(:test_instance) { test_class.new }
-  let(:test_class) do
-    class TestProperty
-      include StubRequests::Concerns::Property
-    end
-  end
+  subject { TestProperty }
 
   let(:property_name)    { :a_method }
   let(:property_type)    { String }
   let(:property_default) { "test string" }
+  let(:test_instance)    { TestProperty.new }
 
   before do
-    Docile.dsl_eval(test_class) do
+    test_class = Class.new do
+      include StubRequests::Concerns::Property
+    end
+
+    stub_const("TestProperty", test_class)
+
+    Docile.dsl_eval(TestProperty) do
       property property_name, type: property_type, default: property_default
     end
   end
@@ -26,7 +26,7 @@ RSpec.describe StubRequests::Concerns::Property, ".property" do
     let(:properties) { { property_name => { type: [property_type], default: property_default } } }
 
     context "for class" do
-      subject { test_class }
+      subject { TestProperty }
 
       its(:properties) { are_expected.to eq(properties) }
     end

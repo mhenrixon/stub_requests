@@ -37,20 +37,20 @@ Gem::Specification.new do |spec|
   spec.add_dependency "jaro_winkler",    "~> 1.0", "< 2"
 
   # ===== Basics =====
-  spec.add_development_dependency "bundler",        ">= 2.0"
+  spec.add_development_dependency "bundler",        ">= 2.1"
   spec.add_development_dependency "rake",           ">= 10.0"
 
   # ===== Testing =====
-  spec.add_development_dependency "appraisal",      ">= 2.2.0"
-  spec.add_development_dependency "json_spec",      ">= 1.1.5"
-  spec.add_development_dependency "fuubar",         ">= 2.3"
-  spec.add_development_dependency "rspec",          ">= 3.8"
-  spec.add_development_dependency "rspec-its",      ">= 1.2"
-  spec.add_development_dependency "rubocop",        "~> 0.63.1"
-  spec.add_development_dependency "rubocop-rspec",  "~> 1.32"
-  spec.add_development_dependency "simplecov",      ">= 0.16.1"
-  spec.add_development_dependency "simplecov-json", ">= 0.2"
-  spec.add_development_dependency "reek",           ">= 5.0"
+  spec.add_development_dependency "appraisal",          ">= 2.2.0"
+  spec.add_development_dependency "json_spec",          ">= 1.1.5"
+  spec.add_development_dependency "fuubar",             ">= 2.3"
+  spec.add_development_dependency "rspec",              ">= 3.8"
+  spec.add_development_dependency "rspec-its",          ">= 1.2"
+  spec.add_development_dependency "rubocop-mhenrixon",  "~> 0.79.2"
+  spec.add_development_dependency "simplecov",          ">= 0.18"
+  spec.add_development_dependency "simplecov-material", ">= 0.5"
+  spec.add_development_dependency "simplecov-oj",       ">= 0.18"
+  spec.add_development_dependency "reek",               ">= 5.0"
 
   # ===== Debugging  =====
   spec.add_development_dependency "pry", ">= 0.12"
@@ -59,7 +59,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "travis", ">= 1.8.9"
 
   # ===== Documentation =====
-  spec.add_development_dependency "yard",          "~> 0.9.18"
+  spec.add_development_dependency "yard" ,          "~> 0.9.24"
   spec.add_development_dependency "redcarpet",     "~> 3.4"
   spec.add_development_dependency "github-markup", "~> 3.0"
   spec.add_development_dependency "github_changelog_generator", "~> 1.14"

@@ -15,6 +15,10 @@ rake yard
 
 git checkout gh-pages
 
+if [[ "$(git branch | grep \* | cut -d ' ' -f2)" !=  "gh-pages" ]]; then
+  git checkout -b gh-pages
+fi;
+
 echo "Cleaning up current documentation"
 find . ! -path '*/.git*' ! -path '*/doc*' ! -path '*/update_docs.sh*' ! -path '*/_config.yml*' ! -path '*/_index.html*' ! -path '.' | xargs rm -rf
 
@@ -24,7 +28,7 @@ mv doc/* ./
 echo "Sending new documentation to github"
 git add --all
 git commit -a -m 'Update documentation'
-git push --force
+git push --set-upstream origin gh-pages --force
 
 if [[ $stash_created == 1 ]]; then
   git stash pop

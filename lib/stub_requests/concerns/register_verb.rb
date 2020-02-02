@@ -22,7 +22,7 @@ module StubRequests
       #
       # @return [Endpoint] the registered endpoint
       #
-      def any(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      def any(path, as:) # rubocop:disable Naming/MethodParameterName
         register(as, __method__, path)
       end
 
@@ -38,7 +38,7 @@ module StubRequests
       #
       # @return [Endpoint] the registered endpoint
       #
-      def get(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      def get(path, as:) # rubocop:disable Naming/MethodParameterName
         register(as, __method__, path)
       end
 
@@ -54,7 +54,7 @@ module StubRequests
       #
       # @return [Endpoint] the registered endpoint
       #
-      def post(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      def post(path, as:) # rubocop:disable Naming/MethodParameterName
         register(as, __method__, path)
       end
 
@@ -70,7 +70,7 @@ module StubRequests
       #
       # @return [Endpoint] the registered endpoint
       #
-      def patch(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      def patch(path, as:) # rubocop:disable Naming/MethodParameterName
         register(as, __method__, path)
       end
 
@@ -86,7 +86,7 @@ module StubRequests
       #
       # @return [Endpoint] the registered endpoint
       #
-      def put(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      def put(path, as:) # rubocop:disable Naming/MethodParameterName
         register(as, __method__, path)
       end
 
@@ -102,7 +102,7 @@ module StubRequests
       #
       # @return [Endpoint] the registered endpoint
       #
-      def delete(path, as:) # rubocop:disable Naming/UncommunicativeMethodParamName
+      def delete(path, as:) # rubocop:disable Naming/MethodParameterName
         register(as, __method__, path)
       end
     end

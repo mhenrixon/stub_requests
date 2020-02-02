@@ -17,7 +17,7 @@ StubRequests.logger = Logger.new("/dev/null")
 require "rspec/its"
 require "rspec/subject_as_lambda"
 
-Dir[File.join(File.dirname(__FILE__), "support", "**", "*.rb")].each { |f| require f }
+Dir[File.join(File.dirname(__FILE__), "support", "**", "*.rb")].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.after do

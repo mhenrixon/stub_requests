@@ -43,4 +43,4 @@ module StubRequests
   end
 end
 
-::WebMock::StubRegistry.send(:include, StubRequests::WebMock::StubRegistryExtension)
+::WebMock::StubRegistry.include StubRequests::WebMock::StubRegistryExtension

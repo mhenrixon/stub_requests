@@ -5,15 +5,16 @@ task :changelog do
   # rubocop:disable Style/MutableConstant
   CHANGELOG_CMD ||= %w[
     github_changelog_generator
-    -u
-    mhenrixon
-    -p
-    stub_requests
     --no-verbose
+    --no-http-cache
+    --user
+    mhenrixon
+    --project
+    stub_requests
     --token
   ]
-  ADD_CHANGELOG_CMD      ||= "git add --all"
-  COMMIT_CHANGELOG_CMD   ||= "git commit -a -m 'Update changelog'"
+  ADD_CHANGELOG_CMD ||= "git add --all"
+  COMMIT_CHANGELOG_CMD ||= "git commit -a -m 'Update changelog'"
   # rubocop:enable Style/MutableConstant
 
   sh("git checkout master")
