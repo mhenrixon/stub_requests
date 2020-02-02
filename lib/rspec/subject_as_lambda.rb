@@ -106,7 +106,7 @@ module RSpec
     #     its(:age) { should eq(25) }
     #   end
     #
-    def it!(*options, &block)
+    def it!(*options, &block) # rubocop:disable Metrics/MethodLength
       it_lambda_caller = caller.reject { |file_line| file_line =~ %r{/rspec/subject_as_lambda} }
       describe(nil, caller: it_lambda_caller) do
         let(:__it_lambda_subject) do
@@ -134,4 +134,4 @@ RSpec.configure do |rspec|
   rspec.backtrace_exclusion_patterns << %r{/lib/rspec/subject_as_lambda}
 end
 
-RSpec::SharedContext.send(:include, RSpec::SubjectAsLambda)
+RSpec::SharedContext.include RSpec::SubjectAsLambda

@@ -1,38 +1,20 @@
-require:
-  - rubocop-rspec
-
-inherit_mode:
-  merge:
-    - Exclude
+inherit_gem:
+  rubocop-mhenrixon:
+    - config/default.yml
 
 AllCops:
   TargetRubyVersion: 2.5
-  Include:
-    - "Rakefile"
-    - "lib/**/*"
-    - "bin/**/*"
-    - "spec/**/*"
-    - ".simplecov"
   Exclude:
     - "lib/stub_requests/core_ext/**/*"
     - "Gemfile.lock"
     - "bin/setup"
     - "gemfiles/**/*"
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
 Metrics/AbcSize:
   Max: 38
-
-Metrics/CyclomaticComplexity:
-  Max: 7
-
-Metrics/LineLength:
-  Max: 120
-
-Metrics/MethodLength:
-  Max: 13
 
 Metrics/BlockLength:
   Exclude:
@@ -46,13 +28,10 @@ Naming/FileName:
   Exclude:
     - '**/Gemfile'
 
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   AllowedNames:
     - ex
     - id
-
-AlignLeftLetBrace:
-  Enabled: true
 
 RSpec/ContextWording:
   Prefixes:

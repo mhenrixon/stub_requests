@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require "simplecov-json"
+require "simplecov-oj"
+require "simplecov-material"
 
 SimpleCov.formatters =
   SimpleCov::Formatter::MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::JSONFormatter,
+    SimpleCov::Formatter::MaterialFormatter,
+    SimpleCov::Formatter::OjFormatter,
   ])
 
 SimpleCov.configure do

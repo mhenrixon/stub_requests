@@ -3,17 +3,21 @@
 require "spec_helper"
 
 RSpec.describe RSpec::SubjectAsLambda do
-  class NullFormatter
-    private
-
-    def method_missing(method, *args, &block) # rubocop:disable Style/MethodMissingSuper, Style/MissingRespondToMissing
-      # ignore
-    end
-  end
-
   let(:stub)    { double }
   let(:error)   { ArgumentError }
   let(:message) { "nice message" }
+
+  before do
+    null_formatter_class = Class.new do
+      private
+
+      def method_missing(method, *args, &block) # rubocop:disable Style/MethodMissingSuper, Style/MissingRespondToMissing
+        # ignore
+      end
+    end
+
+    stub_const("NullFormatter", null_formatter_class)
+  end
 
   describe "#it!" do
     before { allow(stub).to receive(:message).and_raise(error, message) }
